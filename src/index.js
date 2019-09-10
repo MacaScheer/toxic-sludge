@@ -4,11 +4,9 @@ const Pipe = require("./pipe");
 const options = {
   pos: [200, 300],
   width: 20,
-  height: 30 //,
-  // color: 654321
+  height: 30
 };
 const pipe = new Pipe(options);
-// window.drawPipe = Pipe.drawPipe(pipe);
 window.pipe = pipe;
 document.addEventListener("DOMContentLoaded", function() {
   const canvasEl = document.getElementsByTagName("canvas")[0];

@@ -104,7 +104,7 @@ eval("// const Game = require(\"./game\");\n// const GameView = require(\"./game
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("function Pipe(options) {\n  this.pos = options.pos;\n  this.width = options.width;\n  this.height = options.height;\n  // this.shape = options.shape;\n  // this.color = options.color;\n  // this.game = options.game;\n  // this.durability = options.durability;\n}\n\nPipe.prototype.drawPipe = function drawPipe(ctx) {\n  // ctx.fillStyle = this.color;\n  return ctx.fillRect(this.pos[0], this.pos[1], this.width, this.height);\n  // ctx.fill()\n};\n\nPipe.prototype.rotate = function rotate(deg) {};\n\nmodule.exports = Pipe;\n\n\n//# sourceURL=webpack:///./src/pipe.js?");
+eval("const Pipe = function Pipe(options) {\n  this.pos = options.pos;\n  this.width = options.width;\n  this.height = options.height;\n  // this.shape = options.shape;\n  // this.color = options.color;\n  // this.game = options.game;\n  // this.durability = options.durability;\n}\n\nPipe.prototype.drawPipe = function drawPipe(ctx) {\n  // ctx.fillStyle = this.color;\n  return ctx.fillRect(this.pos[0], this.pos[1], this.width, this.height);\n  // ctx.fill()\n};\n\nPipe.prototype.rotate = function rotate(deg) {};\n\nmodule.exports = Pipe;\n\n\n//# sourceURL=webpack:///./src/pipe.js?");
 
 /***/ })
 

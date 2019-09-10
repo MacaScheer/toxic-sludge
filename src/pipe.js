@@ -1,4 +1,4 @@
-function Pipe(options) {
+const Pipe = function Pipe(options) {
   this.pos = options.pos;
   this.width = options.width;
   this.height = options.height;
