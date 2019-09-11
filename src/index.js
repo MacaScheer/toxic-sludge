@@ -1,20 +1,18 @@
-// const Game = require("./game");
-// const GameView = require("./game_view");
-const Pipe = require("./pipe");
-const options = {
-  pos: [200, 300],
-  width: 20,
-  height: 30
-};
-const pipe = new Pipe(options);
-window.pipe = pipe;
+const Tile = require("./tiles");
+const Shape = require("./shape");
+const Board = require("./board");
 document.addEventListener("DOMContentLoaded", function() {
   const canvasEl = document.getElementsByTagName("canvas")[0];
-  // canvasEl.width = Game.DIM_X;
-  // canvasEl.height = Game.DIM_Y;
-
   const ctx = canvasEl.getContext("2d");
-  pipe.drawPipe(ctx);
-  // const game = new Game();
-  // new GameView(game, ctx).start();
+  let shape = new Shape();
+  let board = new Board(400, 800);
+  // space.drawBarrier(ctx);
+  board.createGrid(ctx);
+  // debugger;
+  // space.drawElbow(ctx);
+  // space.drawUturn(ctx);
+  // space.drawStraight(ctx);
+  // space.drawCross(ctx);
+  // space.drawEntry(ctx);
+  // space.drawExit(ctx);
 });
