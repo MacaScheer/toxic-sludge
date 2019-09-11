@@ -1,10 +1,10 @@
 # Toxic Sludge
 
-Rat Pipes is a 2-dimensional puzzle game inspired by Microsoft's Pipe Dream
+Toxic Sludge is a 2-dimensional puzzle game inspired by Microsoft's Pipe Dream
 
 # Background and Overview
 
-The player must connect an entry pipe to an exit pipe through manipulating intermediary pipes. Rat Pipes differs from its inspiration in that all pipe-pieces are present on the screen at the start of the game, and must be rotated and shifted rather than freely placed. Additionally, instead of just sewage that flows through the pipes, there are rats that travel through the pipes searching for the smells on the other end.
+The player must connect an entry pipe to an exit pipe through manipulating intermediary pipes. Toxic Sludge differs from its inspiration in that all pipe-pieces are present on the screen at the start of the game, and must be rotated rather than freely placed. 
 
 Primarily built with the combination of following technologies: 
 
@@ -12,9 +12,9 @@ Javascript, CSS, HTML, Firebase
 
 
 # Functionality and MVP
-+ Rats moves through pipelines
-+ Rats will either bunch up and die, causing a clogged pipe, if the pipe is obstructed/blocked. Additionally, if there is an opening, the rats will escape and infest the   local city streets
-+ Pipes can be manipulated by rotating them
++ Toxic sludge moves through pipelines. Route the sludge through the town via the pipelines.
++ Pipe pieces can be manipulated by rotating them
++ If a pipe isn't connected correctly the sludge may leak out and poison the town's drinking water and cause health hazards.
 + Levels of difficulty
 
 
