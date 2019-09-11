@@ -1,4 +1,4 @@
-# Rat Pipes
+# Toxic Sludge
 
 Rat Pipes is a 2-dimensional puzzle game inspired by Microsoft's Pipe Dream
 
