@@ -1,67 +1,12 @@
+const Elbow = require("./elbow");
+const DblElbow = require("./dblElbow");
+const Straight = require("./straight");
+const Cross = require("./cross");
+
 const Shape = function(type) {
-  this.id = (Math.random() * 10000) % 10000;
-  //   this.increment = increment;
   this.type = type;
-  // if (type ===) { }
-  //   this.makeCanvas();
+
 };
-
-class Elbow {
-  constructor() {
-    this.orientationIndex = Math.random() * 5;
-    this.radius = 25;
-    this.orientationArr = [
-      {
-        offset_x: 25,
-        offset_y: -25,
-        start: 0 * Math.PI,
-        end: 0.5 * Math.PI,
-        openPoints: ["left", "up"]
-      }, //offset_x, offset_y, start, end
-      {
-        offset_x: 25,
-        offset_y: -25,
-        start: 0 * Math.PI,
-        end: 0.5 * Math.PI,
-        openPoints: ["up", "right"]
-      }, //offset_x, offset_y, start, end
-      {
-        offset_x: 25,
-        offset_y: -25,
-        start: 0 * Math.PI,
-        end: 0.5 * Math.PI,
-        openPoints: ["right", "down"]
-      }, //offset_x, offset_y, start, end
-      {
-        offset_x: 25,
-        offset_y: -25,
-        start: 0 * Math.PI,
-        end: 0.5 * Math.PI,
-        openPoints: ["down", "right"]
-      } //offset_x, offset_y, start, end
-    ];
-  }
-  draw(x, y, index) {
-    const orientation = this.orientationArr[this.orientationIndex];
-    ctx.arc(
-      x + orientation.offset_x,
-      y + orientation.offset_y,
-      radius,
-      orientation.start,
-      orientation.end
-    );
-  }
-
-  validFlow(inDir) {
-    let openPoints = this.orientationArr[this.orientationIndex].openPoints;
-    return openPoints.includes(inDir);
-  }
-
-  onClick() {
-    index = (index + 1) % orientationArr.length;
-  }
-  //draw(x, y, orientationArr[orientationIndex])
-}
 
 Shape.prototype.drawBarrier = function(ctx, x, y) {
   ctx.rect(0, 0, 50, 50);
@@ -71,34 +16,37 @@ Shape.prototype.drawBarrier = function(ctx, x, y) {
 };
 
 Shape.prototype.drawElbow = function(ctx, x, y, start) {
-  // debugger
   ctx.beginPath();
-  ctx.arc(x, y, 20, start, 0.5 * Math.PI);
+  ctx.arc(x, y, 25, start, 0.5 * Math.PI);
+  // ctx.arc(x, y + 50, 25, 1.5 * Math.PI, 2 * Math.PI);
+  // ctx.arc(x + 50, y + 50, 25, 1 * Math.PI, 1.5 * Math.PI);
+  // ctx.arc(x + 50, y + 0, 25, 0.5 * Math.PI, 1 * Math.PI);
+
   ctx.lineWidth = 15;
   ctx.stroke();
 };
 
 Shape.prototype.drawDblElbow = function(ctx, x, y) {
   ctx.beginPath();
-  ctx.arc(0, 0, 25, 0, 1 * Math.PI);
-  ctx.moveTo(25, 50);
-  ctx.arc(50, 50, 25, Math.PI, 2 * Math.PI);
+  ctx.arc(x + 0, y + 0, 20, 0, 0.5 * Math.PI);
+  ctx.moveTo(x + 25, y + 50);
+  ctx.arc(x + 50, y + 50, 20, 1.5 * Math.PI, 2 * Math.PI);
   ctx.stroke();
 };
 
 Shape.prototype.drawStraight = function(ctx, x, y) {
   ctx.beginPath();
-  ctx.moveTo(25, 0);
-  ctx.lineTo(25, 50);
+  ctx.moveTo(x + 25, y + 0);
+  ctx.lineTo(x + 25, y + 50);
   ctx.lineWidth = 15;
   ctx.stroke();
 };
 Shape.prototype.drawCross = function(ctx, x, y) {
   ctx.beginPath();
-  ctx.moveTo(25, 0);
-  ctx.lineTo(25, 50);
-  ctx.moveTo(0, 25);
-  ctx.lineTo(50, 25);
+  ctx.moveTo(x + 25, y + 0);
+  ctx.lineTo(x + 25, y + 50);
+  ctx.moveTo(x + 0, y + 25);
+  ctx.lineTo(x + 50, y + 25);
   ctx.lineWidth = 15;
   ctx.stroke();
 };
@@ -126,7 +74,7 @@ Shape.prototype.drawExit = function(ctx, x, y) {
 Shape.prototype.drawShape = function(ctx, x, y, start) {
   switch (this.type) {
     case "dblElbow":
-      this.dblElbow(ctx, x, y);
+      this.drawDblElbow(ctx, x, y);
       break;
     case "cross":
       this.drawCross(ctx, x, y);

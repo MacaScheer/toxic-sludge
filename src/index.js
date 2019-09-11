@@ -1,4 +1,3 @@
-const Tile = require("./tiles");
 const Shape = require("./shape");
 const Board = require("./board");
 document.addEventListener("DOMContentLoaded", function() {
