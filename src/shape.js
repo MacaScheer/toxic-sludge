@@ -54,20 +54,20 @@ class Shape {
 
 Shape.prototype.drawEntry = function(ctx, x, y) {
   ctx.beginPath();
-  ctx.moveTo(0, 25);
-  ctx.lineTo(45, 25);
-  ctx.moveTo(45, 10);
-  ctx.lineTo(45, 40);
+  ctx.moveTo(x + 0, y + 25);
+  ctx.lineTo(x + 45, y + 25);
+  ctx.moveTo(x + 45, y + 10);
+  ctx.lineTo(x + 45, y + 40);
   ctx.lineWidth = 15;
   ctx.stroke();
 };
 
 Shape.prototype.drawExit = function(ctx, x, y) {
   ctx.beginPath();
-  ctx.moveTo(50, 25);
-  ctx.lineTo(5, 25);
-  ctx.moveTo(5, 10);
-  ctx.lineTo(5, 40);
+  ctx.moveTo(x + 50, y + 25);
+  ctx.lineTo(x + 5, y + 25);
+  ctx.moveTo(x + 5, y + 10);
+  ctx.lineTo(x + 5, y + 40);
   ctx.lineWidth = 15;
   ctx.stroke();
 };
@@ -85,13 +85,13 @@ Shape.prototype.drawShape = function(ctx, x, y) {
       let elbow = new Elbow();
       elbow.draw(ctx, x, y);
       break;
-    case "barrier":
-      this.drawBarrier(ctx, x, y);
-      break;
-    case "entryPipe":
+    // case "barrier":
+    //   this.drawBarrier(ctx, x, y);
+    //   break;
+    case "entry":
       this.drawEntry(ctx, x, y);
       break;
-    case "exitPipe":
+    case "exit":
       this.drawExit(ctx, x, y);
       break;
     case "straight":

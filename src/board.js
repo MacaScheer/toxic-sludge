@@ -25,9 +25,20 @@ class Board {
       for (let y = 0, j = 0; j < 13; y += 50, j++) {
         let type = this.types[Math.floor(Math.random() * 3)];
         let xRange = [x, x + 50];
-        let yRange = [y, y + 50]
-        const shape = new Shape(type, xRange, yRange);
-        shape.drawShape(ctx, x, y);
+        let yRange = [y, y + 50];
+        if (x === 0 && y === 250) {
+          const entry = new Shape("entry", xRange, yRange);
+          entry.drawShape(ctx, x, y);
+        }
+        else if (x === 700 && y === 250) {
+          const exit = new Shape("exit", xRange, yRange);
+          exit.drawShape(ctx, x, y);
+        } else {
+          const shape = new Shape(type, xRange, yRange);
+          shape.drawShape(ctx, x, y);
+        }
+        // const shape = new Shape(type, xRange, yRange);
+        // shape.drawShape(ctx, x, y);
       }
     }
     ctx.fill();
