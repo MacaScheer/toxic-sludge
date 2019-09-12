@@ -1,6 +1,7 @@
 # Toxic Sludge
 
 Toxic Sludge is a 2-dimensional puzzle game inspired by Microsoft's Pipe Dream
+Play the game here: https://toxic-sludge.herokuapp.com
 
 # Background and Overview
 
