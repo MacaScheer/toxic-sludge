@@ -4,6 +4,7 @@ class Board {
   constructor(height, width) {
     this.width = width;
     this.height = height;
+    this.types = ["elbow", "straight", "cross"]; //cross, dblElbow
   }
   createGrid(ctx) {
     ctx.beginPath();
@@ -22,20 +23,14 @@ class Board {
 
     for (let x = 0, i = 0; i < 15; x += 50, i++) {
       for (let y = 0, j = 0; j < 13; y += 50, j++) {
-        // const shape = new Shape(types[Math.floor(Math.random() * 5)]);
-        const shape = new Shape("elbow");
-        // debugger;
-        let start = 0;
-        shape.drawShape(ctx, x, y, start);
-        // shape.drawElbow(ctx, x, y)
+        let type = this.types[Math.floor(Math.random() * 3)];
+        let xRange = [x, x + 50];
+        let yRange = [y, y + 50]
+        const shape = new Shape(type, xRange, yRange);
+        shape.drawShape(ctx, x, y);
       }
     }
     ctx.fill();
-  }
-
-  randomShape() {
-    const types = ["dblElbow", "elbow", "straight", "cross"];
-    return types[Math.floor(Math.random() * 5)];
   }
 }
 
