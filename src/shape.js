@@ -53,7 +53,6 @@ Shape.prototype.drawExit = function(ctx, x, y) {
 
 Shape.prototype.reDraw = function(selectId, range, ctx, type) {
   let coords = range.split(",").map(s => parseInt(s));
-  console.log(coords);
   switch (type) {
     case "elbow":
       let elbow = new Elbow(selectId);
