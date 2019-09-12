@@ -5,6 +5,7 @@ class Board {
     this.width = width;
     this.height = height;
     this.types = ["elbow", "straight", "cross"]; //cross, dblElbow
+    this.shapesObj = {};
   }
   createGrid(ctx) {
     ctx.beginPath();
@@ -29,20 +30,41 @@ class Board {
         if (x === 0 && y === 250) {
           const entry = new Shape("entry", xRange, yRange);
           entry.drawShape(ctx, x, y);
-        }
-        else if (x === 700 && y === 250) {
+        } else if (x === 700 && y === 250) {
           const exit = new Shape("exit", xRange, yRange);
           exit.drawShape(ctx, x, y);
         } else {
           const shape = new Shape(type, xRange, yRange);
           shape.drawShape(ctx, x, y);
+          this.shapesObj[[xRange, yRange]] = shape;
         }
-        // const shape = new Shape(type, xRange, yRange);
-        // shape.drawShape(ctx, x, y);
       }
     }
     ctx.fill();
   }
+
+  rotateShape(clickSpot) {
+    let [x, y] = [clickSpot[0], clickSpot[1]];
+    const ranges = Object.keys(this.shapesObj);
+    let selectShape;
+    ranges.forEach(range => {
+      let rangeArr = range.split(",").map(s => parseInt(s));
+      if (
+        x >= rangeArr[0] &&
+        x <= rangeArr[1] &&
+        y >= rangeArr[2] &&
+        y <= rangeArr[3]
+      ) {
+        selectShape = this.shapesObj[range];
+        console.log(selectShape);
+      }
+    });
+    // if (x <= )
+    // let shapeToRotate = this.shapesObj[]
+  }
 }
 
 module.exports = Board;
+
+// const shape = new Shape(type, xRange, yRange);
+// shape.drawShape(ctx, x, y);

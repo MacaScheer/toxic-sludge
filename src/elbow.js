@@ -59,6 +59,11 @@ class Elbow {
     ctx.stroke();
   }
 
+  reDraw() {
+    
+  }
+
+  
   validFlow(inPoint) {
     let openPoints = this.orientationArr[this.orientationIndex].openPoints;
     return openPoints.includes(inPoint);

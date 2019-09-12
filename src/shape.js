@@ -7,16 +7,7 @@ class Shape {
   constructor(type, xRange, yRange) {
     this.xRange = xRange;
     this.yRange = yRange;
-    this.dimensions = [this.x, this.y, this.x + 50, this.y + 50];
     this.type = type;
-    this.canvas = document.getElementById("gameboard");
-    this.ctx = this.canvas.getContext("2d");
-    // this.ctx.canvas.width = 50;
-    // this.ctx.canvas.height = 50;
-    this.canvas.addEventListener("click", function(params) {
-      let clickSpot = [event.pageX, event.pageY];
-      console.log(clickSpot);
-    });
   }
 }
 
@@ -35,23 +26,6 @@ class Shape {
 //   ctx.stroke();
 // };
 
-// Shape.prototype.drawStraight = function(ctx, x, y) {
-//   ctx.beginPath();
-//   ctx.moveTo(x + 25, y + 0);
-//   ctx.lineTo(x + 25, y + 50);
-//   ctx.lineWidth = 15;
-//   ctx.stroke();
-// };
-// Shape.prototype.drawCross = function(ctx, x, y) {
-//   ctx.beginPath();
-//   ctx.moveTo(x + 25, y + 0);
-//   ctx.lineTo(x + 25, y + 50);
-//   ctx.moveTo(x + 0, y + 25);
-//   ctx.lineTo(x + 50, y + 25);
-//   ctx.lineWidth = 15;
-//   ctx.stroke();
-// };
-
 Shape.prototype.drawEntry = function(ctx, x, y) {
   ctx.beginPath();
   ctx.moveTo(x + 0, y + 25);
@@ -59,7 +33,9 @@ Shape.prototype.drawEntry = function(ctx, x, y) {
   ctx.moveTo(x + 45, y + 10);
   ctx.lineTo(x + 45, y + 40);
   ctx.lineWidth = 15;
+  ctx.strokeStyle = "#18A0EB";
   ctx.stroke();
+  ctx.strokeStyle = "#000000";
 };
 
 Shape.prototype.drawExit = function(ctx, x, y) {
@@ -69,7 +45,9 @@ Shape.prototype.drawExit = function(ctx, x, y) {
   ctx.moveTo(x + 5, y + 10);
   ctx.lineTo(x + 5, y + 40);
   ctx.lineWidth = 15;
+  ctx.strokeStyle = "#18A0EB";
   ctx.stroke();
+  ctx.strokeStyle = "#000000";
 };
 
 Shape.prototype.drawShape = function(ctx, x, y) {
