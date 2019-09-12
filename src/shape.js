@@ -9,11 +9,11 @@ class Shape {
     this.yRange = yRange;
     this.dimensions = [this.x, this.y, this.x + 50, this.y + 50];
     this.type = type;
-    this.canvasEl = document.getElementById("gameboard");
-    this.ctx = this.canvasEl.getContext("2d");
+    this.canvas = document.getElementById("gameboard");
+    this.ctx = this.canvas.getContext("2d");
     // this.ctx.canvas.width = 50;
     // this.ctx.canvas.height = 50;
-    this.canvasEl.addEventListener("click", function(params) {
+    this.canvas.addEventListener("click", function(params) {
       let clickSpot = [event.pageX, event.pageY];
       console.log(clickSpot);
     });
