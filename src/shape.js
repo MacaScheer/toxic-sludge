@@ -4,10 +4,11 @@ const Straight = require("./straight");
 const Cross = require("./cross");
 
 class Shape {
-  constructor(type, xRange, yRange) {
+  constructor(type, id, xRange, yRange) {
     this.xRange = xRange;
     this.yRange = yRange;
     this.type = type;
+    this.orientationIndex = id;
   }
 }
 
@@ -33,7 +34,7 @@ Shape.prototype.drawEntry = function(ctx, x, y) {
   ctx.moveTo(x + 45, y + 10);
   ctx.lineTo(x + 45, y + 40);
   ctx.lineWidth = 15;
-  ctx.strokeStyle = "#18A0EB";
+  ctx.strokeStyle = "#FCC201";
   ctx.stroke();
   ctx.strokeStyle = "#000000";
 };
@@ -45,25 +46,48 @@ Shape.prototype.drawExit = function(ctx, x, y) {
   ctx.moveTo(x + 5, y + 10);
   ctx.lineTo(x + 5, y + 40);
   ctx.lineWidth = 15;
-  ctx.strokeStyle = "#18A0EB";
+  ctx.strokeStyle = "#FCC201";
   ctx.stroke();
   ctx.strokeStyle = "#000000";
 };
 
+Shape.prototype.reDraw = function(selectId, range, ctx, type) {
+  let coords = range.split(",").map(s => parseInt(s));
+  console.log(coords);
+  switch (type) {
+    case "elbow":
+      let elbow = new Elbow(selectId);
+      elbow.draw(ctx, coords[0], coords[2]);
+      break;
+    case "straight":
+      let straight = new Straight(selectId);
+      straight.draw(ctx, coords[0], coords[2]);
+      break;
+  }
+};
+
 Shape.prototype.drawShape = function(ctx, x, y) {
   switch (this.type) {
-    case "dblElbow":
-      this.drawDblElbow(ctx, x, y);
-      break;
     case "cross":
       let cross = new Cross();
       cross.draw(ctx, x, y);
       break;
     case "elbow":
-      let elbow = new Elbow();
+      let elbowIndex = this.orientationIndex;
+      let elbow = new Elbow(elbowIndex);
       elbow.draw(ctx, x, y);
       break;
+    case "straight":
+      let straightIndex = this.orientationIndex;
+      let straight = new Straight(straightIndex);
+      straight.draw(ctx, x, y);
+      break;
+    // case "dblElbow":
+    //   this.drawDblElbow(ctx, x, y);
+    //   break;
     // case "barrier":
+    //this could be a wildcard space
+    //that fills with sludge and routes to all contiguous openings
     //   this.drawBarrier(ctx, x, y);
     //   break;
     case "entry":
@@ -71,21 +95,7 @@ Shape.prototype.drawShape = function(ctx, x, y) {
       break;
     case "exit":
       this.drawExit(ctx, x, y);
-      break;
-    case "straight":
-      let straight = new Straight();
-      straight.draw(ctx, x, y);
   }
-};
-
-Shape.prototype.rotatable = function() {
-  return (
-    this.shape != "entry" &&
-    this.shape != "exit" &&
-    this.shape != "cross" &&
-    this.shape != "barrier" &&
-    !this.locked
-  );
 };
 
 module.exports = Shape;

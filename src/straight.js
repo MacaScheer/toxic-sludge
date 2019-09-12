@@ -1,8 +1,8 @@
 const Shape = require("./shape");
 
 class Straight {
-  constructor() {
-    this.orientationIndex = Math.floor(Math.random() * 2);
+  constructor(index) {
+    this.orientationIndex = index;
     this.orientationArr = [
       {
         offset_x_1: 25,
@@ -28,12 +28,14 @@ class Straight {
 
   draw(ctx, x, y) {
     let orientation = this.orientationArr[this.orientationIndex];
+    ctx.clearRect(x + 1, y + 1, 49, 49);
     ctx.beginPath();
     ctx.moveTo(x + orientation.offset_x_1, y + orientation.offset_y_1);
     ctx.lineTo(x + orientation.offset_x_2, y + orientation.offset_y_2);
     ctx.lineWidth = 15;
     ctx.stroke();
   }
+
   validFlow(inPoint) {
     let openPoints = this.orientationArr[this.orientationIndex].openPoints;
     return openPoints.includes(inPoint);

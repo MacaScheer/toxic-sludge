@@ -1,8 +1,8 @@
 // const Shape = require("./shape");
 
 class Elbow {
-  constructor() {
-    this.orientationIndex = Math.floor(Math.random() * 4);
+  constructor(index) {
+    this.orientationIndex = index;
     this.radius = 25;
     this.orientationArr = [
       {
@@ -12,7 +12,7 @@ class Elbow {
         end: 0.5 * Math.PI,
         openPoints: ["left", "top"],
         corner: "topLeft"
-      }, //offset_x, offset_y, start, end
+      },
       {
         offset_x: 50,
         offset_y: 0,
@@ -41,12 +41,10 @@ class Elbow {
     this.outDir = "";
     this.outPoint = "";
   }
-  onClick() {
-    this.orientationIndexndex =
-      (this.orientationIndex + 1) % orientationArr.length;
-  }
+
   draw(ctx, x, y) {
     let orientation = this.orientationArr[this.orientationIndex];
+    ctx.clearRect(x + 1, y + 1, 49, 49);
     ctx.beginPath();
     ctx.arc(
       x + orientation.offset_x,
@@ -59,11 +57,6 @@ class Elbow {
     ctx.stroke();
   }
 
-  reDraw() {
-    
-  }
-
-  
   validFlow(inPoint) {
     let openPoints = this.orientationArr[this.orientationIndex].openPoints;
     return openPoints.includes(inPoint);

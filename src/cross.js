@@ -4,7 +4,7 @@ class Cross {
   constructor() {}
 
   draw(ctx, x, y) {
-    debugger;
+    ctx.clearRect(x + 1, y + 1, 49, 49);
     ctx.beginPath();
     ctx.moveTo(x + 25, y + 0);
     ctx.lineTo(x + 25, y + 50);

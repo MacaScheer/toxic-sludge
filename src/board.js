@@ -1,12 +1,14 @@
 const Shape = require("./shape.js");
 
 class Board {
-  constructor(height, width) {
+  constructor(height, width, ctx) {
     this.width = width;
     this.height = height;
-    this.types = ["elbow", "straight", "cross"]; //cross, dblElbow
+    this.types = ["elbow", "straight", "cross", "elbow"]; //cross, dblElbow
     this.shapesObj = {};
+    this.ctx = ctx;
   }
+
   createGrid(ctx) {
     ctx.beginPath();
 
@@ -34,7 +36,14 @@ class Board {
           const exit = new Shape("exit", xRange, yRange);
           exit.drawShape(ctx, x, y);
         } else {
-          const shape = new Shape(type, xRange, yRange);
+          let id;
+          if (type === "elbow") {
+            id = Math.floor(Math.random() * 4);
+          }
+          if (type === "straight") {
+            id = Math.floor(Math.random() * 2);
+          }
+          const shape = new Shape(type, id, xRange, yRange);
           shape.drawShape(ctx, x, y);
           this.shapesObj[[xRange, yRange]] = shape;
         }
@@ -56,15 +65,20 @@ class Board {
         y <= rangeArr[3]
       ) {
         selectShape = this.shapesObj[range];
-        console.log(selectShape);
+        let selectId = selectShape.orientationIndex;
+        if (selectShape.type === "elbow") {
+          selectId = Math.floor((selectId + 1) % 4);
+          selectShape.reDraw(selectId, range, this.ctx, selectShape.type);
+          this.shapesObj[range].orientationIndex = selectId;
+        }
+        if (selectShape.type === "straight") {
+          selectId = Math.floor((selectId + 1) % 2);
+          selectShape.reDraw(selectId, range, this.ctx, selectShape.type);
+          this.shapesObj[range].orientationIndex = selectId;
+        }
       }
     });
-    // if (x <= )
-    // let shapeToRotate = this.shapesObj[]
   }
 }
 
 module.exports = Board;
-
-// const shape = new Shape(type, xRange, yRange);
-// shape.drawShape(ctx, x, y);
