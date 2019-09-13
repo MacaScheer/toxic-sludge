@@ -30,11 +30,13 @@ class Board {
         let xRange = [x, x + 50];
         let yRange = [y, y + 50];
         if (x === 0 && y === 250) {
-          const entry = new Shape("entry", xRange, yRange);
+          const entry = new Shape("entry", 1, xRange, yRange);
           entry.drawShape(ctx, x, y);
+          this.shapesObj[[xRange, yRange]] = entry;
         } else if (x === 700 && y === 250) {
-          const exit = new Shape("exit", xRange, yRange);
+          const exit = new Shape("exit", 0, xRange, yRange);
           exit.drawShape(ctx, x, y);
+          this.shapesObj[[xRange, yRange]] = exit;
         } else {
           let id;
           if (type === "elbow") {
@@ -65,6 +67,7 @@ class Board {
         y <= rangeArr[3]
       ) {
         selectShape = this.shapesObj[range];
+
         let selectId = selectShape.orientationIndex;
         if (selectShape.type === "elbow") {
           selectId = Math.floor((selectId + 1) % 4);
@@ -79,6 +82,49 @@ class Board {
       }
     });
   }
+
+  findDirection(dirString) {
+    const directionOptionsObj = {
+      0: "right",
+      1: "down",
+      2: "left",
+      3: "up"
+    };
+    let coordinateArr = dirString.split(",");
+    let direction = directionOptionsObj[parseInt(coordinateArr.shift())];
+
+    let coordinates = coordinateArr.map(s => parseInt(s));
+    let newX1, newX2, newY1, newY2;
+    let [x1, x2, y1, y2] = coordinates;
+    let newCoordinateString;
+    switch (direction) {
+      case "right":
+        newX1 = x1 + 50;
+        newX2 = x2 + 50;
+        newCoordinateString = [newX1, newX2, y1, y2].join(",");
+        break;
+      case "left":
+        newX1 = x1 - 50;
+        newX2 = x2 - 50;
+        newCoordinateString = [newX1, newX2, y1, y2].join(",");
+        break;
+      case "up":
+        newY1 = y1 + 50;
+        newY2 = y2 + 50;
+        newCoordinateString = [x1, x2, newY1, newY2].join(",");
+        break;
+      case "down":
+        newY1 = y1 - 50;
+        newY2 = y2 - 50;
+        newCoordinateString = [x1, x2, newY1, newY2].join(",");
+        break;
+    }
+    let nextShapeObj = this.shapesObj[newCoordinateString];
+    console.log(nextShapeObj);
+    return nextShapeObj;
+  }
+
+  fillPipes(nextPipe) {}
 }
 
 module.exports = Board;

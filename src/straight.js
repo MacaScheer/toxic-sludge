@@ -42,27 +42,24 @@ class Straight {
   }
   direction(inDir) {
     //unnecessary check—-only necessary to make inPoint and outDir opposites
-    if (inDir === "down" && this.corner === "upDown") {
+    if (inDir === "down" && this.orientationIndex === 0) {
       this.outPoint = "bottom";
       this.outDir = "down";
     }
-    if (inDir === "up" && this.corner === "upDown") {
+    if (inDir === "up" && this.orientationIndex === 0) {
       this.outPoint = "top";
       this.outDir = "up";
     }
-    if (inDir === "right" && this.corner === "leftRight") {
+    if (inDir === "right" && this.orientationIndex === 1) {
       this.outDir = "right";
       this.outPoint = "right";
     }
-    if (this.inDir === "left" && this.corner === "leftRight") {
+    if (this.inDir === "left" && this.orientationIndex === 1) {
       this.outDir = "left";
       this.outPoint = "left";
     }
   }
-  onClick() {
-    this.orientationIndex =
-      (this.orientationIndex + 1) % this.orientationArr.length;
-  }
+
 }
 
 module.exports = Straight;

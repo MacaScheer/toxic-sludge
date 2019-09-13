@@ -57,42 +57,47 @@ class Elbow {
     ctx.stroke();
   }
 
+  drawSludge(ctx, x, y) {
+    let start = timestamp;
+    let progress = timestamp - start
+  }
+
   validFlow(inPoint) {
     let openPoints = this.orientationArr[this.orientationIndex].openPoints;
     return openPoints.includes(inPoint);
   }
   //having an outDir and outPoint in this case is pointless, but not so with the straight and cross
-  direction(inPoint) {
+  direction(inDir) {
     let corner = this.orientationArr[this.orientationIndex].corner;
-    if (corner === "topRight" && inPoint === "top") {
+    if (corner === "topRight" && inDir === "down") {
       this.outPoint = "right";
       this.outDir = "right";
     }
-    if (corner === "topRight" && inPoint === "right") {
+    if (corner === "topRight" && inDir === "left") {
       this.outDir = "up";
       this.outPoint = "top";
     }
-    if (corner === "topLeft" && inPoint === "top") {
+    if (corner === "topLeft" && inDir === "down") {
       this.outDir = "left";
       this.outPoint = "left";
     }
-    if (corner === "topLeft" && inPoint === "left") {
+    if (corner === "topLeft" && inDir === "right") {
       this.outDir = "up";
       this.outPoint = "top";
     }
-    if (corner === "bottomLeft" && inPoint === "left") {
+    if (corner === "bottomLeft" && inDir === "right") {
       this.outDir = "down";
       this.outPont = "bottom";
     }
-    if (corner === "bottomLeft" && inPoint === "bottom") {
+    if (corner === "bottomLeft" && inDir === "up") {
       this.outDir = "left";
       this.outPoint = "left";
     }
-    if (corner === "bottomRight" && inPoint === "right") {
+    if (corner === "bottomRight" && inDir === "left") {
       this.outDir = "down";
       this.outPoint = "bottom";
     }
-    if (corner === "bottomRight" && inPoint === "bottom") {
+    if (corner === "bottomRight" && inDir === "up") {
       this.outDir = "right";
       this.outPoint = "right";
     }

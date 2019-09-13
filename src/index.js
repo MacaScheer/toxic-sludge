@@ -1,4 +1,5 @@
 const Board = require("./board");
+const Game = require("./game");
 document.addEventListener("DOMContentLoaded", function() {
   const canvasEl = document.getElementById("gameboard");
   const ctx = canvasEl.getContext("2d");
@@ -6,7 +7,8 @@ document.addEventListener("DOMContentLoaded", function() {
   board.createGrid(ctx);
   canvasEl.addEventListener("click", function(params) {
     let clickSpot = [event.pageX, event.pageY];
-    // console.log(clickSpot);
     board.rotateShape(clickSpot);
   });
+  const game = new Game(board);
+  game.start();
 });
