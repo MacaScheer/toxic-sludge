@@ -118,14 +118,15 @@ Shape.prototype.drawSludge = function(nextPipe, prevDir, ctx) {
   switch (nextPipe.type) {
     case "straight":
       let straight = new Straight(index);
-      straight.drawSludge(ctx, x, y);
+      straight.drawSludge(ctx, x, y, prevDir);
       break;
     case "elbow":
       let elbow = new Elbow(index);
-      elbow.drawSludge(ctx, x, y);
+      elbow.drawSludge(ctx, x, y, prevDir);
       break;
     case "cross":
       let cross = new Cross();
+      cross.drawSludge(ctx, x, y, prevDir);
       break;
   }
 };

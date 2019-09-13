@@ -36,9 +36,7 @@ class Straight {
     ctx.stroke();
   }
 
-  drawSludge(ctx, x, y) {
-    
-  }
+  drawSludge(ctx, x, y, prevDir) {}
 
   validFlow(inDir) {
     let inPoint;
