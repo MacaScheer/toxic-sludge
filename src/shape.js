@@ -99,4 +99,35 @@ Shape.prototype.drawShape = function(ctx, x, y) {
   }
 };
 
+Shape.prototype.validPipeFlow = function(nextPipe, prevDir) {
+  let type = nextPipe.type;
+  let index = nextPipe.orientationIndex;
+  switch (type) {
+    case "straight":
+      let straight = new Straight(index);
+      return straight.validFlow(prevDir);
+    case "elbow":
+      let elbow = new Elbow(index);
+      return elbow.validFlow(prevDir);
+  }
+};
+Shape.prototype.drawSludge = function(nextPipe, prevDir, ctx) {
+  let index = nextPipe.orientationIndex;
+  let x = nextPipe.xRange[0];
+  let y = (nextPipe.yRange = [0]);
+  switch (nextPipe.type) {
+    case "straight":
+      let straight = new Straight(index);
+      straight.drawSludge(ctx, x, y);
+      break;
+    case "elbow":
+      let elbow = new Elbow(index);
+      elbow.drawSludge(ctx, x, y);
+      break;
+    case "cross":
+      let cross = new Cross();
+      break;
+  }
+};
+
 module.exports = Shape;

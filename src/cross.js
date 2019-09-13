@@ -13,15 +13,9 @@ class Cross {
     ctx.lineWidth = 15;
     ctx.stroke();
   }
-  validFlow(inPoint) {
-    //will always be true
-    let openPoints = ["up", "down", "left", "right"];
-    return openPoints.includes(inPoint);
-  }
   direction(inDir) {
     return inDir;
   }
-  drawSlime(inDir, inPoint) {}
 }
 
 module.exports = Cross;

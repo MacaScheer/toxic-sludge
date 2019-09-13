@@ -9,7 +9,7 @@ class Straight {
         offset_y_1: 0,
         offset_x_2: 25,
         offset_y_2: 50,
-        openPoints: ["up", "down"],
+        openPoints: ["top", "bottom"],
         corner: "upDown"
       },
       {
@@ -36,8 +36,28 @@ class Straight {
     ctx.stroke();
   }
 
-  validFlow(inPoint) {
+  drawSludge(ctx, x, y) {
+    
+  }
+
+  validFlow(inDir) {
+    let inPoint;
+    switch (inDir) {
+      case "up":
+        inPoint = "bottom";
+        break;
+      case "down":
+        inPoint = "top";
+        break;
+      case "right":
+        inPoint = "left";
+        break;
+      case "left":
+        inPoint = "right";
+        break;
+    }
     let openPoints = this.orientationArr[this.orientationIndex].openPoints;
+    console.log("straight", openPoints.includes(inPoint));
     return openPoints.includes(inPoint);
   }
   direction(inDir) {
@@ -59,7 +79,6 @@ class Straight {
       this.outPoint = "left";
     }
   }
-
 }
 
 module.exports = Straight;

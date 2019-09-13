@@ -92,7 +92,6 @@ class Board {
     };
     let coordinateArr = dirString.split(",");
     let direction = directionOptionsObj[parseInt(coordinateArr.shift())];
-
     let coordinates = coordinateArr.map(s => parseInt(s));
     let newX1, newX2, newY1, newY2;
     let [x1, x2, y1, y2] = coordinates;
@@ -120,11 +119,21 @@ class Board {
         break;
     }
     let nextShapeObj = this.shapesObj[newCoordinateString];
-    console.log(nextShapeObj);
-    return nextShapeObj;
+    return [direction, nextShapeObj];
   }
 
-  fillPipes(nextPipe) {}
+  getValidFlow(prevDir, nextPipe) {
+    let nextType = nextPipe.type;
+    if (nextType === "cross") {
+      return true;
+    } else {
+      return nextPipe.validPipeFlow(nextPipe, prevDir);
+    }
+  }
+
+  fillPipes(prevDir, nextPipe) {
+    nextPipe.drawSludge(nextPipe, prevDir, this.ctx);
+  }
 }
 
 module.exports = Board;

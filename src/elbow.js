@@ -59,11 +59,27 @@ class Elbow {
 
   drawSludge(ctx, x, y) {
     let start = timestamp;
-    let progress = timestamp - start
+    let progress = timestamp - start;
   }
 
-  validFlow(inPoint) {
+  validFlow(inDir) {
+    let inPoint;
+    switch (inDir) {
+      case "up":
+        inPoint = "bottom";
+        break;
+      case "down":
+        inPoint = "top";
+        break;
+      case "right":
+        inPoint = "left";
+        break;
+      case "left":
+        inPoint = "right";
+        break;
+    }
     let openPoints = this.orientationArr[this.orientationIndex].openPoints;
+    console.log(openPoints.includes(inPoint));
     return openPoints.includes(inPoint);
   }
   //having an outDir and outPoint in this case is pointless, but not so with the straight and cross
