@@ -114,7 +114,7 @@ Shape.prototype.validPipeFlow = function(nextPipe, prevDir) {
 Shape.prototype.drawSludge = function(nextPipe, prevDir, ctx) {
   let index = nextPipe.orientationIndex;
   let x = nextPipe.xRange[0];
-  let y = (nextPipe.yRange = [0]);
+  let y = nextPipe.yRange[0];
   switch (nextPipe.type) {
     case "straight":
       let straight = new Straight(index);

@@ -56,10 +56,8 @@ class Elbow {
     ctx.lineWidth = 15;
     ctx.stroke();
   }
-
-  drawSludge(ctx, x, y) {
-    let start = timestamp;
-    let progress = timestamp - start;
+  drawSludge(ctx, x, y, prevDir) {
+    
   }
 
   validFlow(inDir) {

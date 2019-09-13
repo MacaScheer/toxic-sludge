@@ -25,16 +25,16 @@ class Game {
     let dirPackage = this.board.findDirection(this.dirString);
     let nextPipe = dirPackage[1];
     let prevDir = dirPackage[0];
-    this.board.fillPipes(prevDir, nextPipe);
     if (this.board.getValidFlow(prevDir, nextPipe)) {
       // if (before spill){
+      this.board.fillPipes(prevDir, nextPipe);
       let dirNum = this.directionOptionsObj[prevDir];
       let newDirArr = [dirNum]
         .concat(nextPipe["xRange"])
         .concat(nextPipe["yRange"]);
       this.dirString = newDirArr.join(",");
       // dirPackage = this.board.findDirection(this.dirString);
-      console.log(dirPackage);
+      //   console.log(dirPackage);
       //}
       //   setTimeout(this.play.bind(null, timestep + 500), 500);
     } else {

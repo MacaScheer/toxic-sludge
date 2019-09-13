@@ -16,6 +16,7 @@ class Cross {
   direction(inDir) {
     return inDir;
   }
+  drawSludge(ctx, x, y, prevDir) {}
 }
 
 module.exports = Cross;
