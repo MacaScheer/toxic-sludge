@@ -19,5 +19,5 @@ Javascript, CSS, HTML, Firebase
 - Levels of difficulty
 
 <p align="center">
-  <img width="460" height="300" src="./assets/sampleboard.png">
+  <img width=100% height=100% src="./assets/sampleboard.png">
 </p>
