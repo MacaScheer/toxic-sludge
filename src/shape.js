@@ -28,6 +28,7 @@ class Shape {
 // };
 
 Shape.prototype.drawEntry = function(ctx, x, y) {
+  ctx.clearRect(x + 1, y + 1, 49, 49);
   ctx.beginPath();
   ctx.moveTo(x + 0, y + 25);
   ctx.lineTo(x + 45, y + 25);
@@ -40,6 +41,7 @@ Shape.prototype.drawEntry = function(ctx, x, y) {
 };
 
 Shape.prototype.drawExit = function(ctx, x, y) {
+  ctx.clearRect(x + 1, y + 1, 49, 49);
   ctx.beginPath();
   ctx.moveTo(x + 50, y + 25);
   ctx.lineTo(x + 5, y + 25);
