@@ -4,11 +4,12 @@ const Straight = require("./straight");
 const Cross = require("./cross");
 
 class Shape {
-  constructor(type, id, xRange, yRange) {
+  constructor(type, id, xRange, yRange, ctx) {
     this.xRange = xRange;
     this.yRange = yRange;
     this.type = type;
     this.orientationIndex = id;
+    this.ctx = ctx;
   }
 }
 
@@ -57,11 +58,11 @@ Shape.prototype.reDraw = function(selectId, range, ctx, type) {
   let coords = range.split(",").map(s => parseInt(s));
   switch (type) {
     case "elbow":
-      let elbow = new Elbow(selectId);
+      let elbow = new Elbow(selectId, ctx);
       elbow.draw(ctx, coords[0], coords[2]);
       break;
     case "straight":
-      let straight = new Straight(selectId);
+      let straight = new Straight(selectId, ctx);
       straight.draw(ctx, coords[0], coords[2]);
       break;
   }
@@ -70,17 +71,17 @@ Shape.prototype.reDraw = function(selectId, range, ctx, type) {
 Shape.prototype.drawShape = function(ctx, x, y) {
   switch (this.type) {
     case "cross":
-      let cross = new Cross();
+      let cross = new Cross(ctx);
       cross.draw(ctx, x, y);
       break;
     case "elbow":
       let elbowIndex = this.orientationIndex;
-      let elbow = new Elbow(elbowIndex);
+      let elbow = new Elbow(elbowIndex, ctx);
       elbow.draw(ctx, x, y);
       break;
     case "straight":
       let straightIndex = this.orientationIndex;
-      let straight = new Straight(straightIndex);
+      let straight = new Straight(straightIndex, ctx);
       straight.draw(ctx, x, y);
       break;
     // case "dblElbow":
@@ -104,10 +105,10 @@ Shape.prototype.validPipeFlow = function(nextPipe, prevDir) {
   let index = nextPipe.orientationIndex;
   switch (type) {
     case "straight":
-      let straight = new Straight(index);
+      let straight = new Straight(index, this.ctx);
       return straight.validFlow(prevDir);
     case "elbow":
-      let elbow = new Elbow(index);
+      let elbow = new Elbow(index, this.ctx);
       return elbow.validFlow(prevDir);
   }
 };
@@ -117,16 +118,16 @@ Shape.prototype.drawSludge = function(nextPipe, prevDir, ctx) {
   let y = nextPipe.yRange[0];
   switch (nextPipe.type) {
     case "straight":
-      let straight = new Straight(index);
-      straight.drawSludge(ctx, x, y, prevDir);
+      let straight = new Straight(index, ctx);
+      straight.drawSludge(ctx, x, y, prevDir, 1, index);
       break;
     case "elbow":
-      let elbow = new Elbow(index);
-      elbow.drawSludge(ctx, x, y, prevDir);
+      let elbow = new Elbow(index, ctx);
+      elbow.drawSludge(ctx, x, y, prevDir, 1, index);
       break;
     case "cross":
-      let cross = new Cross();
-      cross.drawSludge(ctx, x, y, prevDir);
+      let cross = new Cross(ctx);
+      cross.drawSludge(ctx, x, y, prevDir, 1, index);
       break;
   }
 };

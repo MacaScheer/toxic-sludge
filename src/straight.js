@@ -1,9 +1,11 @@
 const Shape = require("./shape");
 
 class Straight {
-  constructor(index) {
+  constructor(index, ctx) {
     this.orientationIndex = index;
+    this.ctx = ctx;
     this.drawSludge = this.drawSludge.bind(this);
+    this.asyncDrawSludge = this.asyncDrawSludge.bind(this);
     this.orientationArr = [
       {
         offset_x_1: 25,
@@ -39,11 +41,8 @@ class Straight {
     ctx.stroke();
   }
 
-  //account for direction and orientation
-  drawSludge(ctx, x, y, prevDir, sludgeStep) {
-    // direction(prevDir);
-    let orientation = this.orientationArr[this.orientationIndex];
-    console.log(prevDir);
+  drawSludge(ctx, x, y, prevDir, sludgeStep, index) {
+    let orientation = this.orientationArr[index];
     let newOffset;
     if (prevDir === "down" || prevDir === "right") {
       newOffset = sludgeStep;
@@ -51,9 +50,9 @@ class Straight {
     if (prevDir === "up" || prevDir === "left") {
       newOffset = 50 - sludgeStep;
     }
+
     ctx.beginPath();
     if (prevDir === "down") {
-      newOffset++;
       ctx.moveTo(x + orientation.offset_x_1, y + orientation.offset_y_1);
       ctx.lineTo(x + orientation.offset_x_2, y + newOffset);
     } else if (prevDir === "up") {
@@ -71,9 +70,23 @@ class Straight {
     ctx.strokeStyle = "#65FF00";
     ctx.stroke();
     ctx.strokeStyle = "#000000";
+
+    console.log(sludgeStep);
     if (sludgeStep < 50) {
-      setTimeout(this.drawSludge.bind(ctx, x, y, prevDir, sludgeStep + 1), 100);
+      setTimeout(
+        this.asyncDrawSludge,
+        30,
+        x,
+        y,
+        prevDir,
+        sludgeStep + 0.25,
+        index
+      );
     }
+  }
+
+  asyncDrawSludge(x, y, prevDir, sludgeStep, index) {
+    this.drawSludge(this.ctx, x, y, prevDir, sludgeStep, index);
   }
 
   validFlow(inDir) {

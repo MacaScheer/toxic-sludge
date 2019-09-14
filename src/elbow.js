@@ -1,9 +1,10 @@
 // const Shape = require("./shape");
 
 class Elbow {
-  constructor(index) {
+  constructor(index, ctx) {
     this.orientationIndex = index;
     this.radius = 25;
+    this.ctx = ctx;
     this.orientationArr = [
       {
         offset_x: 0,
@@ -56,9 +57,7 @@ class Elbow {
     ctx.lineWidth = 15;
     ctx.stroke();
   }
-  drawSludge(ctx, x, y, prevDir) {
-    
-  }
+  drawSludge(ctx, x, y, prevDir) {}
 
   validFlow(inDir) {
     let inPoint;

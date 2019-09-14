@@ -16,7 +16,6 @@ class Game {
   }
   start() {
     this.dirString = "0,0,50,250,300";
-
     let date = new Date();
     let timeNow = date.getTime();
     this.play(0);

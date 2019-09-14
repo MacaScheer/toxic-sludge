@@ -1,7 +1,9 @@
 const Shape = require("./shape");
 
 class Cross {
-  constructor() {}
+  constructor(ctx) {
+    this.ctx = ctx;
+  }
 
   draw(ctx, x, y) {
     ctx.clearRect(x + 1, y + 1, 49, 49);
