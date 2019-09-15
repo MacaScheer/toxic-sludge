@@ -26,7 +26,8 @@ class Game {
     let prevDir = dirPackage[0];
     if (this.board.getValidFlow(prevDir, nextPipe)) {
       // if (before spill){
-      this.board.fillPipes(prevDir, nextPipe);
+      let nextSpace = this.board.fillPipes(prevDir, nextPipe);
+      console.log("this ", nextSpace);
       let dirNum = this.directionOptionsObj[prevDir];
       let newDirArr = [dirNum]
         .concat(nextPipe["xRange"])

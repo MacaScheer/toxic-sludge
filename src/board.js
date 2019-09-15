@@ -132,7 +132,7 @@ class Board {
   }
 
   fillPipes(prevDir, nextPipe) {
-    nextPipe.drawSludge(nextPipe, prevDir, this.ctx);
+    return nextPipe.drawSludge(nextPipe, prevDir, this.ctx);
   }
 }
 
