@@ -123,7 +123,7 @@ Shape.prototype.drawSludge = function(nextPipe, prevDir, ctx) {
 
     case "elbow":
       let elbow = new Elbow(index, ctx);
-      return elbow.drawSludge(ctx, x, y, prevDir, 1, index);
+      return elbow.drawSludge(ctx, x, y, prevDir, (0.5 * Math.PI) / 200, index);
 
     case "cross":
       let cross = new Cross(ctx);

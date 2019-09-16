@@ -71,7 +71,6 @@ class Straight {
     ctx.stroke();
     ctx.strokeStyle = "#000000";
 
-    // new Promise(function(resolve, reject) {
     if (sludgeStep < 50) {
       setTimeout(
         this.asyncDrawSludge,
@@ -91,7 +90,6 @@ class Straight {
       };
       return nextSpace;
     }
-    // });
   }
 
   asyncDrawSludge(x, y, prevDir, sludgeStep, index) {
