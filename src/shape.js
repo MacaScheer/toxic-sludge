@@ -110,6 +110,8 @@ Shape.prototype.validPipeFlow = function(nextPipe, prevDir) {
     case "elbow":
       let elbow = new Elbow(index, this.ctx);
       return elbow.validFlow(prevDir);
+    case "cross":
+      return true;
   }
 };
 Shape.prototype.drawSludge = function(nextPipe, prevDir, ctx) {

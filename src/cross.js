@@ -3,6 +3,8 @@ const Shape = require("./shape");
 class Cross {
   constructor(ctx) {
     this.ctx = ctx;
+    this.drawSludge = this.drawSludge.bind(this);
+    this.asyncDrawSludge = this.asyncDrawSludge.bind(this);
   }
 
   draw(ctx, x, y) {
@@ -18,7 +20,73 @@ class Cross {
   direction(inDir) {
     return inDir;
   }
-  drawSludge(ctx, x, y, prevDir) {}
+  drawSludge(ctx, x, y, prevDir, sludgeStep, index) {
+    let newOffset;
+    let offset_x_1, offset_y_1, offset_x_2, offset_y_2;
+    if (prevDir === "down" || prevDir === "right") {
+      newOffset = sludgeStep;
+    }
+    if (prevDir === "up" || prevDir === "left") {
+      newOffset = 50 - sludgeStep;
+    }
+
+    if (prevDir === "left") {
+      offset_x_1 = 50;
+      offset_x_2 = newOffset;
+    }
+    if (prevDir === "right") {
+      offset_x_1 = 0;
+      offset_x_2 = newOffset;
+    }
+    if (prevDir === "up") {
+      offset_y_1 = 50;
+      offset_y_2 = newOffset;
+    }
+    if (prevDir === "down") {
+      offset_y_1 = 0;
+      offset_y_2 = newoffset;
+    }
+    ctx.beginPath();
+    if (prevDir === "up" || prevDir === "down") {
+      offset_x_1 = 25;
+      offset_x_2 = 25;
+    }
+    if (prevDir === "left" || prevDir === "right") {
+      offset_y_1 = 25;
+      offset_y_2 = 25;
+    }
+    ctx.moveTo(x + offset_x_1, y + offset_y_1);
+    ctx.lineTo(x + offset_x_2, y + offset_y_2);
+
+    ctx.lineWidth = 10;
+    ctx.strokeStyle = "#65FF00";
+    ctx.stroke();
+    ctx.strokeStyle = "#000000";
+
+    if (sludgeStep < 50) {
+      setTimeout(
+        this.asyncDrawSludge,
+        30,
+        x,
+        y,
+        prevDir,
+        sludgeStep + 0.25,
+        index
+      );
+    } else {
+      let nextSpace = {
+        0: prevDir,
+        1: index,
+        3: x + offset_x_2,
+        4: y + offset_y_2
+      };
+      return nextSpace;
+    }
+  }
+
+  asyncDrawSludge(x, y, prevDir, sludgeStep, index) {
+    this.drawSludge(this.ctx, x, y, prevDir, sludgeStep, index);
+  }
 }
 
 module.exports = Cross;
