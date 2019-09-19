@@ -118,28 +118,16 @@ class Straight {
   }
   direction(inDir) {
     if (inDir === "down" && this.orientationIndex === 0) {
-      this.outPoint = "bottom";
       this.outDir = "down";
-      this.startX = 25;
-      this.startY = 0;
     }
     if (inDir === "up" && this.orientationIndex === 0) {
-      this.outPoint = "top";
       this.outDir = "up";
-      this.startX = 25;
-      this.startY = 50;
     }
     if (inDir === "right" && this.orientationIndex === 1) {
       this.outDir = "right";
-      this.outPoint = "right";
-      this.startX = 0;
-      this.startY = 25;
     }
     if (this.inDir === "left" && this.orientationIndex === 1) {
       this.outDir = "left";
-      this.outPoint = "left";
-      this.startX = 50;
-      this.startY = 25;
     }
   }
 }

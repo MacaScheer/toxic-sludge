@@ -1,9 +1,8 @@
 # Toxic Sludge
 
-Play the game here: https://toxic-sludge.herokuapp.com
-
 Toxic Sludge is a 2-dimensional puzzle game inspired by Microsoft's Pipe Dream
 
+Play the game here: https://toxic-sludge.herokuapp.com
 
 # Background and Overview
 
@@ -11,7 +10,7 @@ The player must connect an entry pipe to an exit pipe through manipulating inter
 
 Primarily built with the combination of following technologies:
 
-Javascript, CSS, HTML, Firebase
+Javascript, CSS, HTML
 
 # Functionality and MVP
 

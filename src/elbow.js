@@ -159,37 +159,31 @@ class Elbow {
   //having an outDir and outPoint in this case is pointless, but not so with the straight and cross
   direction(inDir) {
     let corner = this.orientationArr[this.orientationIndex].corner;
-    if (corner === "topRight" && inDir === "down") {
-      this.outPoint = "right";
+    if (
+      (corner === "topLeft" && inDir === "down") ||
+      (corner === "bottomLeft" && inDir === "up")
+    ) {
+      this.outDir = "left";
+    }
+    if (
+      (corner === "topRight" && inDir === "left") ||
+      (corner === "topLeft" && inDir === "right")
+    ) {
+      this.outDir = "up";
+    }
+
+    if (
+      (corner === "topRight" && inDir === "down") ||
+      (corner === "bottomRight" && inDir === "up")
+    ) {
       this.outDir = "right";
     }
-    if (corner === "topRight" && inDir === "left") {
-      this.outDir = "up";
-      this.outPoint = "top";
-    }
-    if (corner === "topLeft" && inDir === "down") {
-      this.outDir = "left";
-      this.outPoint = "left";
-    }
-    if (corner === "topLeft" && inDir === "right") {
-      this.outDir = "up";
-      this.outPoint = "top";
-    }
-    if (corner === "bottomLeft" && inDir === "right") {
+
+    if (
+      (corner === "bottomLeft" && inDir === "right") ||
+      (corner === "bottomRight" && inDir === "left")
+    ) {
       this.outDir = "down";
-      this.outPont = "bottom";
-    }
-    if (corner === "bottomLeft" && inDir === "up") {
-      this.outDir = "left";
-      this.outPoint = "left";
-    }
-    if (corner === "bottomRight" && inDir === "left") {
-      this.outDir = "down";
-      this.outPoint = "bottom";
-    }
-    if (corner === "bottomRight" && inDir === "up") {
-      this.outDir = "right";
-      this.outPoint = "right";
     }
   }
 }

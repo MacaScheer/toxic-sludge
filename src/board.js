@@ -130,9 +130,8 @@ class Board {
       return nextPipe.validPipeFlow(nextPipe, prevDir);
     }
   }
-
   fillPipes(prevDir, nextPipe) {
-    return nextPipe.drawSludge(nextPipe, prevDir, this.ctx);
+    let returnVal = nextPipe.drawSludge(nextPipe, prevDir, this.ctx);
   }
 }
 
