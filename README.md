@@ -12,7 +12,7 @@ The player must connect an entry pipe to an exit pipe through manipulating inter
 # Functionality
 
 - Toxic sludge moves through pipelines. Route the sludge through the town via the pipelines.
-- Pipe pieces can be manipulated by rotating them
+- Pipe pieces can be manipulated by rotating them.
 - If a pipe isn't connected correctly the sludge may leak out and poison the town's drinking water!
 
 <p align="center">
@@ -20,7 +20,7 @@ The player must connect an entry pipe to an exit pipe through manipulating inter
 </p>
 
 # Class Methods and OOP
-Shape
+Shape Class
 ```
 
 Shape.prototype.validPipeFlow = function(nextPipe, prevDir) {
@@ -56,7 +56,7 @@ Shape.prototype.drawSludge = function(nextPipe, prevDir, ctx) {
   }
 };
 ```
-Elbow
+Elbow Class
 ```
   this.orientationArr = [
       {
@@ -188,7 +188,7 @@ Elbow
   }
   ```
   
-  # Board
+  # Board Class
   ```
   
   rotateShape(clickSpot) {
