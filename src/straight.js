@@ -70,7 +70,12 @@ class Straight {
     ctx.strokeStyle = "#65FF00";
     ctx.stroke();
     ctx.strokeStyle = "#000000";
-
+    // let nextSpace = {
+    //   0: prevDir,
+    //   1: index,
+    //   3: x + orientation.offset_x_2,
+    //   4: y + orientation.offset_y_2
+    // };
     if (sludgeStep < 50) {
       setTimeout(
         this.asyncDrawSludge,
@@ -82,12 +87,12 @@ class Straight {
         index
       );
     } else {
-      let nextSpace = {
-        0: prevDir,
-        1: index,
-        3: x + orientation.offset_x_2,
-        4: y + orientation.offset_y_2
-      };
+      // let nextSpace = {
+      //   0: prevDir,
+      //   1: index,
+      //   3: x + orientation.offset_x_2,
+      //   4: y + orientation.offset_y_2
+      // };
       return nextSpace;
     }
   }

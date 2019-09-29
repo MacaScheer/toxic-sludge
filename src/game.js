@@ -28,7 +28,7 @@ class Game {
       // if (before spill){
 
       let nextShape = this.board.fillPipes(prevDir, nextPipe);
-      console.log(nextShape);
+      console.log("nextShape:  ", nextShape);
       let dirNum = this.directionOptionsObj[prevDir];
       let newDirArr = [dirNum]
         .concat(nextPipe["xRange"])
