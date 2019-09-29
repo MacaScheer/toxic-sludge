@@ -27,7 +27,7 @@ The player must connect an entry pipe to an exit pipe through manipulating inter
 
 Shape Class
 
-```
+```js
 
 Shape.prototype.validPipeFlow = function(nextPipe, prevDir) {
   let type = nextPipe.type;
@@ -65,7 +65,7 @@ Shape.prototype.drawSludge = function(nextPipe, prevDir, ctx) {
 
 Elbow Class
 
-```
+```js
   this.orientationArr = [
       {
         offset_x: 0,
@@ -198,7 +198,7 @@ Elbow Class
 
 # Board Class
 
-```
+```js
 
 rotateShape(clickSpot) {
   let [x, y] = [clickSpot[0], clickSpot[1]];
