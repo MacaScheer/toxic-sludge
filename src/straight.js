@@ -87,12 +87,12 @@ class Straight {
         index
       );
     } else {
-      // let nextSpace = {
-      //   0: prevDir,
-      //   1: index,
-      //   3: x + orientation.offset_x_2,
-      //   4: y + orientation.offset_y_2
-      // };
+      let nextSpace = {
+        0: prevDir,
+        1: index,
+        3: x + orientation.offset_x_2,
+        4: y + orientation.offset_y_2
+      };
       return nextSpace;
     }
   }
