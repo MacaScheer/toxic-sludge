@@ -1,4 +1,5 @@
 # Toxic Sludge
+
 Built with the following technologies: Javascript, CSS, HTML
 
 Toxic Sludge is a 2-dimensional puzzle game inspired by Microsoft's Pipe Dream
@@ -16,11 +17,16 @@ The player must connect an entry pipe to an exit pipe through manipulating inter
 - If a pipe isn't connected correctly the sludge may leak out and poison the town's drinking water!
 
 <p align="center">
+  <img width=100% height=100% src="./assets/empty-intersection-banner.jpg">
+</p>
+<p align="center">
   <img width=100% height=100% src="./assets/sampleboard.png">
 </p>
 
 # Class Methods and OOP
+
 Shape Class
+
 ```
 
 Shape.prototype.validPipeFlow = function(nextPipe, prevDir) {
@@ -56,7 +62,9 @@ Shape.prototype.drawSludge = function(nextPipe, prevDir, ctx) {
   }
 };
 ```
+
 Elbow Class
+
 ```
   this.orientationArr = [
       {
@@ -186,76 +194,77 @@ Elbow Class
   asyncDrawSludge(x, y, prevDir, sludgeStep, index) {
     this.drawSludge(this.ctx, x, y, prevDir, sludgeStep, index);
   }
-  ```
-  
-  # Board Class
-  ```
-  
-  rotateShape(clickSpot) {
-    let [x, y] = [clickSpot[0], clickSpot[1]];
-    const ranges = Object.keys(this.shapesObj);
-    let selectShape;
-    ranges.forEach(range => {
-      let rangeArr = range.split(",").map(s => parseInt(s));
-      if (
-        x >= rangeArr[0] &&
-        x <= rangeArr[1] &&
-        y >= rangeArr[2] &&
-        y <= rangeArr[3]
-      ) {
-        selectShape = this.shapesObj[range];
+```
 
-        let selectId = selectShape.orientationIndex;
-        if (selectShape.type === "elbow") {
-          selectId = Math.floor((selectId + 1) % 4);
-          selectShape.reDraw(selectId, range, this.ctx, selectShape.type);
-          this.shapesObj[range].orientationIndex = selectId;
-        }
-        if (selectShape.type === "straight") {
-          selectId = Math.floor((selectId + 1) % 2);
-          selectShape.reDraw(selectId, range, this.ctx, selectShape.type);
-          this.shapesObj[range].orientationIndex = selectId;
-        }
+# Board Class
+
+```
+
+rotateShape(clickSpot) {
+  let [x, y] = [clickSpot[0], clickSpot[1]];
+  const ranges = Object.keys(this.shapesObj);
+  let selectShape;
+  ranges.forEach(range => {
+    let rangeArr = range.split(",").map(s => parseInt(s));
+    if (
+      x >= rangeArr[0] &&
+      x <= rangeArr[1] &&
+      y >= rangeArr[2] &&
+      y <= rangeArr[3]
+    ) {
+      selectShape = this.shapesObj[range];
+
+      let selectId = selectShape.orientationIndex;
+      if (selectShape.type === "elbow") {
+        selectId = Math.floor((selectId + 1) % 4);
+        selectShape.reDraw(selectId, range, this.ctx, selectShape.type);
+        this.shapesObj[range].orientationIndex = selectId;
       }
-    });
-  }
-
-  findDirection(dirString) {
-    const directionOptionsObj = {
-      0: "right",
-      1: "down",
-      2: "left",
-      3: "up"
-    };
-    let coordinateArr = dirString.split(",");
-    let direction = directionOptionsObj[parseInt(coordinateArr.shift())];
-    let coordinates = coordinateArr.map(s => parseInt(s));
-    let newX1, newX2, newY1, newY2;
-    let [x1, x2, y1, y2] = coordinates;
-    let newCoordinateString;
-    switch (direction) {
-      case "right":
-        newX1 = x1 + 50;
-        newX2 = x2 + 50;
-        newCoordinateString = [newX1, newX2, y1, y2].join(",");
-        break;
-      case "left":
-        newX1 = x1 - 50;
-        newX2 = x2 - 50;
-        newCoordinateString = [newX1, newX2, y1, y2].join(",");
-        break;
-      case "up":
-        newY1 = y1 + 50;
-        newY2 = y2 + 50;
-        newCoordinateString = [x1, x2, newY1, newY2].join(",");
-        break;
-      case "down":
-        newY1 = y1 - 50;
-        newY2 = y2 - 50;
-        newCoordinateString = [x1, x2, newY1, newY2].join(",");
-        break;
+      if (selectShape.type === "straight") {
+        selectId = Math.floor((selectId + 1) % 2);
+        selectShape.reDraw(selectId, range, this.ctx, selectShape.type);
+        this.shapesObj[range].orientationIndex = selectId;
+      }
     }
-    let nextShapeObj = this.shapesObj[newCoordinateString];
-    return [direction, nextShapeObj];
+  });
+}
+
+findDirection(dirString) {
+  const directionOptionsObj = {
+    0: "right",
+    1: "down",
+    2: "left",
+    3: "up"
+  };
+  let coordinateArr = dirString.split(",");
+  let direction = directionOptionsObj[parseInt(coordinateArr.shift())];
+  let coordinates = coordinateArr.map(s => parseInt(s));
+  let newX1, newX2, newY1, newY2;
+  let [x1, x2, y1, y2] = coordinates;
+  let newCoordinateString;
+  switch (direction) {
+    case "right":
+      newX1 = x1 + 50;
+      newX2 = x2 + 50;
+      newCoordinateString = [newX1, newX2, y1, y2].join(",");
+      break;
+    case "left":
+      newX1 = x1 - 50;
+      newX2 = x2 - 50;
+      newCoordinateString = [newX1, newX2, y1, y2].join(",");
+      break;
+    case "up":
+      newY1 = y1 + 50;
+      newY2 = y2 + 50;
+      newCoordinateString = [x1, x2, newY1, newY2].join(",");
+      break;
+    case "down":
+      newY1 = y1 - 50;
+      newY2 = y2 - 50;
+      newCoordinateString = [x1, x2, newY1, newY2].join(",");
+      break;
   }
+  let nextShapeObj = this.shapesObj[newCoordinateString];
+  return [direction, nextShapeObj];
+}
 ```

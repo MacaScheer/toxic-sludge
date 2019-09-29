@@ -4,7 +4,7 @@ class Board {
   constructor(height, width, ctx) {
     this.width = width;
     this.height = height;
-    this.types = ["elbow", "straight", "cross", "elbow"]; //cross, dblElbow
+    this.types = ["elbow", "straight", "cross", "elbow"]; 
     this.shapesObj = {};
     this.ctx = ctx;
   }
