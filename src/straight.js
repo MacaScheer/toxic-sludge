@@ -56,6 +56,7 @@ class Straight {
       3: "",
       4: ""
     };
+    await this.sleepFunction(30);
     ctx.beginPath();
     if (prevDir === "down") {
       ctx.moveTo(x + orientation.offset_x_1, y + orientation.offset_y_1);
@@ -99,7 +100,9 @@ class Straight {
       return nextSpace;
     }
   }
-
+sleepFunction = function(ms) {
+  return new Promise(res => setTimeout(res, ms));
+};
   asyncDrawSludge(ctx, x, y, prevDir, sludgeStep, index) {
     return this.drawSludge(ctx, x, y, prevDir, sludgeStep, index);
   }
