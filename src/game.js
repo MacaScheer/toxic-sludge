@@ -15,25 +15,34 @@ class Game {
     };
   }
   start() {
+    //to start at beginning of entrance
+    // this.dirString = "0,0,0,250,300";
     this.dirString = "0,0,50,250,300";
     let date = new Date();
     let timeNow = date.getTime();
     this.play(0);
   }
-  play(timestep) {
+
+  async play(timestep) {
+    let entryReturn = await this.board.fillEntryPipe("0,50,250,300");
+    // console.log("RETURN FORM ASYNC:", entryReturn);
+
     let dirPackage = this.board.findDirection(this.dirString);
+
+    // let dirPackage = this.board.findDirection(dirString);
+    console.log("DIRPACKAGE", dirPackage);
     let nextPipe = dirPackage[1];
     let prevDir = dirPackage[0];
     if (this.board.getValidFlow(prevDir, nextPipe)) {
+      let val = await this.board.fillPipes(prevDir, nextPipe);
       // if (before spill){
-
-      let nextShape = this.board.fillPipes(prevDir, nextPipe);
-      console.log("nextShape:  ", nextShape);
+      console.log("VAL: ", val);
       let dirNum = this.directionOptionsObj[prevDir];
       let newDirArr = [dirNum]
         .concat(nextPipe["xRange"])
         .concat(nextPipe["yRange"]);
       this.dirString = newDirArr.join(",");
+      console.log("dirstring: ", this.dirString);
       // dirPackage = this.board.findDirection(this.dirString);
       //   console.log(dirPackage);
       //}
@@ -41,9 +50,9 @@ class Game {
     } else {
       console.log("game over");
     }
-
-    //create spill if not corrected in time
   }
+
+  //async call fillPipes
 }
 
 module.exports = Game;

@@ -62,6 +62,12 @@ class Cross {
     ctx.strokeStyle = "#65FF00";
     ctx.stroke();
     ctx.strokeStyle = "#000000";
+    let nextSpace = {
+      0: prevDir,
+      1: index,
+      3: x + offset_x_2,
+      4: y + offset_y_2
+    };
 
     if (sludgeStep < 50) {
       setTimeout(
@@ -74,18 +80,13 @@ class Cross {
         index
       );
     } else {
-      let nextSpace = {
-        0: prevDir,
-        1: index,
-        3: x + offset_x_2,
-        4: y + offset_y_2
-      };
+      console.log("done filling!:", nextSpace);
       return nextSpace;
     }
   }
 
   asyncDrawSludge(x, y, prevDir, sludgeStep, index) {
-    this.drawSludge(this.ctx, x, y, prevDir, sludgeStep, index);
+    return this.drawSludge(this.ctx, x, y, prevDir, sludgeStep, index);
   }
 }
 

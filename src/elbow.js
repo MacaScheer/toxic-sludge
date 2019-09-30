@@ -109,6 +109,12 @@ class Elbow {
     ctx.strokeStyle = "#65FF00";
     ctx.stroke();
     ctx.strokeStyle = "#000000";
+    let nextSpace = {
+      0: prevDir,
+      1: index,
+      3: x + orientation.offset_x_2,
+      4: y + orientation.offset_y_2
+    };
 
     if (sludgeStep < 0.5 * Math.PI) {
       setTimeout(
@@ -121,19 +127,14 @@ class Elbow {
         index
       );
     } else {
-      let nextSpace = {
-        0: prevDir,
-        1: index,
-        3: x + orientation.offset_x_2,
-        4: y + orientation.offset_y_2
-      };
+      console.log("Done filling!", nextSpace);
       return nextSpace;
     }
   }
   //sludgeStep should be (.5 * Math.PI)/200
 
   asyncDrawSludge(x, y, prevDir, sludgeStep, index) {
-    this.drawSludge(this.ctx, x, y, prevDir, sludgeStep, index);
+    return this.drawSludge(this.ctx, x, y, prevDir, sludgeStep, index);
   }
 
   validFlow(inDir) {
