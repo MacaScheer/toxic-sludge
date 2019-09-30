@@ -86,7 +86,7 @@ class Cross {
   }
 
   asyncDrawSludge(x, y, prevDir, sludgeStep, index) {
-    this.drawSludge(this.ctx, x, y, prevDir, sludgeStep, index);
+    return this.drawSludge(this.ctx, x, y, prevDir, sludgeStep, index);
   }
 }
 

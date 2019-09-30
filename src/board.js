@@ -31,8 +31,10 @@ class Board {
         let yRange = [y, y + 50];
         if (x === 0 && y === 250) {
           const entry = new Shape("entry", 1, xRange, yRange);
+          // console.log("ENTRY COORDINATES: ", x, y);
           entry.drawShape(ctx, x, y);
           this.shapesObj[[xRange, yRange]] = entry;
+          // console.log("ShapesObj: ", this.shapesObj);
         } else if (x === 700 && y === 250) {
           const exit = new Shape("exit", 0, xRange, yRange);
           exit.drawShape(ctx, x, y);
@@ -118,7 +120,9 @@ class Board {
         newCoordinateString = [x1, x2, newY1, newY2].join(",");
         break;
     }
+    // console.log("newCoordinateString: ", newCoordinateString);
     let nextShapeObj = this.shapesObj[newCoordinateString];
+    // console.log("NEXTSHAPEOBJ: ", nextShapeObj);
     return [direction, nextShapeObj];
   }
 
@@ -130,8 +134,13 @@ class Board {
       return nextPipe.validPipeFlow(nextPipe, prevDir);
     }
   }
+  async fillEntryPipe(coordinateString) {
+    const entry = new Shape("entry", 1, [0, 50], [250, 300]);
+    let returnVal = await entry.drawSludgeEntry(this.ctx);
+    console.log("RETURNVAL: ", returnVal);
+  }
   fillPipes(prevDir, nextPipe) {
-    console.log("nextPipe orientation ", nextPipe.orientationIndex);
+    // console.log("nextPipe orientation ", nextPipe.orientationIndex);
     return nextPipe.drawSludge(nextPipe, prevDir, this.ctx);
   }
 }

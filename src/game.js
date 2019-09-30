@@ -15,6 +15,8 @@ class Game {
     };
   }
   start() {
+    //to start at beginning of entrance
+    // this.dirString = "0,0,0,250,300";
     this.dirString = "0,0,50,250,300";
     let date = new Date();
     let timeNow = date.getTime();
@@ -22,8 +24,13 @@ class Game {
   }
 
   async play(timestep) {
+    let entryReturn = await this.board.fillEntryPipe("0,50,250,300");
+    // console.log("RETURN FORM ASYNC:", entryReturn);
+
     let dirPackage = this.board.findDirection(this.dirString);
-    console.log(dirPackage);
+
+    // let dirPackage = this.board.findDirection(dirString);
+    console.log("DIRPACKAGE", dirPackage);
     let nextPipe = dirPackage[1];
     let prevDir = dirPackage[0];
     if (this.board.getValidFlow(prevDir, nextPipe)) {

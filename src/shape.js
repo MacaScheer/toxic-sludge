@@ -10,6 +10,10 @@ class Shape {
     this.type = type;
     this.orientationIndex = id;
     this.ctx = ctx;
+    this.drawEntry = this.drawEntry.bind(this);
+    this.drawExit = this.drawExit.bind(this);
+    this.drawSludgeEntry = this.drawSludgeEntry.bind(this);
+    this.asyncDrawSludgeEntry = this.asyncDrawSludgeEntry.bind(this);
   }
 }
 
@@ -27,6 +31,34 @@ class Shape {
 //   ctx.arc(x + 50, y + 50, 20, 1.5 * Math.PI, 2 * Math.PI);
 //   ctx.stroke();
 // };
+
+Shape.prototype.drawSludgeEntry = async function(ctx, sludgeStep = 0) {
+  console.log("TEST FROM DRAWSLUDGE");
+  await this.sleepFunction(30);
+  sludgeStep += 0.25;
+  ctx.beginPath();
+  ctx.moveTo(0, 275);
+  ctx.lineTo(sludgeStep, 275);
+  ctx.lineWidth = 10;
+  ctx.strokeStyle = "#65FF00";
+  ctx.stroke();
+  ctx.strokeStyle = "#000000";
+
+  if (sludgeStep < 50) {
+    return this.asyncDrawSludgeEntry(ctx, sludgeStep);
+  } else {
+    console.log("done filling entry!");
+    return "0,50,100,250,300";
+  }
+};
+
+Shape.prototype.sleepFunction = function(ms) {
+  return new Promise(res => setTimeout(res, ms));
+};
+
+Shape.prototype.asyncDrawSludgeEntry = function(ctx, sludgeStep) {
+  return this.drawSludgeEntry(ctx, sludgeStep);
+};
 
 Shape.prototype.drawEntry = function(ctx, x, y) {
   ctx.clearRect(x + 1, y + 1, 49, 49);
@@ -119,34 +151,20 @@ Shape.prototype.drawSludge = async function(nextPipe, prevDir, ctx) {
   console.log("index: ", index);
   let x = nextPipe.xRange[0];
   let y = nextPipe.yRange[0];
-  // let val;
+  let val;
   switch (nextPipe.type) {
     case "straight":
       let straight = new Straight(index, ctx);
-      let val = await straight.drawSludge(ctx, x, y, prevDir, 1, index);
-      console.log("STRAIGHT SHAPE RETURN", val);
-      return val;
+      return straight.drawSludge(ctx, x, y, prevDir, 1, index);
 
     case "elbow":
       let elbow = new Elbow(index, ctx);
-      let val = await elbow.drawSludge(
-        ctx,
-        x,
-        y,
-        prevDir,
-        (0.5 * Math.PI) / 200,
-        index
-      );
-      console.log("ELBOW RETURN:", val);
-      return val;
+      return elbow.drawSludge(ctx, x, y, prevDir, (0.5 * Math.PI) / 200, index);
 
     case "cross":
       let cross = new Cross(ctx);
-      let val = await cross.drawSludge(ctx, x, y, prevDir, 1, index);
-      console.log("CROSS RETURN", val);
-      return val;
+      return cross.drawSludge(ctx, x, y, prevDir, 1, index);
   }
-  return "RETURN VALUE OF drawSLUDGE";
 };
 
 module.exports = Shape;

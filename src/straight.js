@@ -5,7 +5,7 @@ class Straight {
     this.orientationIndex = index;
     this.ctx = ctx;
     this.drawSludge = this.drawSludge.bind(this);
-    // this.asyncDrawSludge = this.asyncDrawSludge.bind(this);
+    this.asyncDrawSludge = this.asyncDrawSludge.bind(this);
     this.orientationArr = [
       {
         offset_x_1: 25,
@@ -43,68 +43,66 @@ class Straight {
 
   drawSludge(ctx, x, y, prevDir, sludgeStep, index) {
     let orientation = this.orientationArr[index];
-    console.log("RPEV DIRECTIOn: ", prevDir);
-    let newOffset;
-    let newSludgeStep;
-    if (sludgeStep < 50) {
-      for (let i = sludgeStep; i < 50; i += 0.25) {
-        newSludgeStep = i;
-        if (prevDir === "down" || prevDir === "right") {
-          newOffset = newSludgeStep;
-        }
-        if (prevDir === "up" || prevDir === "left") {
-          newOffset = 50 - newSludgeStep;
-        }
-
-        ctx.beginPath();
-        if (prevDir === "down") {
-          ctx.moveTo(x + orientation.offset_x_1, y + orientation.offset_y_1);
-          ctx.lineTo(x + orientation.offset_x_2, y + newOffset);
-        } else if (prevDir === "up") {
-          ctx.moveTo(x + orientation.offset_x_2, y + orientation.offset_y_2);
-          ctx.lineTo(x + orientation.offset_x_1, y + newOffset);
-        } else if (prevDir === "left") {
-          ctx.moveTo(x + orientation.offset_x_2, y + orientation.offset_y_2);
-          ctx.lineTo(x + newOffset, y + orientation.offset_y_1);
-        } else if (prevDir === "right") {
-          ctx.moveTo(x + orientation.offset_x_1, y + orientation.offset_y_1);
-          ctx.lineTo(x + newOffset, y + orientation.offset_y_2);
-        }
-
-        ctx.lineWidth = 10;
-        ctx.strokeStyle = "#65FF00";
-        ctx.stroke();
-        ctx.strokeStyle = "#000000";
-      }
+    if (prevDir === "down" || prevDir === "right") {
+      sludgeStep = sludgeStep;
     }
+    if (prevDir === "up" || prevDir === "left") {
+      sludgeStep = 50 - sludgeStep;
+    }
+
     let nextSpace = {
       0: prevDir,
       1: index,
-      3: x + orientation.offset_x_2,
-      4: y + orientation.offset_y_2
+      3: "",
+      4: ""
     };
-    // if (sludgeStep < 50) {
-    //   setTimeout(
-    //     this.drawSludge,
-    //     30,
-    //     this.ctx,
-    //     x,
-    //     y,
-    //     prevDir,
-    //     sludgeStep + 0.25,
-    //     index
-    //   );
-    // } else {
-    //   console.log("done filling!", nextSpace);
-    //   return nextSpace;
-    // }
-    console.log("nextSpace:", nextSpace);
-    return nextSpace;
+    ctx.beginPath();
+    if (prevDir === "down") {
+      ctx.moveTo(x + orientation.offset_x_1, y + orientation.offset_y_1);
+      ctx.lineTo(x + orientation.offset_x_2, y + sludgeStep);
+      nextSpace[3] = x + orientation.offset_x_2;
+      nextSpace[4] = y + sludgeStep;
+    } else if (prevDir === "up") {
+      ctx.moveTo(x + orientation.offset_x_2, y + orientation.offset_y_2);
+      ctx.lineTo(x + orientation.offset_x_1, y + sludgeStep);
+      nextSpace[3] = x + orientation.offset_x_1;
+      nextSpace[4] = y + sludgeStep;
+    } else if (prevDir === "left") {
+      ctx.moveTo(x + orientation.offset_x_2, y + orientation.offset_y_2);
+      ctx.lineTo(x + sludgeStep, y + orientation.offset_y_1);
+      nextSpace[3] = x + sludgeStep;
+      nextSpace[4] = y + orientation.offset_y_1;
+    } else if (prevDir === "right") {
+      ctx.moveTo(x + orientation.offset_x_1, y + orientation.offset_y_1);
+      ctx.lineTo(x + sludgeStep, y + orientation.offset_y_2);
+      nextSpace[3] = x + sludgeStep;
+      nextSpace[4] = y + orientation.offset_y_2;
+    }
+
+    ctx.lineWidth = 10;
+    ctx.strokeStyle = "#65FF00";
+    ctx.stroke();
+    ctx.strokeStyle = "#000000";
+    if (sludgeStep < 50) {
+      setTimeout(
+        this.asyncDrawSludge,
+        30,
+        this.ctx,
+        x,
+        y,
+        prevDir,
+        sludgeStep + 0.25,
+        index
+      );
+    } else {
+      console.log("done filling!", nextSpace);
+      return nextSpace;
+    }
   }
 
-  // asyncDrawSludge(x, y, prevDir, sludgeStep, index) {
-  //   this.drawSludge(this.ctx, x, y, prevDir, sludgeStep, index);
-  // }
+  asyncDrawSludge(ctx, x, y, prevDir, sludgeStep, index) {
+    return this.drawSludge(ctx, x, y, prevDir, sludgeStep, index);
+  }
 
   validFlow(inDir) {
     let inPoint;

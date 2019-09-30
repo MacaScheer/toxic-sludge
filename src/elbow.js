@@ -134,7 +134,7 @@ class Elbow {
   //sludgeStep should be (.5 * Math.PI)/200
 
   asyncDrawSludge(x, y, prevDir, sludgeStep, index) {
-    this.drawSludge(this.ctx, x, y, prevDir, sludgeStep, index);
+    return this.drawSludge(this.ctx, x, y, prevDir, sludgeStep, index);
   }
 
   validFlow(inDir) {
