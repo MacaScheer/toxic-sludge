@@ -4,7 +4,7 @@ class Board {
   constructor(height, width, ctx) {
     this.width = width;
     this.height = height;
-    this.types = ["elbow", "straight", "cross", "elbow"]; 
+    this.types = ["elbow", "straight", "cross", "elbow"];
     this.shapesObj = {};
     this.ctx = ctx;
   }
@@ -131,7 +131,8 @@ class Board {
     }
   }
   fillPipes(prevDir, nextPipe) {
-    let returnVal = nextPipe.drawSludge(nextPipe, prevDir, this.ctx);
+    console.log("nextPipe orientation ", nextPipe.orientationIndex);
+    return nextPipe.drawSludge(nextPipe, prevDir, this.ctx);
   }
 }
 

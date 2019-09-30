@@ -114,23 +114,39 @@ Shape.prototype.validPipeFlow = function(nextPipe, prevDir) {
       return true;
   }
 };
-Shape.prototype.drawSludge = function(nextPipe, prevDir, ctx) {
+Shape.prototype.drawSludge = async function(nextPipe, prevDir, ctx) {
   let index = nextPipe.orientationIndex;
+  console.log("index: ", index);
   let x = nextPipe.xRange[0];
   let y = nextPipe.yRange[0];
+  // let val;
   switch (nextPipe.type) {
     case "straight":
       let straight = new Straight(index, ctx);
-      return straight.drawSludge(ctx, x, y, prevDir, 1, index);
+      let val = await straight.drawSludge(ctx, x, y, prevDir, 1, index);
+      console.log("STRAIGHT SHAPE RETURN", val);
+      return val;
 
     case "elbow":
       let elbow = new Elbow(index, ctx);
-      return elbow.drawSludge(ctx, x, y, prevDir, (0.5 * Math.PI) / 200, index);
+      let val = await elbow.drawSludge(
+        ctx,
+        x,
+        y,
+        prevDir,
+        (0.5 * Math.PI) / 200,
+        index
+      );
+      console.log("ELBOW RETURN:", val);
+      return val;
 
     case "cross":
       let cross = new Cross(ctx);
-      return cross.drawSludge(ctx, x, y, prevDir, 1, index);
+      let val = await cross.drawSludge(ctx, x, y, prevDir, 1, index);
+      console.log("CROSS RETURN", val);
+      return val;
   }
+  return "RETURN VALUE OF drawSLUDGE";
 };
 
 module.exports = Shape;
