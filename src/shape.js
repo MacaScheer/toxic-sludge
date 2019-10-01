@@ -33,7 +33,6 @@ class Shape {
 // };
 
 Shape.prototype.drawSludgeEntry = async function(ctx, sludgeStep = 0) {
-  console.log("TEST FROM DRAWSLUDGE");
   await this.sleepFunction(30);
   sludgeStep += 0.25;
   ctx.beginPath();
@@ -100,7 +99,7 @@ Shape.prototype.reDraw = function(selectId, range, ctx, type) {
   }
 };
 
-Shape.prototype.drawShape = function(ctx, x, y) {
+Shape.prototype.drawShape = async function(ctx, x, y) {
   switch (this.type) {
     case "cross":
       let cross = new Cross(ctx);
@@ -148,22 +147,33 @@ Shape.prototype.validPipeFlow = function(nextPipe, prevDir) {
 };
 Shape.prototype.drawSludge = async function(nextPipe, prevDir, ctx) {
   let index = nextPipe.orientationIndex;
-  console.log("index: ", index);
+  // console.log("index: ", index);
   let x = nextPipe.xRange[0];
   let y = nextPipe.yRange[0];
-  let val;
+  let returnVal;
   switch (nextPipe.type) {
     case "straight":
       let straight = new Straight(index, ctx);
-      return straight.drawSludge(ctx, x, y, prevDir, 1, index);
+      returnVal = straight.drawSludge(ctx, x, y, prevDir, 1, index);
+      return returnVal;
 
     case "elbow":
       let elbow = new Elbow(index, ctx);
-      return elbow.drawSludge(ctx, x, y, prevDir, (0.5 * Math.PI) / 200, index);
+      returnVal = elbow.drawSludge(
+        ctx,
+        x,
+        y,
+        prevDir,
+        (0.5 * Math.PI) / 200,
+        index
+      );
+      return returnVal;
 
     case "cross":
       let cross = new Cross(ctx);
-      return cross.drawSludge(ctx, x, y, prevDir, 1, index);
+      returnVal = cross.drawSludge(ctx, x, y, prevDir, 1, index);
+      console.log("DRAWSLUDGE RETURN VAL: ", returnVal);
+      return returnVal;
   }
 };
 

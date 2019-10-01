@@ -8,51 +8,40 @@ class Game {
     this.play = this.play.bind(this);
     this.dirString = "";
     this.directionOptionsObj = {
-      right: 0,
-      down: 1,
-      left: 2,
-      up: 3
+      0: "right",
+      1: "down",
+      2: "left",
+      3: "up"
     };
   }
   start() {
-    //to start at beginning of entrance
-    // this.dirString = "0,0,0,250,300";
-    this.dirString = "0,0,50,250,300";
     let date = new Date();
     let timeNow = date.getTime();
-    this.play(0);
+    this.play();
   }
 
-  async play(timestep) {
-    let entryReturn = await this.board.fillEntryPipe("0,50,250,300");
-    // console.log("RETURN FORM ASYNC:", entryReturn);
+  async play() {
+    let entryReturn = await this.board.fillEntryPipe();
+    console.log("RETURN FORM ASYNC:", entryReturn);
+    let coordinateArr = entryReturn.split(",");
+    let direction = this.directionOptionsObj[coordinateArr[0]];
+    console.log("direction", direction);
+    let nextShape = this.board.findDirection(coordinateArr.slice(1));
+    console.log("nextShape", nextShape);
 
-    let dirPackage = this.board.findDirection(this.dirString);
+    while (this.board.getValidFlow(direction, nextShape)) {
+      let coordinateArr = await this.board.fillPipes(direction, nextShape);
+      console.log("COORDINATEARR", coordinateArr);
 
-    // let dirPackage = this.board.findDirection(dirString);
-    console.log("DIRPACKAGE", dirPackage);
-    let nextPipe = dirPackage[1];
-    let prevDir = dirPackage[0];
-    if (this.board.getValidFlow(prevDir, nextPipe)) {
-      let val = await this.board.fillPipes(prevDir, nextPipe);
-      // if (before spill){
-      console.log("VAL: ", val);
-      let dirNum = this.directionOptionsObj[prevDir];
-      let newDirArr = [dirNum]
-        .concat(nextPipe["xRange"])
-        .concat(nextPipe["yRange"]);
-      this.dirString = newDirArr.join(",");
-      console.log("dirstring: ", this.dirString);
-      // dirPackage = this.board.findDirection(this.dirString);
-      //   console.log(dirPackage);
-      //}
-      //   setTimeout(this.play.bind(null, timestep + 500), 500);
-    } else {
-      console.log("game over");
+      console.log("check", coordinateArr[0]);
+      direction = this.directionOptionsObj[coordinateArr[0]];
+      console.log("direction", direction);
+      console.log("slice: ", coordinateArr.slice(1));
+      nextShape = this.board.findDirection(coordinateArr.slice(1));
     }
+    console.log("game over");
+    return;
   }
-
-  //async call fillPipes
 }
 
 module.exports = Game;

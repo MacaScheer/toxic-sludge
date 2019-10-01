@@ -41,43 +41,42 @@ class Straight {
     ctx.stroke();
   }
 
-  drawSludge(ctx, x, y, prevDir, sludgeStep, index) {
+  async drawSludge(ctx, x, y, prevDir, sludgeStep, index) {
     let orientation = this.orientationArr[index];
+    let nextSpaceArr = new Array(5);
     if (prevDir === "down" || prevDir === "right") {
       sludgeStep = sludgeStep;
+      nextSpaceArr[1] = x + 50;
+      nextSpaceArr[2] = x + 50 + sludgeStep;
+      nextSpaceArr[3] = y + 50;
+      nextSpaceArr[4] = y + 50 + sludgeStep;
     }
     if (prevDir === "up" || prevDir === "left") {
       sludgeStep = 50 - sludgeStep;
+      nextSpaceArr[1] = x - 50 - sludgeStep;
+      nextSpaceArr[2] = x - 50;
+      nextSpaceArr[3] = y - 50 - sludgeStep;
+      nextSpaceArr[4] = y - 50;
     }
 
-    let nextSpace = {
-      0: prevDir,
-      1: index,
-      3: "",
-      4: ""
-    };
     await this.sleepFunction(30);
     ctx.beginPath();
     if (prevDir === "down") {
       ctx.moveTo(x + orientation.offset_x_1, y + orientation.offset_y_1);
       ctx.lineTo(x + orientation.offset_x_2, y + sludgeStep);
-      nextSpace[3] = x + orientation.offset_x_2;
-      nextSpace[4] = y + sludgeStep;
+      nextSpaceArr[0] = 1;
     } else if (prevDir === "up") {
       ctx.moveTo(x + orientation.offset_x_2, y + orientation.offset_y_2);
       ctx.lineTo(x + orientation.offset_x_1, y + sludgeStep);
-      nextSpace[3] = x + orientation.offset_x_1;
-      nextSpace[4] = y + sludgeStep;
+      nextSpaceArr[0] = 3;
     } else if (prevDir === "left") {
       ctx.moveTo(x + orientation.offset_x_2, y + orientation.offset_y_2);
       ctx.lineTo(x + sludgeStep, y + orientation.offset_y_1);
-      nextSpace[3] = x + sludgeStep;
-      nextSpace[4] = y + orientation.offset_y_1;
+      nextSpaceArr[0] = 2;
     } else if (prevDir === "right") {
       ctx.moveTo(x + orientation.offset_x_1, y + orientation.offset_y_1);
       ctx.lineTo(x + sludgeStep, y + orientation.offset_y_2);
-      nextSpace[3] = x + sludgeStep;
-      nextSpace[4] = y + orientation.offset_y_2;
+      nextSpaceArr[0] = 0;
     }
 
     ctx.lineWidth = 10;
@@ -85,9 +84,7 @@ class Straight {
     ctx.stroke();
     ctx.strokeStyle = "#000000";
     if (sludgeStep < 50) {
-      setTimeout(
-        this.asyncDrawSludge,
-        30,
+      return this.asyncDrawSludge(
         this.ctx,
         x,
         y,
@@ -96,13 +93,13 @@ class Straight {
         index
       );
     } else {
-      console.log("done filling!", nextSpace);
-      return nextSpace;
+      console.log("done filling STRAIGHT PIPE!", nextSpaceArr);
+      return nextSpaceArr;
     }
   }
-sleepFunction = function(ms) {
-  return new Promise(res => setTimeout(res, ms));
-};
+  sleepFunction(ms) {
+    return new Promise(res => setTimeout(res, ms));
+  }
   asyncDrawSludge(ctx, x, y, prevDir, sludgeStep, index) {
     return this.drawSludge(ctx, x, y, prevDir, sludgeStep, index);
   }
