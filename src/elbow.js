@@ -59,6 +59,8 @@ class Elbow {
     ctx.lineWidth = 15;
     ctx.stroke();
   }
+
+
   async drawSludge(ctx, x, y, prevDir, sludgeStep, index) {
     let orientation = this.orientationArr[index];
     let newStart, newEnd;
@@ -73,6 +75,7 @@ class Elbow {
       nextSpaceArr[2] = x + orientation.offset_x + 50;
       nextSpaceArr[3] = y + orientation.offset_y;
       nextSpaceArr[4] = y + orientation.offset_y + 50;
+      console.log("BOTTOM LEFT:", nextSpaceArr);
     }
     if (prevDir === "down" && orientation.corner === "topLeft") {
       newStart = 0;
@@ -129,6 +132,7 @@ class Elbow {
       nextSpaceArr[2] = x + orientation.offset_x + 50;
       nextSpaceArr[3] = y + orientation.offset_y - 50;
       nextSpaceArr[4] = y + orientation.offset_y;
+      console.log("TOP LEFT:", nextSpaceArr);
     }
     if (prevDir === "down" && orientation.corner === "topRight") {
       newStart = 1 * Math.PI;

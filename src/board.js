@@ -85,8 +85,9 @@ class Board {
     });
   }
 
-  findDirection(coordinates) {
+  findDirection(coordinates, direction) {
     let nextShape = this.shapesObj[coordinates];
+
     return nextShape;
   }
 
@@ -99,18 +100,19 @@ class Board {
     }
   }
   async fillEntryPipe() {
-    const entry = new Shape("entry", 1, [0, 50], [250, 300]);
+    const entry = new Shape("entry", 1, [0, 50], [250, 300], this.ctx);
+    console.log("ENTRY: ", entry);
     let returnVal = await entry.drawSludgeEntry(this.ctx);
     return returnVal;
   }
   async fillPipes(direction, nextShape) {
-    let type = nextShape.type;
-    let index = nextShape.index;
-    let xRange = nextShape.xRange;
-    let yRange = nextShape.yRange;
+    // let type = nextShape.type;
+    // let index = nextShape.index;
+    // let xRange = nextShape.xRange;
+    // let yRange = nextShape.yRange;
 
-    let shape = new Shape(type, index, xRange, yRange);
-    let returnVal = await shape.drawSludge(nextShape, direction, this.ctx);
+    console.log("SHAPE from fillPIPE()", nextShape);
+    let returnVal = await nextShape.drawSludge(nextShape, direction, this.ctx);
     console.log("FILLPIPES RETURN VAL: ", returnVal);
     return returnVal;
   }
