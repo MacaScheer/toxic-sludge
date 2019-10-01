@@ -85,45 +85,9 @@ class Board {
     });
   }
 
-  findDirection(dirString) {
-    const directionOptionsObj = {
-      0: "right",
-      1: "down",
-      2: "left",
-      3: "up"
-    };
-    let coordinateArr = dirString.split(",");
-    let direction = directionOptionsObj[parseInt(coordinateArr.shift())];
-    let coordinates = coordinateArr.map(s => parseInt(s));
-    let newX1, newX2, newY1, newY2;
-    let [x1, x2, y1, y2] = coordinates;
-    let newCoordinateString;
-    switch (direction) {
-      case "right":
-        newX1 = x1 + 50;
-        newX2 = x2 + 50;
-        newCoordinateString = [newX1, newX2, y1, y2].join(",");
-        break;
-      case "left":
-        newX1 = x1 - 50;
-        newX2 = x2 - 50;
-        newCoordinateString = [newX1, newX2, y1, y2].join(",");
-        break;
-      case "up":
-        newY1 = y1 + 50;
-        newY2 = y2 + 50;
-        newCoordinateString = [x1, x2, newY1, newY2].join(",");
-        break;
-      case "down":
-        newY1 = y1 - 50;
-        newY2 = y2 - 50;
-        newCoordinateString = [x1, x2, newY1, newY2].join(",");
-        break;
-    }
-    // console.log("newCoordinateString: ", newCoordinateString);
-    let nextShapeObj = this.shapesObj[newCoordinateString];
-    // console.log("NEXTSHAPEOBJ: ", nextShapeObj);
-    return [direction, nextShapeObj];
+  findDirection(coordinates) {
+    let nextShape = this.shapesObj[coordinates];
+    return nextShape;
   }
 
   getValidFlow(prevDir, nextPipe) {
@@ -134,14 +98,21 @@ class Board {
       return nextPipe.validPipeFlow(nextPipe, prevDir);
     }
   }
-  async fillEntryPipe(coordinateString) {
+  async fillEntryPipe() {
     const entry = new Shape("entry", 1, [0, 50], [250, 300]);
     let returnVal = await entry.drawSludgeEntry(this.ctx);
-    console.log("RETURNVAL: ", returnVal);
+    return returnVal;
   }
-  fillPipes(prevDir, nextPipe) {
-    // console.log("nextPipe orientation ", nextPipe.orientationIndex);
-    return nextPipe.drawSludge(nextPipe, prevDir, this.ctx);
+  async fillPipes(direction, nextShape) {
+    let type = nextShape.type;
+    let index = nextShape.index;
+    let xRange = nextShape.xRange;
+    let yRange = nextShape.yRange;
+
+    let shape = new Shape(type, index, xRange, yRange);
+    let returnVal = await shape.drawSludge(nextShape, direction, this.ctx);
+    console.log("FILLPIPES RETURN VAL: ", returnVal);
+    return returnVal;
   }
 }
 

@@ -20,32 +20,54 @@ class Cross {
   direction(inDir) {
     return inDir;
   }
-  drawSludge(ctx, x, y, prevDir, sludgeStep, index) {
+  async drawSludge(ctx, x, y, prevDir, sludgeStep, index) {
     let newOffset;
     let offset_x_1, offset_y_1, offset_x_2, offset_y_2;
+    const nextSpaceArr = new Array(5);
     if (prevDir === "down" || prevDir === "right") {
       newOffset = sludgeStep;
     }
     if (prevDir === "up" || prevDir === "left") {
       newOffset = 50 - sludgeStep;
     }
-
     if (prevDir === "left") {
       offset_x_1 = 50;
       offset_x_2 = newOffset;
+      nextSpaceArr[0] = 2;
+      nextSpaceArr[1] = x - 50;
+      nextSpaceArr[2] = x;
+      nextSpaceArr[3] = y;
+      nextSpaceArr[4] = y + 50;
     }
     if (prevDir === "right") {
       offset_x_1 = 0;
       offset_x_2 = newOffset;
+      nextSpaceArr[0] = 0;
+      nextSpaceArr[1] = x + 50;
+      nextSpaceArr[2] = x + 100;
+      nextSpaceArr[3] = y;
+      nextSpaceArr[4] = y + 50;
     }
     if (prevDir === "up") {
       offset_y_1 = 50;
       offset_y_2 = newOffset;
+      nextSpaceArr[0] = 3;
+      nextSpaceArr[1] = x;
+      nextSpaceArr[2] = x + 50;
+      nextSpaceArr[3] = y - 50;
+      nextSpaceArr[4] = y;
     }
     if (prevDir === "down") {
       offset_y_1 = 0;
       offset_y_2 = newoffset;
+      nextSpaceArr[0] = 1;
+      nextSpaceArr[1] = x;
+      nextSpaceArr[2] = x + 50;
+      nextSpaceArr[3] = y + 50;
+      nextSpaceArr[4] = y + 100;
     }
+    await this.sleepFunction(30);
+
     ctx.beginPath();
     if (prevDir === "up" || prevDir === "down") {
       offset_x_1 = 25;
@@ -62,27 +84,16 @@ class Cross {
     ctx.strokeStyle = "#65FF00";
     ctx.stroke();
     ctx.strokeStyle = "#000000";
-    let nextSpace = {
-      0: prevDir,
-      1: index,
-      3: x + offset_x_2,
-      4: y + offset_y_2
-    };
 
     if (sludgeStep < 50) {
-      setTimeout(
-        this.asyncDrawSludge,
-        30,
-        x,
-        y,
-        prevDir,
-        sludgeStep + 0.25,
-        index
-      );
+      this.asyncDrawSludge(x, y, prevDir, sludgeStep + 0.25, index);
     } else {
-      console.log("done filling!:", nextSpace);
-      return nextSpace;
+      console.log("done filling CROSS PIPE!:", nextSpaceArr);
+      return nextSpaceArr;
     }
+  }
+  sleepFunction(ms) {
+    return new Promise(res => setTimeout(res, ms));
   }
 
   asyncDrawSludge(x, y, prevDir, sludgeStep, index) {
