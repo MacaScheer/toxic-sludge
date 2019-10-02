@@ -80,7 +80,7 @@ class Straight {
     }
 
     ctx.lineWidth = 10;
-    ctx.strokeStyle = "#65FF00";
+    ctx.strokeStyle = "#556B2F";
     ctx.stroke();
     ctx.strokeStyle = "#000000";
     if (sludgeStep < 50) {
@@ -105,6 +105,7 @@ class Straight {
   }
 
   validFlow(inDir) {
+    console.log("INDIR: ", inDir);
     let inPoint;
     switch (inDir) {
       case "up":

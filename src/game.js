@@ -38,9 +38,15 @@ class Game {
       console.log("direction", direction);
       console.log("slice: ", coordinateArr.slice(1));
       nextShape = this.board.findDirection(coordinateArr.slice(1));
+      await this.sleepFunction(30);
+      console.log("AFTER SLEEP", this.board.fillPipes(direction, nextShape));
     }
     console.log("game over");
     return;
+  }
+
+  sleepFunction(ms) {
+    return new Promise(res => setTimeout(res, ms));
   }
 }
 
