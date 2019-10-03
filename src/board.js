@@ -30,13 +30,13 @@ class Board {
         let xRange = [x, x + 50];
         let yRange = [y, y + 50];
         if (x === 0 && y === 250) {
-          const entry = new Shape("entry", 1, xRange, yRange);
+          const entry = new Shape("entry", 1, xRange, yRange, this.ctx);
           // console.log("ENTRY COORDINATES: ", x, y);
           entry.drawShape(ctx, x, y);
           this.shapesObj[[xRange, yRange]] = entry;
           // console.log("ShapesObj: ", this.shapesObj);
         } else if (x === 700 && y === 250) {
-          const exit = new Shape("exit", 0, xRange, yRange);
+          const exit = new Shape("exit", 0, xRange, yRange, this.ctx);
           exit.drawShape(ctx, x, y);
           this.shapesObj[[xRange, yRange]] = exit;
         } else {
@@ -47,7 +47,7 @@ class Board {
           if (type === "straight") {
             id = Math.floor(Math.random() * 2);
           }
-          const shape = new Shape(type, id, xRange, yRange);
+          const shape = new Shape(type, id, xRange, yRange, ctx);
           shape.drawShape(ctx, x, y);
           this.shapesObj[[xRange, yRange]] = shape;
         }
@@ -71,22 +71,27 @@ class Board {
         selectShape = this.shapesObj[range];
 
         let selectId = selectShape.orientationIndex;
+        console.log("SELECT SHAPE", selectShape);
+
         if (selectShape.type === "elbow") {
           selectId = Math.floor((selectId + 1) % 4);
           selectShape.reDraw(selectId, range, this.ctx, selectShape.type);
           this.shapesObj[range].orientationIndex = selectId;
+          console.log("ROTATE, new orientationIDX: ", this.shapesObj[range]);
         }
         if (selectShape.type === "straight") {
           selectId = Math.floor((selectId + 1) % 2);
           selectShape.reDraw(selectId, range, this.ctx, selectShape.type);
           this.shapesObj[range].orientationIndex = selectId;
+          console.log("ROTATE, new orientationIDX: ", this.shapesObj[range]);
         }
       }
     });
   }
 
-  findDirection(coordinates) {
+  findDirection(coordinates, direction) {
     let nextShape = this.shapesObj[coordinates];
+
     return nextShape;
   }
 
@@ -99,18 +104,14 @@ class Board {
     }
   }
   async fillEntryPipe() {
-    const entry = new Shape("entry", 1, [0, 50], [250, 300]);
+    const entry = new Shape("entry", 1, [0, 50], [250, 300], this.ctx);
+    console.log("ENTRY: ", entry);
     let returnVal = await entry.drawSludgeEntry(this.ctx);
     return returnVal;
   }
   async fillPipes(direction, nextShape) {
-    let type = nextShape.type;
-    let index = nextShape.index;
-    let xRange = nextShape.xRange;
-    let yRange = nextShape.yRange;
-
-    let shape = new Shape(type, index, xRange, yRange);
-    let returnVal = await shape.drawSludge(nextShape, direction, this.ctx);
+    console.log("SHAPE from fillPIPE()", nextShape);
+    let returnVal = await nextShape.drawSludge(nextShape, direction, this.ctx);
     console.log("FILLPIPES RETURN VAL: ", returnVal);
     return returnVal;
   }

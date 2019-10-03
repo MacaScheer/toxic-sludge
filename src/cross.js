@@ -81,12 +81,12 @@ class Cross {
     ctx.lineTo(x + offset_x_2, y + offset_y_2);
 
     ctx.lineWidth = 10;
-    ctx.strokeStyle = "#65FF00";
+    ctx.strokeStyle = "#556B2F";
     ctx.stroke();
     ctx.strokeStyle = "#000000";
 
     if (sludgeStep < 50) {
-      this.asyncDrawSludge(x, y, prevDir, sludgeStep + 0.25, index);
+      return this.asyncDrawSludge(x, y, prevDir, sludgeStep + 0.25, index);
     } else {
       console.log("done filling CROSS PIPE!:", nextSpaceArr);
       return nextSpaceArr;

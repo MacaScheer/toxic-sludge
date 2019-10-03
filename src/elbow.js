@@ -59,6 +59,7 @@ class Elbow {
     ctx.lineWidth = 15;
     ctx.stroke();
   }
+
   async drawSludge(ctx, x, y, prevDir, sludgeStep, index) {
     let orientation = this.orientationArr[index];
     let newStart, newEnd;
@@ -73,6 +74,7 @@ class Elbow {
       nextSpaceArr[2] = x + orientation.offset_x + 50;
       nextSpaceArr[3] = y + orientation.offset_y;
       nextSpaceArr[4] = y + orientation.offset_y + 50;
+      // console.log("BOTTOM LEFT:", nextSpaceArr);
     }
     if (prevDir === "down" && orientation.corner === "topLeft") {
       newStart = 0;
@@ -129,6 +131,7 @@ class Elbow {
       nextSpaceArr[2] = x + orientation.offset_x + 50;
       nextSpaceArr[3] = y + orientation.offset_y - 50;
       nextSpaceArr[4] = y + orientation.offset_y;
+      // console.log("TOP LEFT:", nextSpaceArr);
     }
     if (prevDir === "down" && orientation.corner === "topRight") {
       newStart = 1 * Math.PI;
@@ -149,12 +152,12 @@ class Elbow {
     );
 
     ctx.lineWidth = 10;
-    ctx.strokeStyle = "#65FF00";
+    ctx.strokeStyle = "#556B2F";
     ctx.stroke();
     ctx.strokeStyle = "#000000";
 
     if (sludgeStep < 0.5 * Math.PI) {
-      this.asyncDrawSludge(
+      return this.asyncDrawSludge(
         x,
         y,
         prevDir,
@@ -163,7 +166,7 @@ class Elbow {
       );
     } else {
       console.log("Done filling ELBOW PIPE!", nextSpaceArr);
-      return nextSpaceArr.join(",");
+      return nextSpaceArr;
     }
   }
   //sludgeStep should be (.5 * Math.PI)/200
@@ -175,6 +178,7 @@ class Elbow {
   }
 
   validFlow(inDir) {
+    console.log("INDIR", inDir);
     let inPoint;
     switch (inDir) {
       case "up":
@@ -191,7 +195,7 @@ class Elbow {
         break;
     }
     let openPoints = this.orientationArr[this.orientationIndex].openPoints;
-    console.log(openPoints.includes(inPoint));
+    console.log("OPENPOINTS INCLUDES?:", openPoints.includes(inPoint));
     return openPoints.includes(inPoint);
   }
   //having an outDir and outPoint in this case is pointless, but not so with the straight and cross

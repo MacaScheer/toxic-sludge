@@ -26,7 +26,7 @@ class Game {
     let coordinateArr = entryReturn.split(",");
     let direction = this.directionOptionsObj[coordinateArr[0]];
     console.log("direction", direction);
-    let nextShape = this.board.findDirection(coordinateArr.slice(1));
+    let nextShape = this.board.findDirection(coordinateArr.slice(1), direction);
     console.log("nextShape", nextShape);
 
     while (this.board.getValidFlow(direction, nextShape)) {
@@ -38,9 +38,15 @@ class Game {
       console.log("direction", direction);
       console.log("slice: ", coordinateArr.slice(1));
       nextShape = this.board.findDirection(coordinateArr.slice(1));
+      await this.sleepFunction(30);
+      console.log("AFTER SLEEP");
     }
     console.log("game over");
     return;
+  }
+
+  sleepFunction(ms) {
+    return new Promise(res => setTimeout(res, ms));
   }
 }
 
