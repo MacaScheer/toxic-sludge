@@ -166,7 +166,7 @@ class Elbow {
       );
     } else {
       console.log("Done filling ELBOW PIPE!", nextSpaceArr);
-      return nextSpaceArr.join(",");
+      return nextSpaceArr;
     }
   }
   //sludgeStep should be (.5 * Math.PI)/200

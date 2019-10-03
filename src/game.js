@@ -39,7 +39,7 @@ class Game {
       console.log("slice: ", coordinateArr.slice(1));
       nextShape = this.board.findDirection(coordinateArr.slice(1));
       await this.sleepFunction(30);
-      console.log("AFTER SLEEP", this.board.fillPipes(direction, nextShape));
+      console.log("AFTER SLEEP");
     }
     console.log("game over");
     return;
