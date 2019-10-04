@@ -71,19 +71,22 @@ class Board {
         selectShape = this.shapesObj[range];
 
         let selectId = selectShape.orientationIndex;
+        
         console.log("SELECT SHAPE", selectShape);
         //replace old object with new one
-        if (selectShape.type === "elbow") {
-          selectId = Math.floor((selectId + 1) % 4);
-          selectShape.reDraw(selectId, range, this.ctx, selectShape.type);
-          this.shapesObj[range].orientationIndex = selectId;
-          // console.log("ROTATE, new orientationIDX: ", this.shapesObj[range]);
-        }
-        if (selectShape.type === "straight") {
-          selectId = Math.floor((selectId + 1) % 2);
-          selectShape.reDraw(selectId, range, this.ctx, selectShape.type);
-          this.shapesObj[range].orientationIndex = selectId;
-          // console.log("ROTATE, new orientationIDX: ", this.shapesObj[range]);
+        if (!this.isFull) {
+          if (selectShape.type === "elbow") {
+            selectId = Math.floor((selectId + 1) % 4);
+            selectShape.reDraw(selectId, range, this.ctx, selectShape.type);
+            this.shapesObj[range].orientationIndex = selectId;
+            // console.log("ROTATE, new orientationIDX: ", this.shapesObj[range]);
+          }
+          if (selectShape.type === "straight") {
+            selectId = Math.floor((selectId + 1) % 2);
+            selectShape.reDraw(selectId, range, this.ctx, selectShape.type);
+            this.shapesObj[range].orientationIndex = selectId;
+            // console.log("ROTATE, new orientationIDX: ", this.shapesObj[range]);
+          }
         }
       }
     });

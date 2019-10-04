@@ -1,10 +1,11 @@
 // const Shape = require("./shape");
 
 class Elbow {
-  constructor(index, ctx) {
+  constructor(index, ctx, isFull = false) {
     this.orientationIndex = index;
     this.radius = 25;
     this.ctx = ctx;
+    this.isFull = isFull;
     this.drawSludge = this.drawSludge.bind(this);
     this.asyncDrawSludge = this.asyncDrawSludge.bind(this);
     this.orientationArr = [
@@ -46,23 +47,27 @@ class Elbow {
   }
 
   draw(ctx, x, y) {
-    let orientation = this.orientationArr[this.orientationIndex];
-    ctx.clearRect(x + 1, y + 1, 49, 49);
-    ctx.beginPath();
-    ctx.arc(
-      x + orientation.offset_x,
-      y + orientation.offset_y,
-      this.radius,
-      orientation.start,
-      orientation.end
-    );
-    ctx.lineWidth = 15;
-    ctx.stroke();
+    if (!this.isFull) {
+      let orientation = this.orientationArr[this.orientationIndex];
+      ctx.clearRect(x + 1, y + 1, 49, 49);
+      ctx.beginPath();
+      ctx.arc(
+        x + orientation.offset_x,
+        y + orientation.offset_y,
+        this.radius,
+        orientation.start,
+        orientation.end
+      );
+      ctx.lineWidth = 15;
+      ctx.stroke();
+    }
   }
 
   async drawSludge(ctx, x, y, prevDir, sludgeStep, index) {
+    this.isFull = true;
     let orientation = this.orientationArr[index];
     let newStart, newEnd;
+    await this.sleepFunction(30);
     ctx.beginPath();
     const nextSpaceArr = new Array(5);
     // positive arc direction
@@ -74,17 +79,15 @@ class Elbow {
       nextSpaceArr[2] = x + orientation.offset_x + 50;
       nextSpaceArr[3] = y + orientation.offset_y;
       nextSpaceArr[4] = y + orientation.offset_y + 50;
-      // console.log("BOTTOM LEFT:", nextSpaceArr);
     }
     if (prevDir === "down" && orientation.corner === "topLeft") {
       newStart = 0;
-      newEnd = sludgeStep;
+      newEnd = newStart + sludgeStep;
       nextSpaceArr[0] = 2;
       nextSpaceArr[1] = x + orientation.offset_x - 50;
       nextSpaceArr[2] = x + orientation.offset_x;
       nextSpaceArr[3] = y + orientation.offset_y;
       nextSpaceArr[4] = y + orientation.offset_y + 50;
-      //PROBLEM WITH THIS PART ^^
     }
     if (prevDir === "up" && orientation.corner === "bottomRight") {
       newStart = 1 * Math.PI;
@@ -106,8 +109,9 @@ class Elbow {
     }
     // negative arc direction
     if (prevDir === "up" && orientation.corner === "bottomLeft") {
-      newStart = 0 * Math.PI;
-      newEnd = newStart - sludgeStep;
+      newEnd = 0 * Math.PI;
+      newStart = newEnd - sludgeStep;
+
       nextSpaceArr[0] = 2;
       nextSpaceArr[1] = x + orientation.offset_x - 50;
       nextSpaceArr[2] = x + orientation.offset_x;
@@ -115,8 +119,8 @@ class Elbow {
       nextSpaceArr[4] = y + orientation.offset_y;
     }
     if (prevDir === "left" && orientation.corner === "bottomRight") {
-      newStart = 1.5 * Math.PI;
-      newEnd = newStart - sludgeStep;
+      newEnd = 1.5 * Math.PI;
+      newStart = newEnd - sludgeStep;
       nextSpaceArr[0] = 1;
       nextSpaceArr[1] = x + orientation.offset_x - 50;
       nextSpaceArr[2] = x + orientation.offset_x;
@@ -124,25 +128,23 @@ class Elbow {
       nextSpaceArr[4] = y + orientation.offset_y + 50;
     }
     if (prevDir === "right" && orientation.corner === "topLeft") {
-      newStart = 0.5 * Math.PI;
-      newEnd = newStart - sludgeStep;
+      newEnd = 0.5 * Math.PI;
+      newStart = newEnd - sludgeStep;
       nextSpaceArr[0] = 3;
       nextSpaceArr[1] = x + orientation.offset_x;
       nextSpaceArr[2] = x + orientation.offset_x + 50;
       nextSpaceArr[3] = y + orientation.offset_y - 50;
       nextSpaceArr[4] = y + orientation.offset_y;
-      // console.log("TOP LEFT:", nextSpaceArr);
     }
     if (prevDir === "down" && orientation.corner === "topRight") {
-      newStart = 1 * Math.PI;
-      newEnd = newStart - sludgeStep;
+      newEnd = 1 * Math.PI;
+      newStart = newEnd - sludgeStep;
       nextSpaceArr[0] = 0;
       nextSpaceArr[1] = x + orientation.offset_x;
       nextSpaceArr[2] = x + orientation.offset_x + 50;
       nextSpaceArr[3] = y + orientation.offset_y;
       nextSpaceArr[4] = y + orientation.offset_y + 50;
     }
-    await this.sleepFunction(30);
     ctx.arc(
       x + orientation.offset_x,
       y + orientation.offset_y,

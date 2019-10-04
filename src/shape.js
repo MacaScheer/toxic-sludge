@@ -4,12 +4,13 @@ const Straight = require("./straight");
 const Cross = require("./cross");
 
 class Shape {
-  constructor(type, id, xRange, yRange, ctx) {
+  constructor(type, id, xRange, yRange, ctx, isFull = false) {
     this.xRange = xRange;
     this.yRange = yRange;
     this.type = type;
     this.orientationIndex = id;
     this.ctx = ctx;
+    this.isFull = isFull;
     this.drawEntry = this.drawEntry.bind(this);
     this.drawExit = this.drawExit.bind(this);
     this.drawSludgeEntry = this.drawSludgeEntry.bind(this);
@@ -147,6 +148,7 @@ Shape.prototype.validPipeFlow = function(nextPipe, prevDir) {
 };
 Shape.prototype.drawSludge = async function(nextPipe, prevDir, ctx) {
   let index = nextPipe.orientationIndex;
+  // this.isFull = true;
   // console.log("index: ", index);
   let x = nextPipe.xRange[0];
   let y = nextPipe.yRange[0];
