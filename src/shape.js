@@ -1,5 +1,5 @@
 const Elbow = require("./elbow");
-const DblElbow = require("./dblElbow");
+// const DblElbow = require("./dblElbow");
 const Straight = require("./straight");
 const Cross = require("./cross");
 
@@ -39,7 +39,7 @@ Shape.prototype.drawSludgeEntry = async function(ctx, sludgeStep = 0) {
   ctx.moveTo(0, 275);
   ctx.lineTo(sludgeStep, 275);
   ctx.lineWidth = 10;
-  ctx.strokeStyle = "#556B2F";
+  ctx.strokeStyle = "#32CD32";
   ctx.stroke();
   ctx.strokeStyle = "#000000";
 
@@ -159,6 +159,8 @@ Shape.prototype.drawSludge = async function(nextPipe, prevDir, ctx) {
 
     case "elbow":
       let elbow = new Elbow(index, ctx);
+      console.log("shape class ELBOW PREVDIR: ", prevDir);
+
       returnVal = await elbow.drawSludge(
         ctx,
         x,
@@ -170,9 +172,10 @@ Shape.prototype.drawSludge = async function(nextPipe, prevDir, ctx) {
       return returnVal;
 
     case "cross":
-      let cross = new Cross(ctx);
+      console.log("shape class CROSS PREVDIR: ", prevDir);
+      let cross = new Cross(index, ctx);
       returnVal = await cross.drawSludge(ctx, x, y, prevDir, 1, index);
-      console.log("DRAWSLUDGE RETURN VAL: ", returnVal);
+      console.log("DRAWSLUDGE RETURN VAL IN SHAPE: ", returnVal);
       return returnVal;
   }
 };

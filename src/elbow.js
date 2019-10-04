@@ -152,7 +152,7 @@ class Elbow {
     );
 
     ctx.lineWidth = 10;
-    ctx.strokeStyle = "#556B2F";
+    ctx.strokeStyle = "#32CD32";
     ctx.stroke();
     ctx.strokeStyle = "#000000";
 

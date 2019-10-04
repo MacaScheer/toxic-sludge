@@ -44,19 +44,40 @@ class Straight {
   async drawSludge(ctx, x, y, prevDir, sludgeStep, index) {
     let orientation = this.orientationArr[index];
     let nextSpaceArr = new Array(5);
-    if (prevDir === "down" || prevDir === "right") {
-      sludgeStep = sludgeStep;
+
+    if (prevDir === "right") {
+      nextSpaceArr[0] = 0;
       nextSpaceArr[1] = x + 50;
       nextSpaceArr[2] = x + 50 + sludgeStep;
-      nextSpaceArr[3] = y + 50;
-      nextSpaceArr[4] = y + 50 + sludgeStep;
+      nextSpaceArr[3] = y;
+      nextSpaceArr[4] = y + 50;
     }
-    if (prevDir === "up" || prevDir === "left") {
-      sludgeStep = 50 - sludgeStep;
+    if (prevDir === "left") {
+      nextSpaceArr[0] = 2;
       nextSpaceArr[1] = x - 50 - sludgeStep;
       nextSpaceArr[2] = x - 50;
       nextSpaceArr[3] = y - 50 - sludgeStep;
       nextSpaceArr[4] = y - 50;
+    }
+    if (prevDir === "down") {
+      nextSpaceArr[0] = 1;
+      nextSpaceArr[1] = x;
+      nextSpaceArr[2] = x + 50;
+      nextSpaceArr[3] = y + 50;
+      nextSpaceArr[4] = y + 50 + sludgeStep;
+    }
+    if (prevDir === "up") {
+      nextSpaceArr[0] = 3;
+      nextSpaceArr[1] = x;
+      nextSpaceArr[2] = x + 50;
+      nextSpaceArr[3] = y - 50 - sludgeStep;
+      nextSpaceArr[4] = y;
+    }
+    if (prevDir === "down" || prevDir === "right") {
+      sludgeStep = sludgeStep;
+    }
+    if (prevDir === "up" || prevDir === "left") {
+      sludgeStep = 50 - sludgeStep;
     }
 
     await this.sleepFunction(30);
@@ -80,7 +101,7 @@ class Straight {
     }
 
     ctx.lineWidth = 10;
-    ctx.strokeStyle = "#556B2F";
+    ctx.strokeStyle = "#32CD32";
     ctx.stroke();
     ctx.strokeStyle = "#000000";
     if (sludgeStep < 50) {

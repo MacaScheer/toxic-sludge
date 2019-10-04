@@ -72,18 +72,18 @@ class Board {
 
         let selectId = selectShape.orientationIndex;
         console.log("SELECT SHAPE", selectShape);
-
+        //replace old object with new one
         if (selectShape.type === "elbow") {
           selectId = Math.floor((selectId + 1) % 4);
           selectShape.reDraw(selectId, range, this.ctx, selectShape.type);
           this.shapesObj[range].orientationIndex = selectId;
-          console.log("ROTATE, new orientationIDX: ", this.shapesObj[range]);
+          // console.log("ROTATE, new orientationIDX: ", this.shapesObj[range]);
         }
         if (selectShape.type === "straight") {
           selectId = Math.floor((selectId + 1) % 2);
           selectShape.reDraw(selectId, range, this.ctx, selectShape.type);
           this.shapesObj[range].orientationIndex = selectId;
-          console.log("ROTATE, new orientationIDX: ", this.shapesObj[range]);
+          // console.log("ROTATE, new orientationIDX: ", this.shapesObj[range]);
         }
       }
     });
@@ -105,14 +105,15 @@ class Board {
   }
   async fillEntryPipe() {
     const entry = new Shape("entry", 1, [0, 50], [250, 300], this.ctx);
-    console.log("ENTRY: ", entry);
+    // console.log("ENTRY: ", entry);
     let returnVal = await entry.drawSludgeEntry(this.ctx);
     return returnVal;
   }
   async fillPipes(direction, nextShape) {
-    console.log("SHAPE from fillPIPE()", nextShape);
+    console.log("SHAPES OBJECT:  ", this.shapesObj);
+    console.log("SHAPE from fillPIPE() in BOARD", nextShape);
     let returnVal = await nextShape.drawSludge(nextShape, direction, this.ctx);
-    console.log("FILLPIPES RETURN VAL: ", returnVal);
+    console.log("BOARD FILLPIPES RETURN VAL: ", returnVal);
     return returnVal;
   }
 }
