@@ -9,5 +9,6 @@ module.exports = {
     rules: [
       { test: /\.js$/, loader: "babel-loader", query: { presets: ["es2015"] } }
     ]
-  }
+  },
+  devtool: "eval"
 };

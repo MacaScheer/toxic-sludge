@@ -1,9 +1,10 @@
 const Shape = require("./shape");
 
 class Straight {
-  constructor(index, ctx) {
+  constructor(index, ctx, isFull = false) {
     this.orientationIndex = index;
     this.ctx = ctx;
+    this.isFull = isFull;
     this.drawSludge = this.drawSludge.bind(this);
     this.asyncDrawSludge = this.asyncDrawSludge.bind(this);
     this.orientationArr = [
@@ -32,31 +33,55 @@ class Straight {
   }
 
   draw(ctx, x, y) {
-    let orientation = this.orientationArr[this.orientationIndex];
-    ctx.clearRect(x + 1, y + 1, 49, 49);
-    ctx.beginPath();
-    ctx.moveTo(x + orientation.offset_x_1, y + orientation.offset_y_1);
-    ctx.lineTo(x + orientation.offset_x_2, y + orientation.offset_y_2);
-    ctx.lineWidth = 15;
-    ctx.stroke();
+    if (!this.isFull) {
+      let orientation = this.orientationArr[this.orientationIndex];
+      ctx.clearRect(x + 1, y + 1, 49, 49);
+      ctx.beginPath();
+      ctx.moveTo(x + orientation.offset_x_1, y + orientation.offset_y_1);
+      ctx.lineTo(x + orientation.offset_x_2, y + orientation.offset_y_2);
+      ctx.lineWidth = 15;
+      ctx.stroke();
+    }
   }
 
   async drawSludge(ctx, x, y, prevDir, sludgeStep, index) {
+    this.isFull = true;
     let orientation = this.orientationArr[index];
     let nextSpaceArr = new Array(5);
-    if (prevDir === "down" || prevDir === "right") {
-      sludgeStep = sludgeStep;
+
+    if (prevDir === "right") {
+      nextSpaceArr[0] = 0;
       nextSpaceArr[1] = x + 50;
       nextSpaceArr[2] = x + 50 + sludgeStep;
-      nextSpaceArr[3] = y + 50;
-      nextSpaceArr[4] = y + 50 + sludgeStep;
+      nextSpaceArr[3] = y;
+      nextSpaceArr[4] = y + 50;
     }
-    if (prevDir === "up" || prevDir === "left") {
-      sludgeStep = 50 - sludgeStep;
+    if (prevDir === "left") {
+      nextSpaceArr[0] = 2;
       nextSpaceArr[1] = x - 50 - sludgeStep;
       nextSpaceArr[2] = x - 50;
       nextSpaceArr[3] = y - 50 - sludgeStep;
       nextSpaceArr[4] = y - 50;
+    }
+    if (prevDir === "down") {
+      nextSpaceArr[0] = 1;
+      nextSpaceArr[1] = x;
+      nextSpaceArr[2] = x + 50;
+      nextSpaceArr[3] = y + 50;
+      nextSpaceArr[4] = y + 50 + sludgeStep;
+    }
+    if (prevDir === "up") {
+      nextSpaceArr[0] = 3;
+      nextSpaceArr[1] = x;
+      nextSpaceArr[2] = x + 50;
+      nextSpaceArr[3] = y - 50 - sludgeStep;
+      nextSpaceArr[4] = y;
+    }
+    if (prevDir === "down" || prevDir === "right") {
+      sludgeStep = sludgeStep;
+    }
+    if (prevDir === "up" || prevDir === "left") {
+      sludgeStep = 50 - sludgeStep;
     }
 
     await this.sleepFunction(30);
@@ -66,10 +91,12 @@ class Straight {
       ctx.lineTo(x + orientation.offset_x_2, y + sludgeStep);
       nextSpaceArr[0] = 1;
     } else if (prevDir === "up") {
+      debugger;
       ctx.moveTo(x + orientation.offset_x_2, y + orientation.offset_y_2);
       ctx.lineTo(x + orientation.offset_x_1, y + sludgeStep);
       nextSpaceArr[0] = 3;
     } else if (prevDir === "left") {
+      debugger;
       ctx.moveTo(x + orientation.offset_x_2, y + orientation.offset_y_2);
       ctx.lineTo(x + sludgeStep, y + orientation.offset_y_1);
       nextSpaceArr[0] = 2;
@@ -80,7 +107,7 @@ class Straight {
     }
 
     ctx.lineWidth = 10;
-    ctx.strokeStyle = "#556B2F";
+    ctx.strokeStyle = "#32CD32";
     ctx.stroke();
     ctx.strokeStyle = "#000000";
     if (sludgeStep < 50) {
