@@ -1,8 +1,10 @@
 const Shape = require("./shape");
 
 class Cross {
-  constructor(ctx) {
+  constructor(id, ctx) {
     this.ctx = ctx;
+    this.orientationIndex = id;
+
     this.drawSludge = this.drawSludge.bind(this);
     this.asyncDrawSludge = this.asyncDrawSludge.bind(this);
   }
@@ -59,7 +61,7 @@ class Cross {
     }
     if (prevDir === "down") {
       offset_y_1 = 0;
-      offset_y_2 = newoffset;
+      offset_y_2 = newOffset;
       nextSpaceArr[0] = 1;
       nextSpaceArr[1] = x;
       nextSpaceArr[2] = x + 50;
@@ -81,7 +83,7 @@ class Cross {
     ctx.lineTo(x + offset_x_2, y + offset_y_2);
 
     ctx.lineWidth = 10;
-    ctx.strokeStyle = "#556B2F";
+    ctx.strokeStyle = "#32CD32";
     ctx.stroke();
     ctx.strokeStyle = "#000000";
 

@@ -31,13 +31,14 @@ class Game {
 
     while (this.board.getValidFlow(direction, nextShape)) {
       let coordinateArr = await this.board.fillPipes(direction, nextShape);
-      console.log("COORDINATEARR", coordinateArr);
+      console.log("GAME FILL PIPES RETURN", coordinateArr);
 
-      console.log("check", coordinateArr[0]);
+      // console.log("check", coordinateArr[0]);
       direction = this.directionOptionsObj[coordinateArr[0]];
       console.log("direction", direction);
-      console.log("slice: ", coordinateArr.slice(1));
+      console.log("from return of fill pipes slice: ", coordinateArr.slice(1));
       nextShape = this.board.findDirection(coordinateArr.slice(1));
+      console.log("NEXTSHAPE IN GAME, FROM board.findDirection: ", nextShape);
       await this.sleepFunction(30);
       console.log("AFTER SLEEP");
     }

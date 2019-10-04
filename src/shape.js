@@ -1,15 +1,16 @@
 const Elbow = require("./elbow");
-const DblElbow = require("./dblElbow");
+// const DblElbow = require("./dblElbow");
 const Straight = require("./straight");
 const Cross = require("./cross");
 
 class Shape {
-  constructor(type, id, xRange, yRange, ctx) {
+  constructor(type, id, xRange, yRange, ctx, isFull = false) {
     this.xRange = xRange;
     this.yRange = yRange;
     this.type = type;
     this.orientationIndex = id;
     this.ctx = ctx;
+    this.isFull = isFull;
     this.drawEntry = this.drawEntry.bind(this);
     this.drawExit = this.drawExit.bind(this);
     this.drawSludgeEntry = this.drawSludgeEntry.bind(this);
@@ -39,7 +40,7 @@ Shape.prototype.drawSludgeEntry = async function(ctx, sludgeStep = 0) {
   ctx.moveTo(0, 275);
   ctx.lineTo(sludgeStep, 275);
   ctx.lineWidth = 10;
-  ctx.strokeStyle = "#556B2F";
+  ctx.strokeStyle = "#32CD32";
   ctx.stroke();
   ctx.strokeStyle = "#000000";
 
@@ -147,6 +148,7 @@ Shape.prototype.validPipeFlow = function(nextPipe, prevDir) {
 };
 Shape.prototype.drawSludge = async function(nextPipe, prevDir, ctx) {
   let index = nextPipe.orientationIndex;
+  // this.isFull = true;
   // console.log("index: ", index);
   let x = nextPipe.xRange[0];
   let y = nextPipe.yRange[0];
@@ -159,6 +161,8 @@ Shape.prototype.drawSludge = async function(nextPipe, prevDir, ctx) {
 
     case "elbow":
       let elbow = new Elbow(index, ctx);
+      console.log("shape class ELBOW PREVDIR: ", prevDir);
+
       returnVal = await elbow.drawSludge(
         ctx,
         x,
@@ -170,9 +174,10 @@ Shape.prototype.drawSludge = async function(nextPipe, prevDir, ctx) {
       return returnVal;
 
     case "cross":
-      let cross = new Cross(ctx);
+      console.log("shape class CROSS PREVDIR: ", prevDir);
+      let cross = new Cross(index, ctx);
       returnVal = await cross.drawSludge(ctx, x, y, prevDir, 1, index);
-      console.log("DRAWSLUDGE RETURN VAL: ", returnVal);
+      console.log("DRAWSLUDGE RETURN VAL IN SHAPE: ", returnVal);
       return returnVal;
   }
 };
