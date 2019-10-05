@@ -1,14 +1,12 @@
 const Shape = require("./shape.js");
 
 class Board {
-  constructor(height, width, ctx) {
-    this.width = width;
-    this.height = height;
+  constructor(ctx) {
     this.types = ["elbow", "straight", "cross", "elbow"];
     this.shapesObj = {};
-    this.spillOut = this.spillOut.bind(this);
     this.ctx = ctx;
   }
+
 
   createGrid(ctx) {
     ctx.beginPath();
@@ -89,7 +87,6 @@ class Board {
 
   findDirection(coordinates, direction) {
     let nextShape = this.shapesObj[coordinates];
-
     return nextShape;
   }
 
@@ -114,27 +111,7 @@ class Board {
     return returnVal;
   }
 
-  spillOut(nextShape, direction) {
-    console.log("NEXTSHAPE", nextShape);
-    console.log("DIRECTION", direction);
-    let ctx = this.ctx;
-    let offset_x, offset_y;
-    if (direction === "right" || direction === "left") offset_y = 25;
-    if (direction === "down" || direction === "up") offset_x = 25;
-    if (direction === "down") offset_y = 50;
-    if (direction === "up") offset_y = 0;
-    if (direction === "right") offset_x = 50;
-    if (direction === "left") offset_x = 0;
-    ctx.beginPath();
-    ctx.lineWidth = 10;
-    ctx.strokeStyle = "#32CD32";
-    for (let i = 0; i < 500; i += 0.25) {
-      console.log("I", i);
-      ctx.arc(offset_x, offset_y, i, 0, 2 * Math.PI);
-      ctx.stroke();
-    }
-    ctx.strokeStyle = "#000000";
-  }
+  
 }
 
 module.exports = Board;

@@ -1,8 +1,9 @@
-const Board = require("./board");
-
+// const Board = require("./board");
+// const Background = require("./background");
 class Game {
-  constructor(board) {
+  constructor(board, background) {
     this.board = board;
+    this.background = background;
     this.isGameOver = false;
     this.start = this.start.bind(this);
     this.play = this.play.bind(this);
@@ -33,7 +34,7 @@ class Game {
       nextShape = this.board.findDirection(coordinateArr.slice(1));
       await this.sleepFunction(30);
     }
-    this.board.spillOut(nextShape, direction);
+    this.background.spillOut(nextShape, direction);
     console.log("game over");
 
     return;
