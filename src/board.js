@@ -2,7 +2,7 @@ const Shape = require("./shape.js");
 
 class Board {
   constructor(ctx) {
-    this.types = ["elbow", "straight", "cross", "elbow"];
+    this.types = ["elbow", "straight", "straight", "cross", "elbow"];
     this.shapesObj = {};
     this.ctx = ctx;
   }
@@ -24,7 +24,7 @@ class Board {
 
     for (let x = 0, i = 0; i < 15; x += 50, i++) {
       for (let y = 0, j = 0; j < 13; y += 50, j++) {
-        let type = this.types[Math.floor(Math.random() * 3)];
+        let type = this.types[Math.floor(Math.random() * 4)];
         let xRange = [x, x + 50];
         let yRange = [y, y + 50];
         if (x === 0 && y === 250) {
