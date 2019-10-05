@@ -167,7 +167,6 @@ class Elbow {
         index
       );
     } else {
-      console.log("Done filling ELBOW PIPE!", nextSpaceArr);
       return nextSpaceArr;
     }
   }
@@ -180,7 +179,6 @@ class Elbow {
   }
 
   validFlow(inDir) {
-    console.log("INDIR", inDir);
     let inPoint;
     switch (inDir) {
       case "up":
@@ -197,7 +195,6 @@ class Elbow {
         break;
     }
     let openPoints = this.orientationArr[this.orientationIndex].openPoints;
-    console.log("OPENPOINTS INCLUDES?:", openPoints.includes(inPoint));
     return openPoints.includes(inPoint);
   }
 }

@@ -6,6 +6,7 @@ class Board {
     this.height = height;
     this.types = ["elbow", "straight", "cross", "elbow"];
     this.shapesObj = {};
+    this.spillOut = this.spillOut.bind(this);
     this.ctx = ctx;
   }
 
@@ -31,10 +32,8 @@ class Board {
         let yRange = [y, y + 50];
         if (x === 0 && y === 250) {
           const entry = new Shape("entry", 1, xRange, yRange, this.ctx);
-          // console.log("ENTRY COORDINATES: ", x, y);
           entry.drawShape(ctx, x, y);
           this.shapesObj[[xRange, yRange]] = entry;
-          // console.log("ShapesObj: ", this.shapesObj);
         } else if (x === 700 && y === 250) {
           const exit = new Shape("exit", 0, xRange, yRange, this.ctx);
           exit.drawShape(ctx, x, y);
@@ -71,21 +70,17 @@ class Board {
         selectShape = this.shapesObj[range];
 
         let selectId = selectShape.orientationIndex;
-        
-        console.log("SELECT SHAPE", selectShape);
-        //replace old object with new one
+
         if (!this.isFull) {
           if (selectShape.type === "elbow") {
             selectId = Math.floor((selectId + 1) % 4);
             selectShape.reDraw(selectId, range, this.ctx, selectShape.type);
             this.shapesObj[range].orientationIndex = selectId;
-            // console.log("ROTATE, new orientationIDX: ", this.shapesObj[range]);
           }
           if (selectShape.type === "straight") {
             selectId = Math.floor((selectId + 1) % 2);
             selectShape.reDraw(selectId, range, this.ctx, selectShape.type);
             this.shapesObj[range].orientationIndex = selectId;
-            // console.log("ROTATE, new orientationIDX: ", this.shapesObj[range]);
           }
         }
       }
@@ -108,7 +103,6 @@ class Board {
   }
   async fillEntryPipe() {
     const entry = new Shape("entry", 1, [0, 50], [250, 300], this.ctx);
-    // console.log("ENTRY: ", entry);
     let returnVal = await entry.drawSludgeEntry(this.ctx);
     return returnVal;
   }
@@ -118,6 +112,28 @@ class Board {
     let returnVal = await nextShape.drawSludge(nextShape, direction, this.ctx);
     console.log("BOARD FILLPIPES RETURN VAL: ", returnVal);
     return returnVal;
+  }
+
+  spillOut(nextShape, direction) {
+    console.log("NEXTSHAPE", nextShape);
+    console.log("DIRECTION", direction);
+    let ctx = this.ctx;
+    let offset_x, offset_y;
+    if (direction === "right" || direction === "left") offset_y = 25;
+    if (direction === "down" || direction === "up") offset_x = 25;
+    if (direction === "down") offset_y = 50;
+    if (direction === "up") offset_y = 0;
+    if (direction === "right") offset_x = 50;
+    if (direction === "left") offset_x = 0;
+    ctx.beginPath();
+    ctx.lineWidth = 10;
+    ctx.strokeStyle = "#32CD32";
+    for (let i = 0; i < 500; i += 0.25) {
+      console.log("I", i);
+      ctx.arc(offset_x, offset_y, i, 0, 2 * Math.PI);
+      ctx.stroke();
+    }
+    ctx.strokeStyle = "#000000";
   }
 }
 

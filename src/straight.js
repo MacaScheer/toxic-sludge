@@ -118,7 +118,6 @@ class Straight {
         index
       );
     } else {
-      console.log("done filling STRAIGHT PIPE!", nextSpaceArr);
       return nextSpaceArr;
     }
   }
@@ -130,7 +129,6 @@ class Straight {
   }
 
   validFlow(inDir) {
-    console.log("INDIR: ", inDir);
     let inPoint;
     switch (inDir) {
       case "up":
@@ -147,7 +145,6 @@ class Straight {
         break;
     }
     let openPoints = this.orientationArr[this.orientationIndex].openPoints;
-    // console.log("straight", openPoints.includes(inPoint));
     return openPoints.includes(inPoint);
   }
   direction(inDir) {

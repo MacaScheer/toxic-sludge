@@ -47,7 +47,6 @@ Shape.prototype.drawSludgeEntry = async function(ctx, sludgeStep = 0) {
   if (sludgeStep < 50) {
     return this.asyncDrawSludgeEntry(ctx, sludgeStep);
   } else {
-    console.log("done filling entry!");
     return "0,50,100,250,300";
   }
 };
@@ -148,8 +147,6 @@ Shape.prototype.validPipeFlow = function(nextPipe, prevDir) {
 };
 Shape.prototype.drawSludge = async function(nextPipe, prevDir, ctx) {
   let index = nextPipe.orientationIndex;
-  // this.isFull = true;
-  // console.log("index: ", index);
   let x = nextPipe.xRange[0];
   let y = nextPipe.yRange[0];
   let returnVal;
@@ -161,7 +158,6 @@ Shape.prototype.drawSludge = async function(nextPipe, prevDir, ctx) {
 
     case "elbow":
       let elbow = new Elbow(index, ctx);
-      console.log("shape class ELBOW PREVDIR: ", prevDir);
 
       returnVal = await elbow.drawSludge(
         ctx,
@@ -174,10 +170,8 @@ Shape.prototype.drawSludge = async function(nextPipe, prevDir, ctx) {
       return returnVal;
 
     case "cross":
-      console.log("shape class CROSS PREVDIR: ", prevDir);
       let cross = new Cross(index, ctx);
       returnVal = await cross.drawSludge(ctx, x, y, prevDir, 1, index);
-      console.log("DRAWSLUDGE RETURN VAL IN SHAPE: ", returnVal);
       return returnVal;
   }
 };

@@ -90,7 +90,6 @@ class Cross {
     if (sludgeStep < 50) {
       return this.asyncDrawSludge(x, y, prevDir, sludgeStep + 0.25, index);
     } else {
-      console.log("done filling CROSS PIPE!:", nextSpaceArr);
       return nextSpaceArr;
     }
   }
