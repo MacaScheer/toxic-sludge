@@ -1,8 +1,9 @@
-const Board = require("./board");
-
+// const Board = require("./board");
+// const Background = require("./background");
 class Game {
-  constructor(board) {
+  constructor(board, background) {
     this.board = board;
+    this.background = background;
     this.isGameOver = false;
     this.start = this.start.bind(this);
     this.play = this.play.bind(this);
@@ -22,33 +23,28 @@ class Game {
 
   async play() {
     let entryReturn = await this.board.fillEntryPipe();
-    console.log("RETURN FORM ASYNC:", entryReturn);
     let coordinateArr = entryReturn.split(",");
     let direction = this.directionOptionsObj[coordinateArr[0]];
-    console.log("direction", direction);
     let nextShape = this.board.findDirection(coordinateArr.slice(1), direction);
-    console.log("nextShape", nextShape);
 
     while (this.board.getValidFlow(direction, nextShape)) {
       let coordinateArr = await this.board.fillPipes(direction, nextShape);
-      console.log("GAME FILL PIPES RETURN", coordinateArr);
 
-      // console.log("check", coordinateArr[0]);
       direction = this.directionOptionsObj[coordinateArr[0]];
-      console.log("direction", direction);
-      console.log("from return of fill pipes slice: ", coordinateArr.slice(1));
       nextShape = this.board.findDirection(coordinateArr.slice(1));
-      console.log("NEXTSHAPE IN GAME, FROM board.findDirection: ", nextShape);
-      await this.sleepFunction(30);
-      console.log("AFTER SLEEP");
+      await this.sleepFunction(5);
     }
+    this.background.spillOut(nextShape, direction);
     console.log("game over");
+
     return;
   }
 
   sleepFunction(ms) {
     return new Promise(res => setTimeout(res, ms));
   }
+
+  startGameModal() {}
 }
 
 module.exports = Game;

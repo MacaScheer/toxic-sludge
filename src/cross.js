@@ -68,7 +68,7 @@ class Cross {
       nextSpaceArr[3] = y + 50;
       nextSpaceArr[4] = y + 100;
     }
-    await this.sleepFunction(30);
+    await this.sleepFunction(5);
 
     ctx.beginPath();
     if (prevDir === "up" || prevDir === "down") {
@@ -90,7 +90,6 @@ class Cross {
     if (sludgeStep < 50) {
       return this.asyncDrawSludge(x, y, prevDir, sludgeStep + 0.25, index);
     } else {
-      console.log("done filling CROSS PIPE!:", nextSpaceArr);
       return nextSpaceArr;
     }
   }
