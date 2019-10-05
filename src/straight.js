@@ -91,14 +91,10 @@ class Straight {
       ctx.lineTo(x + orientation.offset_x_2, y + newOffset);
       nextSpaceArr[0] = 1;
     } else if (prevDir === "up") {
-      debugger;
-      // ctx.moveTo(x + orientation.offset_x_2, y + orientation.offset_y_2);
-      // ctx.lineTo(x + orientation.offset_x_1, y + sludgeStep);
       ctx.moveTo(x + orientation.offset_x_1, y + newOffset);
       ctx.lineTo(x + orientation.offset_x_2, y + orientation.offset_y_2);
       nextSpaceArr[0] = 3;
     } else if (prevDir === "left") {
-      debugger;
       ctx.moveTo(x + orientation.offset_x_2, y + orientation.offset_y_2);
       ctx.lineTo(x + newOffset, y + orientation.offset_y_1);
       nextSpaceArr[0] = 2;
