@@ -155,10 +155,8 @@ Shape.prototype.drawSludge = async function(nextPipe, prevDir, ctx) {
       let straight = new Straight(index, ctx);
       returnVal = await straight.drawSludge(ctx, x, y, prevDir, 1, index);
       return returnVal;
-
     case "elbow":
       let elbow = new Elbow(index, ctx);
-
       returnVal = await elbow.drawSludge(
         ctx,
         x,
@@ -168,7 +166,6 @@ Shape.prototype.drawSludge = async function(nextPipe, prevDir, ctx) {
         index
       );
       return returnVal;
-
     case "cross":
       let cross = new Cross(index, ctx);
       returnVal = await cross.drawSludge(ctx, x, y, prevDir, 1, index);

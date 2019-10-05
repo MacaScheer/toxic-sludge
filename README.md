@@ -42,24 +42,32 @@ Shape.prototype.validPipeFlow = function(nextPipe, prevDir) {
       return true;
   }
 };
-Shape.prototype.drawSludge = function(nextPipe, prevDir, ctx) {
+Shape.prototype.drawSludge = async function(nextPipe, prevDir, ctx) {
   let index = nextPipe.orientationIndex;
   let x = nextPipe.xRange[0];
   let y = nextPipe.yRange[0];
+  let returnVal;
   switch (nextPipe.type) {
     case "straight":
       let straight = new Straight(index, ctx);
-      return straight.drawSludge(ctx, x, y, prevDir, 1, index);
-
+      returnVal = await straight.drawSludge(ctx, x, y, prevDir, 1, index);
+      return returnVal;
     case "elbow":
       let elbow = new Elbow(index, ctx);
-      return elbow.drawSludge(ctx, x, y, prevDir, (0.5 * Math.PI) / 200, index);
-
+      returnVal = await elbow.drawSludge(
+        ctx,
+        x,
+        y,
+        prevDir,
+        (0.5 * Math.PI) / 200,
+        index
+      );
+      return returnVal;
     case "cross":
-      let cross = new Cross(ctx);
-      return cross.drawSludge(ctx, x, y, prevDir, 1, index);
+      let cross = new Cross(index, ctx);
+      returnVal = await cross.drawSludge(ctx, x, y, prevDir, 1, index);
+      return returnVal;
   }
-};
 ```
 
 Elbow Class
@@ -117,43 +125,87 @@ Elbow Class
     ctx.lineWidth = 15;
     ctx.stroke();
   }
-  drawSludge(ctx, x, y, prevDir, sludgeStep, index) {
+  async drawSludge(ctx, x, y, prevDir, sludgeStep, index) {
+    this.isFull = true;
     let orientation = this.orientationArr[index];
     let newStart, newEnd;
+    await this.sleepFunction(5);
     ctx.beginPath();
+    const nextSpaceArr = new Array(5);
     // positive arc direction
     if (prevDir === "right" && orientation.corner === "bottomLeft") {
       newStart = 1.5 * Math.PI;
       newEnd = newStart + sludgeStep;
+      nextSpaceArr[0] = 1;
+      nextSpaceArr[1] = x + orientation.offset_x;
+      nextSpaceArr[2] = x + orientation.offset_x + 50;
+      nextSpaceArr[3] = y + orientation.offset_y;
+      nextSpaceArr[4] = y + orientation.offset_y + 50;
     }
     if (prevDir === "down" && orientation.corner === "topLeft") {
       newStart = 0;
-      newEnd = sludgeStep;
+      newEnd = newStart + sludgeStep;
+      nextSpaceArr[0] = 2;
+      nextSpaceArr[1] = x + orientation.offset_x - 50;
+      nextSpaceArr[2] = x + orientation.offset_x;
+      nextSpaceArr[3] = y + orientation.offset_y;
+      nextSpaceArr[4] = y + orientation.offset_y + 50;
     }
     if (prevDir === "up" && orientation.corner === "bottomRight") {
       newStart = 1 * Math.PI;
       newEnd = newStart + sludgeStep;
+      nextSpaceArr[0] = 0;
+      nextSpaceArr[1] = x + orientation.offset_x;
+      nextSpaceArr[2] = x + orientation.offset_x + 50;
+      nextSpaceArr[3] = y + orientation.offset_y - 50;
+      nextSpaceArr[4] = y + orientation.offset_y;
     }
     if (prevDir === "left" && orientation.corner === "topRight") {
       newStart = 0.5 * Math.PI;
       newEnd = newStart + sludgeStep;
+      nextSpaceArr[0] = 3;
+      nextSpaceArr[1] = x + orientation.offset_x - 50;
+      nextSpaceArr[2] = x + orientation.offset_x;
+      nextSpaceArr[3] = y + orientation.offset_y - 50;
+      nextSpaceArr[4] = y + orientation.offset_y;
     }
     // negative arc direction
     if (prevDir === "up" && orientation.corner === "bottomLeft") {
-      newStart = 0 * Math.PI;
-      newEnd = newStart - sludgeStep;
+      newEnd = 0 * Math.PI;
+      newStart = newEnd - sludgeStep;
+
+      nextSpaceArr[0] = 2;
+      nextSpaceArr[1] = x + orientation.offset_x - 50;
+      nextSpaceArr[2] = x + orientation.offset_x;
+      nextSpaceArr[3] = y + orientation.offset_y - 50;
+      nextSpaceArr[4] = y + orientation.offset_y;
     }
     if (prevDir === "left" && orientation.corner === "bottomRight") {
-      newStart = 1.5 * Math.PI;
-      newEnd = newStart - sludgeStep;
+      newEnd = 1.5 * Math.PI;
+      newStart = newEnd - sludgeStep;
+      nextSpaceArr[0] = 1;
+      nextSpaceArr[1] = x + orientation.offset_x - 50;
+      nextSpaceArr[2] = x + orientation.offset_x;
+      nextSpaceArr[3] = y + orientation.offset_y;
+      nextSpaceArr[4] = y + orientation.offset_y + 50;
     }
     if (prevDir === "right" && orientation.corner === "topLeft") {
-      newStart = 0.5 * Math.PI;
-      newEnd = newStart - sludgeStep;
+      newEnd = 0.5 * Math.PI;
+      newStart = newEnd - sludgeStep;
+      nextSpaceArr[0] = 3;
+      nextSpaceArr[1] = x + orientation.offset_x;
+      nextSpaceArr[2] = x + orientation.offset_x + 50;
+      nextSpaceArr[3] = y + orientation.offset_y - 50;
+      nextSpaceArr[4] = y + orientation.offset_y;
     }
     if (prevDir === "down" && orientation.corner === "topRight") {
-      newStart = 1 * Math.PI;
-      newEnd = newStart - sludgeStep;
+      newEnd = 1 * Math.PI;
+      newStart = newEnd - sludgeStep;
+      nextSpaceArr[0] = 0;
+      nextSpaceArr[1] = x + orientation.offset_x;
+      nextSpaceArr[2] = x + orientation.offset_x + 50;
+      nextSpaceArr[3] = y + orientation.offset_y;
+      nextSpaceArr[4] = y + orientation.offset_y + 50;
     }
     ctx.arc(
       x + orientation.offset_x,
@@ -164,14 +216,12 @@ Elbow Class
     );
 
     ctx.lineWidth = 10;
-    ctx.strokeStyle = "#65FF00";
+    ctx.strokeStyle = "#32CD32";
     ctx.stroke();
     ctx.strokeStyle = "#000000";
 
     if (sludgeStep < 0.5 * Math.PI) {
-      setTimeout(
-        this.asyncDrawSludge,
-        30,
+      return this.asyncDrawSludge(
         x,
         y,
         prevDir,
@@ -179,13 +229,7 @@ Elbow Class
         index
       );
     } else {
-      let nextSpace = {
-        0: prevDir,
-        1: index,
-        3: x + orientation.offset_x_2,
-        4: y + orientation.offset_y_2
-      };
-      return nextSpace;
+      return nextSpaceArr;
     }
   }
   //sludgeStep should be (.5 * Math.PI)/200
