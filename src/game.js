@@ -32,7 +32,7 @@ class Game {
 
       direction = this.directionOptionsObj[coordinateArr[0]];
       nextShape = this.board.findDirection(coordinateArr.slice(1));
-      await this.sleepFunction(30);
+      await this.sleepFunction(5);
     }
     this.background.spillOut(nextShape, direction);
     console.log("game over");

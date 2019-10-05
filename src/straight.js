@@ -84,7 +84,7 @@ class Straight {
       newOffset = 50 - sludgeStep;
     }
 
-    await this.sleepFunction(30);
+    await this.sleepFunction(5);
     ctx.beginPath();
     if (prevDir === "down") {
       ctx.moveTo(x + orientation.offset_x_1, y + orientation.offset_y_1);

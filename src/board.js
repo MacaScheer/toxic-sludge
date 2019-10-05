@@ -7,7 +7,6 @@ class Board {
     this.ctx = ctx;
   }
 
-
   createGrid(ctx) {
     ctx.beginPath();
 
@@ -110,8 +109,6 @@ class Board {
     console.log("BOARD FILLPIPES RETURN VAL: ", returnVal);
     return returnVal;
   }
-
-  
 }
 
 module.exports = Board;

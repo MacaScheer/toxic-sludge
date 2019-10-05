@@ -67,7 +67,7 @@ class Elbow {
     this.isFull = true;
     let orientation = this.orientationArr[index];
     let newStart, newEnd;
-    await this.sleepFunction(30);
+    await this.sleepFunction(5);
     ctx.beginPath();
     const nextSpaceArr = new Array(5);
     // positive arc direction
