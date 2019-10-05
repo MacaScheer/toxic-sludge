@@ -48,61 +48,63 @@ class Straight {
     this.isFull = true;
     let orientation = this.orientationArr[index];
     let nextSpaceArr = new Array(5);
-
     if (prevDir === "right") {
       nextSpaceArr[0] = 0;
       nextSpaceArr[1] = x + 50;
-      nextSpaceArr[2] = x + 50 + sludgeStep;
+      nextSpaceArr[2] = x + 100;
       nextSpaceArr[3] = y;
       nextSpaceArr[4] = y + 50;
     }
     if (prevDir === "left") {
       nextSpaceArr[0] = 2;
-      nextSpaceArr[1] = x - 50 - sludgeStep;
-      nextSpaceArr[2] = x - 50;
-      nextSpaceArr[3] = y - 50 - sludgeStep;
-      nextSpaceArr[4] = y - 50;
+      nextSpaceArr[1] = x - 50;
+      nextSpaceArr[2] = x;
+      nextSpaceArr[3] = y;
+      nextSpaceArr[4] = y + 50;
     }
     if (prevDir === "down") {
       nextSpaceArr[0] = 1;
       nextSpaceArr[1] = x;
       nextSpaceArr[2] = x + 50;
       nextSpaceArr[3] = y + 50;
-      nextSpaceArr[4] = y + 50 + sludgeStep;
+      nextSpaceArr[4] = y + 100;
     }
     if (prevDir === "up") {
       nextSpaceArr[0] = 3;
       nextSpaceArr[1] = x;
       nextSpaceArr[2] = x + 50;
-      nextSpaceArr[3] = y - 50 - sludgeStep;
+      nextSpaceArr[3] = y - 50;
       nextSpaceArr[4] = y;
     }
+    let newOffset;
     if (prevDir === "down" || prevDir === "right") {
-      sludgeStep = sludgeStep;
+      newOffset = sludgeStep;
     }
     if (prevDir === "up" || prevDir === "left") {
-      sludgeStep = 50 - sludgeStep;
+      newOffset = 50 - sludgeStep;
     }
 
     await this.sleepFunction(30);
     ctx.beginPath();
     if (prevDir === "down") {
       ctx.moveTo(x + orientation.offset_x_1, y + orientation.offset_y_1);
-      ctx.lineTo(x + orientation.offset_x_2, y + sludgeStep);
+      ctx.lineTo(x + orientation.offset_x_2, y + newOffset);
       nextSpaceArr[0] = 1;
     } else if (prevDir === "up") {
       debugger;
-      ctx.moveTo(x + orientation.offset_x_2, y + orientation.offset_y_2);
-      ctx.lineTo(x + orientation.offset_x_1, y + sludgeStep);
+      // ctx.moveTo(x + orientation.offset_x_2, y + orientation.offset_y_2);
+      // ctx.lineTo(x + orientation.offset_x_1, y + sludgeStep);
+      ctx.moveTo(x + orientation.offset_x_1, y + newOffset);
+      ctx.lineTo(x + orientation.offset_x_2, y + orientation.offset_y_2);
       nextSpaceArr[0] = 3;
     } else if (prevDir === "left") {
       debugger;
       ctx.moveTo(x + orientation.offset_x_2, y + orientation.offset_y_2);
-      ctx.lineTo(x + sludgeStep, y + orientation.offset_y_1);
+      ctx.lineTo(x + newOffset, y + orientation.offset_y_1);
       nextSpaceArr[0] = 2;
     } else if (prevDir === "right") {
       ctx.moveTo(x + orientation.offset_x_1, y + orientation.offset_y_1);
-      ctx.lineTo(x + sludgeStep, y + orientation.offset_y_2);
+      ctx.lineTo(x + newOffset, y + orientation.offset_y_2);
       nextSpaceArr[0] = 0;
     }
 

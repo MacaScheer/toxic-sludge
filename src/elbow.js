@@ -200,36 +200,6 @@ class Elbow {
     console.log("OPENPOINTS INCLUDES?:", openPoints.includes(inPoint));
     return openPoints.includes(inPoint);
   }
-  //having an outDir and outPoint in this case is pointless, but not so with the straight and cross
-  // direction(inDir) {
-  //   let corner = this.orientationArr[this.orientationIndex].corner;
-  //   if (
-  //     (corner === "topLeft" && inDir === "down") ||
-  //     (corner === "bottomLeft" && inDir === "up")
-  //   ) {
-  //     this.outDir = "left";
-  //   }
-  //   if (
-  //     (corner === "topRight" && inDir === "left") ||
-  //     (corner === "topLeft" && inDir === "right")
-  //   ) {
-  //     this.outDir = "up";
-  //   }
-
-  //   if (
-  //     (corner === "topRight" && inDir === "down") ||
-  //     (corner === "bottomRight" && inDir === "up")
-  //   ) {
-  //     this.outDir = "right";
-  //   }
-
-  //   if (
-  //     (corner === "bottomLeft" && inDir === "right") ||
-  //     (corner === "bottomRight" && inDir === "left")
-  //   ) {
-  //     this.outDir = "down";
-  //   }
-  // }
 }
 
 module.exports = Elbow;
