@@ -34,8 +34,13 @@ class Game {
       nextShape = this.board.findDirection(coordinateArr.slice(1));
       await this.sleepFunction(5);
     }
+    // if (nextShape[xRange] === [700, 750] && nextShape[yRange] === [250, 300]) {
+    //   console.log("YOU SAVED THE CITY FROM TOXICITY!!!");
+    //   this.Message.winMessage();
+    // } else {
     this.background.spillOut(nextShape, direction);
     console.log("game over");
+    // }
 
     return;
   }

@@ -2,14 +2,14 @@ class Background {
   constructor(ctx2) {
     this.ctx2 = ctx2;
     this.spillOut = this.spillOut.bind(this);
-    this.createBG = this.createBG.bind(this);
+    // this.createBG = this.createBG.bind(this);
   }
 
-  createBG() {
-    this.ctx2.beginPath();
-    this.ctx2.rect(0, 0, 2500, 2500);
-    this.ctx2.stroke();
-  }
+  // createBG() {
+  //   this.ctx2.beginPath();
+  //   this.ctx2.rect(0, 0, 2500, 2500);
+  //   this.ctx2.stroke();
+  // }
   async spillOut(nextShape, direction) {
     // console.log("NEXTSHAPE", nextShape);
     let x = nextShape.xRange[0];
