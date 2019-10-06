@@ -11,12 +11,9 @@ class Background {
     this.ctx2.stroke();
   }
   async spillOut(nextShape, direction) {
-    console.log("NEXTSHAPE", nextShape);
+    // console.log("NEXTSHAPE", nextShape);
     let x = nextShape.xRange[0];
     let y = nextShape.yRange[0];
-    console.log("coordinates X", x);
-    console.log("coordinates Y", y);
-
     let ctx2 = this.ctx2;
     let offset_x, offset_y;
     if (direction === "right" || direction === "left") offset_y = 25;
