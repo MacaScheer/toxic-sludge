@@ -8,7 +8,7 @@ class Background {
   async spillOut(nextShape, direction) {
     let x = nextShape.xRange[0];
     let y = nextShape.yRange[0];
-    let ctx = this.ctx2;
+    let ctx = this.ctx;
     let offset_x, offset_y;
     if (direction === "right" || direction === "left") offset_y = 25;
     if (direction === "down" || direction === "up") offset_x = 25;

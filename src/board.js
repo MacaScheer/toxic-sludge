@@ -103,10 +103,7 @@ class Board {
     return returnVal;
   }
   async fillPipes(direction, nextShape) {
-    console.log("SHAPES OBJECT:  ", this.shapesObj);
-    console.log("SHAPE from fillPIPE() in BOARD", nextShape);
     let returnVal = await nextShape.drawSludge(nextShape, direction, this.ctx);
-    console.log("BOARD FILLPIPES RETURN VAL: ", returnVal);
     return returnVal;
   }
 }
