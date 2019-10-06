@@ -25,12 +25,27 @@ class Background {
     ctx2.beginPath();
     ctx2.lineWidth = 5;
     ctx2.strokeStyle = "#32CD32";
-    for (let i = 0; i < 500; i += 0.25) {
-      await this.sleepFunction(5);
+    for (let i = 0; i < 400; i += 3) {
+      await this.sleepFunction(4);
       ctx2.arc(x + offset_x, y + offset_y, i, 0, 2 * Math.PI);
       ctx2.stroke();
     }
+    this.showMessage(ctx2);
   }
+  showMessage(ctx2) {
+    let canvas = document.getElementById("gameboard");
+    ctx2.clearRect(200, 150, 350, 250);
+    ctx2.font = "20px Arial";
+    ctx2.fillStyle = "black";
+    ctx2.textAlign = "center";
+    ctx2.fillText("Game Over!", canvas.width / 2, canvas.height / 3);
+    ctx2.fillText(
+      "Ground water has been contaminated!",
+      canvas.width / 2,
+      canvas.height / 2
+    );
+  }
+
   sleepFunction(ms) {
     return new Promise(res => setTimeout(res, ms));
   }
