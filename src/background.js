@@ -38,7 +38,7 @@ class Background {
     ctx2.font = "20px Arial";
     ctx2.fillStyle = "black";
     ctx2.textAlign = "center";
-    ctx2.fillText("Game Over!", canvas.width / 2, canvas.height / 3);
+    ctx2.fillText("Game Over!", canvas.width / 2, (canvas.height * 2) / 5);
     ctx2.fillText(
       "Ground water has been contaminated!",
       canvas.width / 2,
