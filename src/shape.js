@@ -34,7 +34,7 @@ class Shape {
 // };
 
 Shape.prototype.drawSludgeEntry = async function(ctx, sludgeStep = 0) {
-  await this.sleepFunction(30);
+  await this.sleepFunction(10);
   sludgeStep += 0.25;
   ctx.beginPath();
   ctx.moveTo(0, 275);
