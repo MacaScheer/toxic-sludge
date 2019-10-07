@@ -1,10 +1,12 @@
 const Shape = require("./shape.js");
+const Message = require("./message");
 
 class Board {
   constructor(ctx) {
     this.types = ["elbow", "straight", "straight", "cross", "elbow"];
     this.shapesObj = {};
     this.ctx = ctx;
+    this.message = new Message(ctx);
   }
 
   createGrid(ctx) {
@@ -90,12 +92,16 @@ class Board {
   }
 
   getValidFlow(prevDir, nextPipe) {
+    // if (nextPipe) {
+    //   this.message.winMessage();
+    // } else {
     let nextType = nextPipe.type;
     if (nextType === "cross") {
       return true;
     } else {
       return nextPipe.validPipeFlow(nextPipe, prevDir);
     }
+    // }
   }
   async fillEntryPipe() {
     const entry = new Shape("entry", 1, [0, 50], [250, 300], this.ctx);
