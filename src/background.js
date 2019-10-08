@@ -24,7 +24,7 @@ class Background {
       ctx.arc(x + offset_x, y + offset_y, i, 0, 2 * Math.PI);
       ctx.stroke();
     }
-    this.message.showMessage();
+    this.message.showMessage("lose");
   }
 
   sleepFunction(ms) {

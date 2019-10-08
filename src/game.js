@@ -15,8 +15,6 @@ class Game {
     };
   }
   start() {
-    let date = new Date();
-    let timeNow = date.getTime();
     this.play();
   }
 
@@ -32,15 +30,19 @@ class Game {
       direction = this.directionOptionsObj[coordinateArr[0]];
       nextShape = this.board.findDirection(coordinateArr.slice(1));
       await this.sleepFunction(5);
-      if (nextShape.xRange[0] === 700 && nextShape.yRange[0] === 250) {
-        console.log("YOU SAVED THE CITY");
-        this.message.winMessage();
+      if (!nextShape) {
+        console.log("YOU WENT OFF-GRID!");
+        this.message.showMessage("offGrid");
+        return;
       }
-
+      if (nextShape.xRange[0] >= 700 && nextShape.yRange[0] === 250) {
+        console.log("YOU SAVED THE CITY");
+        this.message.showMessage("win");
+        return;
+      }
     }
-    debugger;
-      this.background.spillOut(nextShape, direction);
-      console.log("game over");
+    this.background.spillOut(nextShape, direction);
+    console.log("game over");
     return;
   }
 
