@@ -50,11 +50,6 @@ class Message {
         this.ctx.fillText(
           "Rotate the pipes to route the sludge",
           this.canvas.width / 2,
-          (this.canvas.height * 2) / 5
-        );
-        this.ctx.fillText(
-          "Press 'Play' to start",
-          this.canvas.width / 2,
           this.canvas.height / 2
         );
     }
