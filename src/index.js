@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", function() {
   const message = new Message(ctx);
   const background = new Background(ctx, message);
   const board = new Board(ctx);
+  message.showMessage("start");
   playButton.addEventListener("click", function(params) {
     board.createGrid(ctx);
     const game = new Game(board, background, message);
