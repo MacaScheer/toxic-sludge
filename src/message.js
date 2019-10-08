@@ -45,6 +45,7 @@ class Message {
           this.canvas.width / 2,
           this.canvas.height / 2
         );
+        break;
       case "start":
         this.ctx.fillText(
           "Rotate the pipes to route the sludge",
