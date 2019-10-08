@@ -126,7 +126,6 @@ Elbow Class
     ctx.stroke();
   }
   async drawSludge(ctx, x, y, prevDir, sludgeStep, index) {
-    this.isFull = true;
     let orientation = this.orientationArr[index];
     let newStart, newEnd;
     await this.sleepFunction(5);

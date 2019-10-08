@@ -1,10 +1,12 @@
 const Shape = require("./shape.js");
+const Message = require("./message");
 
 class Board {
   constructor(ctx) {
     this.types = ["elbow", "straight", "straight", "cross", "elbow"];
     this.shapesObj = {};
     this.ctx = ctx;
+    this.message = new Message(ctx);
   }
 
   createGrid(ctx) {
@@ -24,7 +26,7 @@ class Board {
 
     for (let x = 0, i = 0; i < 15; x += 50, i++) {
       for (let y = 0, j = 0; j < 13; y += 50, j++) {
-        let type = this.types[Math.floor(Math.random() * 4)];
+        let type = this.types[Math.floor(Math.random() * 5)];
         let xRange = [x, x + 50];
         let yRange = [y, y + 50];
         if (x === 0 && y === 250) {
@@ -65,20 +67,17 @@ class Board {
         y <= rangeArr[3]
       ) {
         selectShape = this.shapesObj[range];
-
         let selectId = selectShape.orientationIndex;
 
-        if (!this.isFull) {
-          if (selectShape.type === "elbow") {
-            selectId = Math.floor((selectId + 1) % 4);
-            selectShape.reDraw(selectId, range, this.ctx, selectShape.type);
-            this.shapesObj[range].orientationIndex = selectId;
-          }
-          if (selectShape.type === "straight") {
-            selectId = Math.floor((selectId + 1) % 2);
-            selectShape.reDraw(selectId, range, this.ctx, selectShape.type);
-            this.shapesObj[range].orientationIndex = selectId;
-          }
+        if (selectShape.type === "elbow") {
+          selectId = Math.floor((selectId + 1) % 4);
+          selectShape.reDraw(selectId, range, this.ctx, selectShape.type);
+          this.shapesObj[range].orientationIndex = selectId;
+        }
+        if (selectShape.type === "straight") {
+          selectId = Math.floor((selectId + 1) % 2);
+          selectShape.reDraw(selectId, range, this.ctx, selectShape.type);
+          this.shapesObj[range].orientationIndex = selectId;
         }
       }
     });
@@ -103,10 +102,7 @@ class Board {
     return returnVal;
   }
   async fillPipes(direction, nextShape) {
-    console.log("SHAPES OBJECT:  ", this.shapesObj);
-    console.log("SHAPE from fillPIPE() in BOARD", nextShape);
     let returnVal = await nextShape.drawSludge(nextShape, direction, this.ctx);
-    console.log("BOARD FILLPIPES RETURN VAL: ", returnVal);
     return returnVal;
   }
 }

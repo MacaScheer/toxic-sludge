@@ -1,8 +1,7 @@
-// const Board = require("./board");
-// const Background = require("./background");
 class Game {
-  constructor(board, background) {
+  constructor(board, background, message) {
     this.board = board;
+    this.message = message;
     this.background = background;
     this.isGameOver = false;
     this.start = this.start.bind(this);
@@ -16,8 +15,6 @@ class Game {
     };
   }
   start() {
-    let date = new Date();
-    let timeNow = date.getTime();
     this.play();
   }
 
@@ -33,23 +30,25 @@ class Game {
       direction = this.directionOptionsObj[coordinateArr[0]];
       nextShape = this.board.findDirection(coordinateArr.slice(1));
       await this.sleepFunction(5);
+      if (!nextShape) {
+        console.log("YOU WENT OFF-GRID!");
+        this.message.showMessage("offGrid");
+        return;
+      }
+      if (nextShape.xRange[0] >= 700 && nextShape.yRange[0] === 250) {
+        console.log("YOU SAVED THE CITY");
+        this.message.showMessage("win");
+        return;
+      }
     }
-    // if (nextShape[xRange] === [700, 750] && nextShape[yRange] === [250, 300]) {
-    //   console.log("YOU SAVED THE CITY FROM TOXICITY!!!");
-    //   this.Message.winMessage();
-    // } else {
     this.background.spillOut(nextShape, direction);
     console.log("game over");
-    // }
-
     return;
   }
 
   sleepFunction(ms) {
     return new Promise(res => setTimeout(res, ms));
   }
-
-  startGameModal() {}
 }
 
 module.exports = Game;
