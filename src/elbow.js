@@ -1,11 +1,10 @@
 // const Shape = require("./shape");
 
 class Elbow {
-  constructor(index, ctx, isFull = false) {
+  constructor(index, ctx) {
     this.orientationIndex = index;
     this.radius = 25;
     this.ctx = ctx;
-    this.isFull = isFull;
     this.drawSludge = this.drawSludge.bind(this);
     this.asyncDrawSludge = this.asyncDrawSludge.bind(this);
     this.orientationArr = [
@@ -47,7 +46,6 @@ class Elbow {
   }
 
   draw(ctx, x, y) {
-    if (!this.isFull) {
       let orientation = this.orientationArr[this.orientationIndex];
       ctx.clearRect(x + 1, y + 1, 49, 49);
       ctx.beginPath();
@@ -60,11 +58,9 @@ class Elbow {
       );
       ctx.lineWidth = 15;
       ctx.stroke();
-    }
   }
 
   async drawSludge(ctx, x, y, prevDir, sludgeStep, index) {
-    this.isFull = true;
     let orientation = this.orientationArr[index];
     let newStart, newEnd;
     await this.sleepFunction(5);

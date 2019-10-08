@@ -1,10 +1,9 @@
 const Shape = require("./shape");
 
 class Straight {
-  constructor(index, ctx, isFull = false) {
+  constructor(index, ctx) {
     this.orientationIndex = index;
     this.ctx = ctx;
-    this.isFull = isFull;
     this.drawSludge = this.drawSludge.bind(this);
     this.asyncDrawSludge = this.asyncDrawSludge.bind(this);
     this.orientationArr = [
@@ -33,7 +32,6 @@ class Straight {
   }
 
   draw(ctx, x, y) {
-    if (!this.isFull) {
       let orientation = this.orientationArr[this.orientationIndex];
       ctx.clearRect(x + 1, y + 1, 49, 49);
       ctx.beginPath();
@@ -41,11 +39,9 @@ class Straight {
       ctx.lineTo(x + orientation.offset_x_2, y + orientation.offset_y_2);
       ctx.lineWidth = 15;
       ctx.stroke();
-    }
   }
 
   async drawSludge(ctx, x, y, prevDir, sludgeStep, index) {
-    this.isFull = true;
     let orientation = this.orientationArr[index];
     let nextSpaceArr = new Array(5);
     if (prevDir === "right") {

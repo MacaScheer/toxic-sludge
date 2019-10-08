@@ -26,7 +26,7 @@ class Board {
 
     for (let x = 0, i = 0; i < 15; x += 50, i++) {
       for (let y = 0, j = 0; j < 13; y += 50, j++) {
-        let type = this.types[Math.floor(Math.random() * 4)];
+        let type = this.types[Math.floor(Math.random() * 5)];
         let xRange = [x, x + 50];
         let yRange = [y, y + 50];
         if (x === 0 && y === 250) {
@@ -67,20 +67,17 @@ class Board {
         y <= rangeArr[3]
       ) {
         selectShape = this.shapesObj[range];
-
         let selectId = selectShape.orientationIndex;
 
-        if (!this.isFull) {
-          if (selectShape.type === "elbow") {
-            selectId = Math.floor((selectId + 1) % 4);
-            selectShape.reDraw(selectId, range, this.ctx, selectShape.type);
-            this.shapesObj[range].orientationIndex = selectId;
-          }
-          if (selectShape.type === "straight") {
-            selectId = Math.floor((selectId + 1) % 2);
-            selectShape.reDraw(selectId, range, this.ctx, selectShape.type);
-            this.shapesObj[range].orientationIndex = selectId;
-          }
+        if (selectShape.type === "elbow") {
+          selectId = Math.floor((selectId + 1) % 4);
+          selectShape.reDraw(selectId, range, this.ctx, selectShape.type);
+          this.shapesObj[range].orientationIndex = selectId;
+        }
+        if (selectShape.type === "straight") {
+          selectId = Math.floor((selectId + 1) % 2);
+          selectShape.reDraw(selectId, range, this.ctx, selectShape.type);
+          this.shapesObj[range].orientationIndex = selectId;
         }
       }
     });
@@ -92,16 +89,12 @@ class Board {
   }
 
   getValidFlow(prevDir, nextPipe) {
-    // if (nextPipe) {
-    //   this.message.winMessage();
-    // } else {
     let nextType = nextPipe.type;
     if (nextType === "cross") {
       return true;
     } else {
       return nextPipe.validPipeFlow(nextPipe, prevDir);
     }
-    // }
   }
   async fillEntryPipe() {
     const entry = new Shape("entry", 1, [0, 50], [250, 300], this.ctx);
