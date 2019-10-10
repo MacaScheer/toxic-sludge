@@ -5,9 +5,9 @@ class Message {
     this.canvas = document.getElementById("gameboard");
   }
   showMessage(type) {
-    this.ctx.clearRect(200, 150, 350, 250);
-    this.ctx.font = "20px Arial";
-    this.ctx.fillStyle = "black";
+    this.ctx.clearRect(25, 150, 700, 250);
+    this.ctx.font = "35px Arial";
+    this.ctx.fillStyle = "#32CD32";
     this.ctx.textAlign = "center";
     switch (type) {
       case "win":
@@ -48,9 +48,19 @@ class Message {
         break;
       case "start":
         this.ctx.fillText(
-          "Rotate the pipes to route the sludge",
+          "Click on the squares to rotate the pipes.",
+          this.canvas.width / 2,
+          (this.canvas.height * 3) / 7
+        );
+        this.ctx.fillText(
+          "Route the sludge through the town",
           this.canvas.width / 2,
           this.canvas.height / 2
+        );
+        this.ctx.fillText(
+          "PLAY",
+          this.canvas.width / 2,
+          (this.canvas.height * 5) / 7
         );
     }
   }

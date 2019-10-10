@@ -10,11 +10,15 @@ document.addEventListener("DOMContentLoaded", function() {
   const background = new Background(ctx, message);
   const board = new Board(ctx);
   message.showMessage("start");
-  playButton.addEventListener("click", function(params) {
-    board.createGrid(ctx);
-    const game = new Game(board, background, message);
-    game.start();
-  });
+  canvasEl.addEventListener(
+    "click",
+    function() {
+      board.createGrid(ctx);
+      const game = new Game(board, background, message);
+      game.start();
+    },
+    { once: true }
+  );
   canvasEl.addEventListener("click", function(params) {
     let clickSpot = [event.pageX, event.pageY];
     board.rotateShape(clickSpot);
