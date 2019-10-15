@@ -29,13 +29,13 @@ class Game {
 
       direction = this.directionOptionsObj[coordinateArr[0]];
       nextShape = this.board.findDirection(coordinateArr.slice(1));
-      await this.sleepFunction(5);
+      await this.sleepFunction(10);
       if (!nextShape) {
         console.log("YOU WENT OFF-GRID!");
         this.message.showMessage("offGrid");
         return;
       }
-      if (nextShape.xRange[0] >= 700 && nextShape.yRange[0] === 250) {
+      if (nextShape.xRange[0] >= 1600 && nextShape.yRange[0] === 350) {
         console.log("YOU SAVED THE CITY");
         this.message.showMessage("win");
         return;
