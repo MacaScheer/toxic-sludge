@@ -5,7 +5,7 @@ class Message {
     this.canvas = document.getElementById("gameboard");
   }
   showMessage(type) {
-    this.ctx.clearRect(25, 150, 700, 250);
+    this.ctx.clearRect(200, 100, 1250, 600);
     this.ctx.font = "35px Arial";
     this.ctx.fillStyle = "#32CD32";
     this.ctx.textAlign = "center";
@@ -48,19 +48,29 @@ class Message {
         break;
       case "start":
         this.ctx.fillText(
+          "Welcome to Toxic-Sludge!",
+          this.canvas.width / 2,
+          (this.canvas.height * 1.5) / 7
+        );
+        this.ctx.fillText(
+          "Route the sludge from the entry-pipe to the exit-pipe",
+          this.canvas.width / 2,
+          (this.canvas.height * 2.5) / 7
+        );
+        this.ctx.fillText(
+          "Each square contains a pipe-piece that rotates",
+          this.canvas.width / 2,
+          (this.canvas.height * 3.5) / 7
+        );
+        this.ctx.fillText(
           "Click on the squares to rotate the pipes.",
           this.canvas.width / 2,
-          (this.canvas.height * 3) / 7
+          (this.canvas.height * 4.5) / 7
         );
         this.ctx.fillText(
-          "Route the sludge through the town",
+          "click here to PLAY",
           this.canvas.width / 2,
-          this.canvas.height / 2
-        );
-        this.ctx.fillText(
-          "PLAY",
-          this.canvas.width / 2,
-          (this.canvas.height * 5) / 7
+          (this.canvas.height * 5.5) / 7
         );
     }
   }

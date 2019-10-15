@@ -9,12 +9,13 @@ document.addEventListener("DOMContentLoaded", function() {
   const message = new Message(ctx);
   const background = new Background(ctx, message);
   const board = new Board(ctx);
+  board.createGrid(ctx);
   message.showMessage("start");
   canvasEl.addEventListener(
     "click",
     function() {
-      board.createGrid(ctx);
       const game = new Game(board, background, message);
+      board.createGrid(ctx);
       game.start();
     },
     { once: true }
