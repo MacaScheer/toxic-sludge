@@ -63,7 +63,7 @@ class Elbow {
   async drawSludge(ctx, x, y, prevDir, sludgeStep, index) {
     let orientation = this.orientationArr[index];
     let newStart, newEnd;
-    await this.sleepFunction(5);
+    await this.sleepFunction(10);
     ctx.beginPath();
     const nextSpaceArr = new Array(5);
     // positive arc direction

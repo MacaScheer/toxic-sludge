@@ -21,8 +21,8 @@ Shape.prototype.drawSludgeEntry = async function(ctx, sludgeStep = 0) {
   await this.sleepFunction(10);
   sludgeStep += 0.25;
   ctx.beginPath();
-  ctx.moveTo(0, 275);
-  ctx.lineTo(sludgeStep, 275);
+  ctx.moveTo(0, 375);
+  ctx.lineTo(sludgeStep, 375);
   ctx.lineWidth = 10;
   ctx.strokeStyle = "#32CD32";
   ctx.stroke();
@@ -31,7 +31,7 @@ Shape.prototype.drawSludgeEntry = async function(ctx, sludgeStep = 0) {
   if (sludgeStep < 50) {
     return this.asyncDrawSludgeEntry(ctx, sludgeStep);
   } else {
-    return "0,50,100,250,300";
+    return "0,50,100,350,400";
   }
 };
 

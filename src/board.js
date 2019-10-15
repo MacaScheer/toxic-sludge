@@ -12,28 +12,28 @@ class Board {
   createGrid(ctx) {
     ctx.beginPath();
 
-    for (let x = 0, i = 0; i < 14; x += 50, i++) {
+    for (let x = 0, i = 0; i < 24; x += 50, i++) {
       ctx.moveTo(0, x);
-      ctx.lineTo(750, x);
+      ctx.lineTo(1650, x);
       ctx.lineWidth = 1;
       ctx.stroke();
     }
-    for (let x = 0, i = 0; i < 16; x += 50, i++) {
+    for (let x = 0, i = 0; i < 37; x += 50, i++) {
       ctx.moveTo(x, 0);
-      ctx.lineTo(x, 650);
+      ctx.lineTo(x, 800);
       ctx.stroke();
     }
 
-    for (let x = 0, i = 0; i < 15; x += 50, i++) {
-      for (let y = 0, j = 0; j < 13; y += 50, j++) {
+    for (let x = 0, i = 0; i < 33; x += 50, i++) {
+      for (let y = 0, j = 0; j < 16; y += 50, j++) {
         let type = this.types[Math.floor(Math.random() * 5)];
         let xRange = [x, x + 50];
         let yRange = [y, y + 50];
-        if (x === 0 && y === 250) {
+        if (x === 0 && y === 350) {
           const entry = new Shape("entry", 1, xRange, yRange, this.ctx);
           entry.drawShape(ctx, x, y);
           this.shapesObj[[xRange, yRange]] = entry;
-        } else if (x === 700 && y === 250) {
+        } else if (x === 1600 && y === 350) {
           const exit = new Shape("exit", 0, xRange, yRange, this.ctx);
           exit.drawShape(ctx, x, y);
           this.shapesObj[[xRange, yRange]] = exit;
@@ -97,7 +97,7 @@ class Board {
     }
   }
   async fillEntryPipe() {
-    const entry = new Shape("entry", 1, [0, 50], [250, 300], this.ctx);
+    const entry = new Shape("entry", 1, [0, 50], [350, 400], this.ctx);
     let returnVal = await entry.drawSludgeEntry(this.ctx);
     return returnVal;
   }
