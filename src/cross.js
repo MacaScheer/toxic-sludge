@@ -68,7 +68,7 @@ class Cross {
       nextSpaceArr[3] = y + 50;
       nextSpaceArr[4] = y + 100;
     }
-    await this.sleepFunction(10);
+    await this.sleepFunction(7);
 
     ctx.beginPath();
     if (prevDir === "up" || prevDir === "down") {
