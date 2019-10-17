@@ -29,7 +29,7 @@ class Game {
 
       direction = this.directionOptionsObj[coordinateArr[0]];
       nextShape = this.board.findDirection(coordinateArr.slice(1));
-      await this.sleepFunction(10);
+      await this.sleepFunction(7);
       if (!nextShape) {
         console.log("YOU WENT OFF-GRID!");
         this.message.showMessage("offGrid");
