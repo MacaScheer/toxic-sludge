@@ -5,7 +5,7 @@ class Background {
     this.message = message;
   }
 
-  async spillOut(nextShape, direction) {
+  async spillOut(nextShape, direction, points) {
     let x = nextShape.xRange[0];
     let y = nextShape.yRange[0];
     let ctx = this.ctx;
@@ -24,7 +24,8 @@ class Background {
       ctx.arc(x + offset_x, y + offset_y, i, 0, 2 * Math.PI);
       ctx.stroke();
     }
-    this.message.showMessage("lose");
+    this.message.showMessage("lose", points);
+    ctx.strokeStyle = "#000000";
   }
 
   sleepFunction(ms) {

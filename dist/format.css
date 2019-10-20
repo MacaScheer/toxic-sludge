@@ -1,8 +1,37 @@
 body {
   background: url("./underground1.png");
   background-repeat: no-repeat;
-  background-size: 1660px 820px;
+  background-size: 1281px 667px;
+}
+.modal {
+  /* background: url:("") */
+  background-repeat: no-repeat;
+  /* background-size: 1400 */
 }
 h1 {
   align-content: center;
+}
+
+button {
+  margin-right: 880px;
+  margin-top: 5px;
+  width: 175px;
+  height: 30px;
+  text-overflow: ellipsis;
+  font-size: 14px;
+  font-weight: 700;
+  color: rgb(11, 11, 10);
+  box-sizing: border-box;
+  margin-bottom: 7px;
+  background-color: rgb(60, 203, 62);
+  border-radius: 4px;
+  outline: none;
+  border: 1px solid #fafafa;
+}
+button:hover {
+  cursor: pointer;
+}
+
+span {
+  margin-left: 1050px;
 }

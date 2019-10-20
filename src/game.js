@@ -1,3 +1,5 @@
+const Board = require("./board");
+
 class Game {
   constructor(board, background, message) {
     this.board = board;
@@ -7,6 +9,7 @@ class Game {
     this.start = this.start.bind(this);
     this.play = this.play.bind(this);
     this.dirString = "";
+    this.points = 0;
     this.directionOptionsObj = {
       0: "right",
       1: "down",
@@ -22,9 +25,10 @@ class Game {
     let entryReturn = await this.board.fillEntryPipe();
     let coordinateArr = entryReturn.split(",");
     let direction = this.directionOptionsObj[coordinateArr[0]];
-    let nextShape = this.board.findDirection(coordinateArr.slice(1), direction);
+    let nextShape = this.board.findDirection(coordinateArr.slice(1));
 
-    while (this.board.getValidFlow(direction, nextShape)) {
+    while (this.board.getValidFlow(direction, nextShape) && !this.isGameOver) {
+      this.points += 1;
       let coordinateArr = await this.board.fillPipes(direction, nextShape);
 
       direction = this.directionOptionsObj[coordinateArr[0]];
@@ -32,17 +36,18 @@ class Game {
       await this.sleepFunction(7);
       if (!nextShape) {
         console.log("YOU WENT OFF-GRID!");
-        this.message.showMessage("offGrid");
+        this.message.showMessage("offGrid", this.points);
         return;
       }
-      if (nextShape.xRange[0] >= 1600 && nextShape.yRange[0] === 350) {
+      if (nextShape.xRange[0] >= 1205 && nextShape.yRange[0] === 300) {
         console.log("YOU SAVED THE CITY");
-        this.message.showMessage("win");
+        this.message.showMessage("win", this.points);
         return;
       }
     }
-    this.background.spillOut(nextShape, direction);
+    this.background.spillOut(nextShape, direction, this.points);
     console.log("game over");
+
     return;
   }
 

@@ -1,4 +1,5 @@
 const Elbow = require("./elbow");
+const Board = require("./board");
 // const DblElbow = require("./dblElbow");
 const Straight = require("./straight");
 const Cross = require("./cross");
@@ -17,21 +18,21 @@ class Shape {
   }
 }
 
-Shape.prototype.drawSludgeEntry = async function(ctx, sludgeStep = 0) {
+Shape.prototype.drawSludgeEntry = async function(ctx, sludgeStep = 5) {
   await this.sleepFunction(10);
   sludgeStep += 0.25;
   ctx.beginPath();
-  ctx.moveTo(0, 375);
-  ctx.lineTo(sludgeStep, 375);
+  ctx.moveTo(5, 325);
+  ctx.lineTo(sludgeStep, 325);
   ctx.lineWidth = 10;
   ctx.strokeStyle = "#32CD32";
   ctx.stroke();
   ctx.strokeStyle = "#000000";
 
-  if (sludgeStep < 50) {
+  if (sludgeStep < 55) {
     return this.asyncDrawSludgeEntry(ctx, sludgeStep);
   } else {
-    return "0,50,100,350,400";
+    return "0,55,105,300,350";
   }
 };
 
