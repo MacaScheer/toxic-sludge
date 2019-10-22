@@ -1,7 +1,7 @@
 body {
   background: url("./underground1.png");
   background-repeat: no-repeat;
-  background-size: 1281px 667px;
+  background-size: 1281px 807px;
 }
 .modal {
   /* background: url:("") */
@@ -13,10 +13,11 @@ h1 {
 }
 
 button {
-  margin-right: 880px;
-  margin-top: 5px;
-  width: 175px;
-  height: 30px;
+  margin-left: 550px;
+  margin-right: 330px;
+  margin-top: 0px;
+  width: 155px;
+  height: 20px;
   text-overflow: ellipsis;
   font-size: 14px;
   font-weight: 700;
@@ -26,7 +27,7 @@ button {
   background-color: rgb(60, 203, 62);
   border-radius: 4px;
   outline: none;
-  border: 1px solid #fafafa;
+  border: 1px solid rgb(11, 11, 10);
 }
 button:hover {
   cursor: pointer;
