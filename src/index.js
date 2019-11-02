@@ -2,6 +2,7 @@ const Board = require("./board");
 const Game = require("./game");
 const Background = require("./background");
 const Message = require("./message");
+
 document.addEventListener("DOMContentLoaded", function() {
   const canvasEl = document.getElementById("gameboard");
   const ctx = canvasEl.getContext("2d");
@@ -13,7 +14,8 @@ document.addEventListener("DOMContentLoaded", function() {
   board.createGrid(ctx);
   message.showMessage("start");
 
-  restartButton.addEventListener("click", function() {
+  restartButton.addEventListener("click", function () {
+    board.isGameOver = true;
     const newCanvasEl = document.getElementById("gameboard");
     const newCtx = newCanvasEl.getContext("2d");
     newCtx.clearRect(0, 0, 1265, 660);

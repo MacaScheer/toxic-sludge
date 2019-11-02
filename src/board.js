@@ -9,7 +9,7 @@ class Board {
     this.message = new Message(ctx);
   }
 
-  createGrid(ctx) {
+  createGrid(ctx, shapesObj = this.shapesObj) {
     ctx.beginPath();
 
     for (let x = 0, i = 0; i < 14; x += 50, i++) {
@@ -34,13 +34,13 @@ class Board {
         let xRange = [x, x + 50];
         let yRange = [y, y + 50];
         if (x === 5 && y === 300) {
-          const entry = new Shape("entry", 1, xRange, yRange, this.ctx);
+          const entry = new Shape("entry", 1, xRange, yRange, ctx);
           entry.drawShape(ctx, x, y);
-          this.shapesObj[[xRange, yRange]] = entry;
+          shapesObj[[xRange, yRange]] = entry;
         } else if (x === 1205 && y === 300) {
-          const exit = new Shape("exit", 0, xRange, yRange, this.ctx);
+          const exit = new Shape("exit", 0, xRange, yRange, ctx);
           exit.drawShape(ctx, x, y);
-          this.shapesObj[[xRange, yRange]] = exit;
+          shapesObj[[xRange, yRange]] = exit;
         } else {
           let id;
           if (type === "elbow") {
@@ -51,16 +51,16 @@ class Board {
           }
           const shape = new Shape(type, id, xRange, yRange, ctx);
           shape.drawShape(ctx, x, y);
-          this.shapesObj[[xRange, yRange]] = shape;
+          shapesObj[[xRange, yRange]] = shape;
         }
       }
     }
     ctx.fill();
   }
 
-  rotateShape(clickSpot) {
+  rotateShape(clickSpot, shapesObj = this.shapesObj, ctx = this.ctx) {
     let [x, y] = [clickSpot[0], clickSpot[1]];
-    const ranges = Object.keys(this.shapesObj);
+    const ranges = Object.keys(shapesObj);
     let selectShape;
     ranges.forEach(range => {
       let rangeArr = range.split(",").map(s => parseInt(s));
@@ -70,25 +70,25 @@ class Board {
         y >= rangeArr[2] &&
         y <= rangeArr[3]
       ) {
-        selectShape = this.shapesObj[range];
+        selectShape = shapesObj[range];
         let selectId = selectShape.orientationIndex;
 
         if (selectShape.type === "elbow") {
           selectId = Math.floor((selectId + 1) % 4);
-          selectShape.reDraw(selectId, range, this.ctx, selectShape.type);
-          this.shapesObj[range].orientationIndex = selectId;
+          selectShape.reDraw(selectId, range, ctx, selectShape.type);
+          shapesObj[range].orientationIndex = selectId;
         }
         if (selectShape.type === "straight") {
           selectId = Math.floor((selectId + 1) % 2);
-          selectShape.reDraw(selectId, range, this.ctx, selectShape.type);
-          this.shapesObj[range].orientationIndex = selectId;
+          selectShape.reDraw(selectId, range, ctx, selectShape.type);
+          shapesObj[range].orientationIndex = selectId;
         }
       }
     });
   }
 
-  findDirection(coordinates) {
-    let nextShape = this.shapesObj[coordinates];
+  findDirection(coordinates, shapesObj = this.shapesObj) {
+    let nextShape = shapesObj[coordinates];
     return nextShape;
   }
 
@@ -100,13 +100,19 @@ class Board {
       return nextPipe.validPipeFlow(nextPipe, prevDir);
     }
   }
-  async fillEntryPipe() {
-    const entry = new Shape("entry", 1, [5, 55], [300, 350], this.ctx);
-    let returnVal = await entry.drawSludgeEntry(this.ctx);
+  async fillEntryPipe(ctx = this.ctx) {
+    const entry = new Shape("entry", 1, [5, 55], [300, 350], ctx);
+    let returnVal = await entry.drawSludgeEntry(ctx);
     return returnVal;
   }
-  async fillPipes(direction, nextShape) {
-    let returnVal = await nextShape.drawSludge(nextShape, direction, this.ctx);
+  async fillExitPipe(ctx = this.ctx, direction) {
+    const exit = new Shape("exit", direction, [1205, 1255], [300, 350], ctx);
+    console.log("EXIT: ", exit);
+    console.log("DIRECTION: ", direction);
+    exit.drawSludgeExit(ctx, direction);
+  }
+  async fillPipes(direction, nextShape, ctx = this.ctx) {
+    let returnVal = await nextShape.drawSludge(nextShape, direction, ctx);
     return returnVal;
   }
 }
