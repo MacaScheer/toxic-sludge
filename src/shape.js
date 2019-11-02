@@ -44,6 +44,44 @@ Shape.prototype.asyncDrawSludgeEntry = function(ctx, sludgeStep) {
   return this.drawSludgeEntry(ctx, sludgeStep);
 };
 
+Shape.prototype.drawSludgeExit = async function(
+  ctx,
+  direction,
+  sludgeStep = 5
+) {
+  await this.sleepFunction(10);
+  sludgeStep += 0.3;
+  ctx.beginPath();
+  ctx.strokeStyle = "#32CD32";
+  ctx.lineWidth = 10;
+  switch (direction) {
+    case 0:
+      ctx.moveTo(1205, 325);
+      ctx.lineTo(1230, 325);
+      return;
+    case 1:
+      ctx.moveTo(1230, 300);
+      ctx.lineTo(1230, 325);
+      return;
+    case 3:
+      ctx.lineTo(1230, 350);
+      ctx.moveTo(1230, 325);
+      return;
+  }
+  ctx.stroke();
+
+  ctx.strokeStyle = "#000000";
+
+  if (sludgeStep < 55) {
+    return this.asyncDrawSludgeExit(ctx, direction, sludgeStep);
+  } else {
+    return "YOU WIN";
+  }
+};
+
+Shape.prototype.asyncDrawSludgeExit = function(ctx, direction, sludgeStep) {
+  return this.drawSludgeExit(ctx, direction, sludgeStep);
+};
 Shape.prototype.drawEntry = function(ctx, x, y) {
   ctx.clearRect(x + 1, y + 1, 49, 49);
   ctx.beginPath();
@@ -59,14 +97,43 @@ Shape.prototype.drawEntry = function(ctx, x, y) {
 
 Shape.prototype.drawExit = function(ctx, x, y) {
   ctx.clearRect(x + 1, y + 1, 49, 49);
+  let twoPi = 2 * Math.PI;
   ctx.beginPath();
-  ctx.moveTo(x + 50, y + 25);
-  ctx.lineTo(x + 5, y + 25);
-  ctx.moveTo(x + 5, y + 10);
-  ctx.lineTo(x + 5, y + 40);
-  ctx.lineWidth = 15;
-  ctx.strokeStyle = "#FCC201";
+  // ctx.moveTo(x + 50, y + 25);
+  // ctx.lineTo(x + 5, y + 25);
+  // ctx.moveTo(x + 5, y + 10);
+  // ctx.lineTo(x + 5, y + 40);
+  ctx.arc(1230, 325, 23, 0, twoPi);
+  ctx.fillStyle = "#FCC201";
+  ctx.fill();
+  ctx.beginPath();
+  ctx.arc(1230, 325, 15, 0, twoPi);
+  ctx.lineWidth = 0.75;
   ctx.stroke();
+  ctx.beginPath();
+  ctx.arc(1230, 325, 14.5, 0, twoPi);
+  ctx.lineWidth = 1;
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.arc(1230, 325, 13, 0, twoPi);
+  ctx.lineWidth = 1.25;
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.arc(1230, 325, 12, 0, twoPi);
+  ctx.lineWidth = 1.38;
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.arc(1230, 325, 10, 0, twoPi);
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.arc(1230, 325, 8.75, 0, twoPi);
+  ctx.fillStyle = "#383838";
+  ctx.fill();
+  ctx.beginPath();
+  ctx.arc(1230, 325, 8, 0, twoPi);
+  ctx.fillStyle = "#000000";
+  ctx.fill();
   ctx.strokeStyle = "#000000";
 };
 

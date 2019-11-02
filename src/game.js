@@ -21,13 +21,17 @@ class Game {
     this.play();
   }
 
-  async play() {
-    let entryReturn = await this.board.fillEntryPipe();
+  async play(
+    board = this.board,
+    directionOptionsObj = this.directionOptionsObj
+  ) {
+    let entryReturn = await board.fillEntryPipe();
     let coordinateArr = entryReturn.split(",");
-    let direction = this.directionOptionsObj[coordinateArr[0]];
-    let nextShape = this.board.findDirection(coordinateArr.slice(1));
+    let direction = directionOptionsObj[coordinateArr[0]];
+    let nextShape = board.findDirection(coordinateArr.slice(1));
 
     while (this.board.getValidFlow(direction, nextShape) && !this.isGameOver) {
+      console.log("gameOver?: ", this.isGameOver);
       this.points += 1;
       let coordinateArr = await this.board.fillPipes(direction, nextShape);
 
@@ -40,6 +44,7 @@ class Game {
         return;
       }
       if (nextShape.xRange[0] >= 1205 && nextShape.yRange[0] === 300) {
+        await board.fillExitPipe(direction);
         console.log("YOU SAVED THE CITY");
         this.message.showMessage("win", this.points);
         return;
