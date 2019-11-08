@@ -3,7 +3,7 @@ const Game = require("./game");
 const Background = require("./background");
 const Message = require("./message");
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
   const canvasEl = document.getElementById("gameboard");
   const ctx = canvasEl.getContext("2d");
   const restartButton = document.getElementById("restart-button");
@@ -13,9 +13,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
   board.createGrid(ctx);
   message.showMessage("start");
-
+  ///NEED TO ONLY SHOW THIS BUTTON IF GAME IS OVER//
+  // if (board.isGameOver){
   restartButton.addEventListener("click", function () {
-    board.isGameOver = true;
     const newCanvasEl = document.getElementById("gameboard");
     const newCtx = newCanvasEl.getContext("2d");
     newCtx.clearRect(0, 0, 1265, 660);
@@ -23,11 +23,12 @@ document.addEventListener("DOMContentLoaded", function() {
     const newGame = new Game(newBoard, background, message);
     newBoard.createGrid(newCtx);
     newGame.start();
-    newCanvasEl.addEventListener("click", function() {
+    newCanvasEl.addEventListener("click", function () {
       let clickSpot = [event.pageX, event.pageY];
       newBoard.rotateShape(clickSpot);
     });
   });
+// }
   canvasEl.addEventListener("click", function() {
     let clickSpot = [event.pageX, event.pageY];
     board.rotateShape(clickSpot);
