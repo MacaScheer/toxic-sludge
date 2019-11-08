@@ -105,11 +105,12 @@ class Board {
     let returnVal = await entry.drawSludgeEntry(ctx);
     return returnVal;
   }
-  async fillExitPipe(ctx = this.ctx, direction) {
+  async fillExitPipe(direction, ctx = this.ctx) {
     const exit = new Shape("exit", direction, [1205, 1255], [300, 350], ctx);
     console.log("EXIT: ", exit);
     console.log("DIRECTION: ", direction);
-    exit.drawSludgeExit(ctx, direction);
+    let exitReturn = await exit.drawSludgeExit(direction, ctx);
+    return exitReturn
   }
   async fillPipes(direction, nextShape, ctx = this.ctx) {
     let returnVal = await nextShape.drawSludge(nextShape, direction, ctx);

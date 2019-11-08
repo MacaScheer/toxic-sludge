@@ -31,7 +31,6 @@ class Game {
     let nextShape = board.findDirection(coordinateArr.slice(1));
 
     while (this.board.getValidFlow(direction, nextShape) && !this.isGameOver) {
-      console.log("gameOver?: ", this.isGameOver);
       this.points += 1;
       let coordinateArr = await this.board.fillPipes(direction, nextShape);
 
@@ -44,10 +43,15 @@ class Game {
         return;
       }
       if (nextShape.xRange[0] >= 1205 && nextShape.yRange[0] === 300) {
-        await board.fillExitPipe(direction);
-        console.log("YOU SAVED THE CITY");
-        this.message.showMessage("win", this.points);
-        return;
+        let winMessage = await board.fillExitPipe(direction);
+        if (winMessage) {
+          console.log("YOU SAVED THE CITY", winMessage);
+          this.message.showMessage("win", this.points);
+          return;
+        } else {
+          this.background.spillOut(nextShape, direction, this.points);
+          console.log("game over");
+        }
       }
     }
     this.background.spillOut(nextShape, direction, this.points);
